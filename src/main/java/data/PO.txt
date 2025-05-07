@@ -1,0 +1,2 @@
+PO_ID,PR_ID,Item_ID,Supplier_ID,Quantity,Order_Date,Ordered_By,Status,Approval_By
+PO001,PR001,IT001,S001,10,06-05-2025,U001,PENDING,-
