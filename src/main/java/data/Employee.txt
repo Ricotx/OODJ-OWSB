@@ -1,3 +1,0 @@
-Employee_ID,Name,Employee_Role,Email,Password
-E001,Richard Ong,PURCHASE_MANAGER,richard@omega.com,12345
-E002,Jane Lee,ADMINISTRATOR,janelee@omega.com,12345

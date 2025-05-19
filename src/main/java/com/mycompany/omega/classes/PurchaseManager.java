@@ -92,6 +92,12 @@ public class PurchaseManager extends Employee implements Manageable<PO>, Viewabl
                 .collect(Collectors.toList());
     }
     
+    public List<PO> filterPO_byDate(LocalDate date){
+        return poList.stream()
+                .filter(po -> po.getDate().equals(date))
+                .collect(Collectors.toList());
+    }
+    
     public PR getPRById(String id){
         return prList.stream()
                 .filter(pr -> pr.getPR_ID().equals(id))

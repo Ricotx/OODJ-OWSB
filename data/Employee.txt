@@ -1,1 +1,2 @@
-E001,Richard,PURCHASE_MANAGER,ric@omega.com,12345 
+E001,Richard,PURCHASE_MANAGER,ric@omega.com,12345
+E002,AnWen,ADMINISTRATOR,anwen@omega.com,12345

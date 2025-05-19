@@ -273,7 +273,7 @@ public class PMFrame extends javax.swing.JFrame {
 
         searchLabel.setText("Search based on Purchase Requisition ID or Request Date:");
 
-        prSearchTextField.setText("By PR ID");
+        prSearchTextField.setText("Enter PR ID");
         prSearchTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 prSearchTextFieldActionPerformed(evt);
@@ -573,7 +573,7 @@ public class PMFrame extends javax.swing.JFrame {
         }
         
         //Create and record PO
-        PO newPO = new PO (poID, pr, supplier, item, quantity, LocalDate.now(), requestedBy,"PENDING","-");
+        PO newPO = new PO (poID, pr, supplier, item, quantity, LocalDate.now(), requestedBy,"PENDING","-", 0);
         manager.add(newPO); //Write to PO.txt file
         manager.updatePRStatus(prID, "Approved"); //Update PR status from pending to approve
         
@@ -673,6 +673,20 @@ public class PMFrame extends javax.swing.JFrame {
                 itemIDTextField.setText(selectedPR.getItem().getItemID());
                 quantityTextField.setText(String.valueOf(selectedPR.getQuantity()));
                 
+                if (selectedPR.getStatus().equalsIgnoreCase("APPROVED")){
+                    recordPO_Btn.setEnabled(false);
+                    rejectPR_Button.setEnabled(false);
+                    JOptionPane.showMessageDialog(this, "This PR has been APPROVED and a PO has been created. Only PR with PENDING status is allowed to create a new PO");
+                } else if (selectedPR.getStatus().equalsIgnoreCase("REJECTED")){
+                    recordPO_Btn.setEnabled(false);
+                    rejectPR_Button.setEnabled(false);
+                    JOptionPane.showMessageDialog(this, "This PR has been REJECTED and no PO has been created. Only PR with PENDING status is allowed to create a new PO");
+                } else {
+                    recordPO_Btn.setEnabled(true);
+                    rejectPR_Button.setEnabled(true);
+                    JOptionPane.showMessageDialog(this, "This PR has been REJECTED and no PO has been created. Only PR with PENDING status is allowed to create a new PO");
+                }
+                
                 //Filter suppliers for selected item based on the itemID
                 loadSupplierForItem(selectedPR.getItem().getItemID());
                 
@@ -696,6 +710,8 @@ public class PMFrame extends javax.swing.JFrame {
 
     private void btnEditDeletePOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditDeletePOActionPerformed
         // TODO add your handling code here:
+        new PM2Frame().setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnEditDeletePOActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed

@@ -1,2 +1,0 @@
-PR_ID,Item_ID,Quantity,Request_Date,Requested_By,Status
-PR001,IT001,50,12-05-2025,U001,PENDING

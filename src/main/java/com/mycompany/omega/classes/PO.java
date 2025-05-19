@@ -23,8 +23,9 @@ public class PO {
     private final String orderedBy;
     private String approval;
     private String approvalBy;
+    private int receivedQuantity;
 
-    public PO(String poID, PR pr, Supplier sup, Item item, int quantity, LocalDate Date, String orderedBy, String approval, String approvalBy) {
+    public PO(String poID, PR pr, Supplier sup, Item item, int quantity, LocalDate Date, String orderedBy, String approval, String approvalBy, int receivedQuantity) {
         this.poID = poID;
         this.pr = pr;
         this.sup = sup;
@@ -34,11 +35,12 @@ public class PO {
         this.orderedBy = orderedBy;
         this.approval = approval;
         this.approvalBy = approvalBy;
+        this.receivedQuantity = receivedQuantity;
     }
 
     @Override
     public String toString(){
-        return poID + "," + pr.getPR_ID() + "," + item.getItemID() + "," + sup.getSupplierID()+ ","+ quantity + "," + Date.format(formatter) + "," + orderedBy + "," + approval + "," + approvalBy;
+        return poID + "," + pr.getPR_ID() + "," + item.getItemID() + "," + sup.getSupplierID()+ ","+ quantity + "," + Date.format(formatter) + "," + orderedBy + "," + approval + "," + approvalBy + "," + receivedQuantity;
     }
     
     public static PO fromLine(String line, List<PR> prList, List<Item> itemList, List<Supplier> supplierList) {
@@ -74,7 +76,8 @@ public class PO {
             LocalDate.parse(parts[5], formatter),
             parts[6],
             parts[7],
-            parts[8]
+            parts[8],
+            Integer.parseInt(parts[9])
         );
 
     } catch (Exception e) {
@@ -143,6 +146,14 @@ public class PO {
 
     public void setApprovalBy(String approvalBy) {
         this.approvalBy = approvalBy;
+    }
+    
+    public int getReceivedQuantity(){
+        return receivedQuantity;
+    }
+    
+    public void setReceivedQuantity(int receivedQuantity){
+        this.receivedQuantity = receivedQuantity;
     }
     
     

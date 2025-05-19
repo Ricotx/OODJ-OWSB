@@ -322,7 +322,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="prSearchTextField">
           <Properties>
-            <Property name="text" type="java.lang.String" value="By PR ID"/>
+            <Property name="text" type="java.lang.String" value="Enter PR ID"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="prSearchTextFieldActionPerformed"/>
