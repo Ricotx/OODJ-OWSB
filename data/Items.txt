@@ -1,0 +1,2 @@
+IT001,Mouse,50
+IT002,Keyboard,20
