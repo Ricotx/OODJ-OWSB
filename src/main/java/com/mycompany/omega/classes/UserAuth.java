@@ -26,7 +26,9 @@ public class UserAuth {
                     if (email.equals(inputUsername) && password.equals(inputPassword)) {
                         return switch (role) {
                             case PURCHASE_MANAGER -> new PurchaseManager(employeeID, name, role, email, password);
+                            case INVENTORY_MANAGER -> new InventoryManager(employeeID, name, role, email, password);
                             case ADMINISTRATOR -> new Admin(employeeID, name, role, email, password);
+                                
                             // Add others like:
                             // case ADMINISTRATOR -> new Administrator(...);
                             default -> null;
