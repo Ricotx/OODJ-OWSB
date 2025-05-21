@@ -676,15 +676,15 @@ public class PMFrame extends javax.swing.JFrame {
                 if (selectedPR.getStatus().equalsIgnoreCase("APPROVED")){
                     recordPO_Btn.setEnabled(false);
                     rejectPR_Button.setEnabled(false);
-                    JOptionPane.showMessageDialog(this, "This PR has been APPROVED and a PO has been created. Only PR with PENDING status is allowed to create a new PO");
+                    JOptionPane.showMessageDialog(this, "This PR has been APPROVED and an existing PO has been created.");
                 } else if (selectedPR.getStatus().equalsIgnoreCase("REJECTED")){
                     recordPO_Btn.setEnabled(false);
                     rejectPR_Button.setEnabled(false);
-                    JOptionPane.showMessageDialog(this, "This PR has been REJECTED and no PO has been created. Only PR with PENDING status is allowed to create a new PO");
+                    JOptionPane.showMessageDialog(this, "This PR has been REJECTED, NO Purchase Order is created.\nOnly PENDING Requisition is able to create a new Purchase Order");
                 } else {
                     recordPO_Btn.setEnabled(true);
                     rejectPR_Button.setEnabled(true);
-                    JOptionPane.showMessageDialog(this, "This PR has been REJECTED and no PO has been created. Only PR with PENDING status is allowed to create a new PO");
+                    JOptionPane.showMessageDialog(this, "This PR is PENDING, a NEW Purchase Order is pending to be created.");
                 }
                 
                 //Filter suppliers for selected item based on the itemID
