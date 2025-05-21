@@ -1,3 +1,4 @@
 E001,Richard,PURCHASE_MANAGER,ric@omega.com,12345
 E002,AnWen,ADMINISTRATOR,anwen@omega.com,12345
 E003,Fikri,INVENTORY_MANAGER,fikri@omega.com,12345
+E004,Adham,SALES_MANAGER,adham@omega.com,12345
