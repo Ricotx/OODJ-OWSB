@@ -45,7 +45,7 @@ public abstract class Employee {
         String password = parts[4];
         
         return switch (role){
-            //case SALES_MANAGER -> new SalesManager(id, name, role, email, password);
+            case SALES_MANAGER -> new SalesManager(id, name, role, email, password);
             case PURCHASE_MANAGER -> new PurchaseManager(id, name, role, email, password);
             //case FINANCE_MANAGER -> new FinanceManager(id, name, role, email, password);
             //case INVENTORY_MANAGER -> new InventoryManager(id, name, role, email, password);
