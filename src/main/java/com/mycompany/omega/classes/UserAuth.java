@@ -27,6 +27,8 @@ public class UserAuth {
                         return switch (role) {
                             case PURCHASE_MANAGER -> new PurchaseManager(employeeID, name, role, email, password);
                             case INVENTORY_MANAGER -> new InventoryManager(employeeID, name, role, email, password);
+                            
+                            case FINANCE_MANAGER -> new FinanceManager(employeeID, name, role, email, password);
                             case ADMINISTRATOR -> new Admin(employeeID, name, role, email, password);
                                 
                             // Add others like:
