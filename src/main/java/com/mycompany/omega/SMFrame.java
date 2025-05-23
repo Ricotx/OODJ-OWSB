@@ -1336,6 +1336,8 @@ public class SMFrame extends javax.swing.JFrame {
 
     private void logoutbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutbtnActionPerformed
         JOptionPane.showMessageDialog(null, "Logout succesfully!");
+        Session.clear();
+        System.out.println("User Logged Out: " + Session.getCurrentUser());
         this.dispose();
         new LoginFrame().setVisible(true);
     }//GEN-LAST:event_logoutbtnActionPerformed

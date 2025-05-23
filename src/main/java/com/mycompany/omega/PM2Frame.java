@@ -714,6 +714,10 @@ public class PM2Frame extends javax.swing.JFrame {
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
+        Session.clear();
+        System.out.println("User Logged Out: " + Session.getCurrentUser());
+        this.dispose();
+        new LoginFrame().setVisible(true);
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void quantityTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantityTextFieldActionPerformed

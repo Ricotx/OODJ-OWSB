@@ -1181,8 +1181,10 @@ public class FinanceFrame extends javax.swing.JFrame {
     
     
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        Session.clear();
+        System.out.println("User Logged Out: " + Session.getCurrentUser());
         this.dispose();
-        manager.launchLogin();
+        new LoginFrame().setVisible(true);
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnSearchPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchPOActionPerformed
