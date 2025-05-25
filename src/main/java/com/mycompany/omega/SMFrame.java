@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 public class SMFrame extends javax.swing.JFrame {
     private SalesManager manager;
     private boolean isEditMode = false;
+    private int oriquantity;
     /**
      * Creates new form SMFrame
      */
@@ -1707,7 +1708,6 @@ public class SMFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_salesrecordfldActionPerformed
 
     private void salesavebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salesavebtnActionPerformed
-
       String salesid = this.salesidfld.getText().trim();
       String itemid = (String)this.salesitemidcmb.getSelectedItem();
       String quantity = this.salesquantityfld.getText().trim();
@@ -1721,11 +1721,14 @@ public class SMFrame extends javax.swing.JFrame {
 
       try {
          int saleQty = Integer.parseInt(quantity);
-         int Quantity = Integer.parseInt(quantity);
+         
          List<Item> itemList = manager.getAllItems();
          Item matchedItem = (Item)itemList.stream().filter(i -> 
                             i.getItemID().equals(itemid))
                             .findFirst().orElse(null);
+         
+         int Quantity = matchedItem.getStock() + oriquantity;
+         
          if (matchedItem == null) {
             JOptionPane.showMessageDialog(null, "Invalid Item ID!");
             return;
@@ -1736,12 +1739,15 @@ public class SMFrame extends javax.swing.JFrame {
             return;
          }
 
-         if (saleQty > matchedItem.getStock()) {
-            JOptionPane.showMessageDialog(null, "Not Enough stock. Available: " + matchedItem.getStock());
+         if (saleQty > Quantity) {
+            JOptionPane.showMessageDialog(null, "Not Enough stock. Available: " + Quantity);
             return;
          }
-
-         matchedItem.setStock(matchedItem.getStock() - saleQty);
+         
+         System.out.println("new Q:" + saleQty);
+         System.out.println("ori quant:" + Quantity);
+         System.out.println("current quant:" + matchedItem.getStock());
+         matchedItem.setStock(Quantity - saleQty);         
          FileHandler.writeAllToFile("data/Items.txt", itemList);
          String matchedEmployee = manager.getEmployeeID();
          if (matchedEmployee == null) {
@@ -1759,7 +1765,7 @@ public class SMFrame extends javax.swing.JFrame {
                return;
             }
 
-            linetowrite = salesid + "," + matchedItem.getItemID() + "," + Quantity + "," + matchedEmployee + "," + salesdate;
+            linetowrite = salesid + "," + matchedItem.getItemID() + "," + saleQty + "," + matchedEmployee + "," + salesdate;
             FileHandler.appendLine("data/Sale.txt", linetowrite);
             JOptionPane.showMessageDialog(null, "Sales added succesfully!");
             loadAllSales();
@@ -1795,13 +1801,13 @@ public class SMFrame extends javax.swing.JFrame {
                return;
             }
 
-            matchedItem.setStock(stockwithReturn - newQty);
+            matchedItem.setStock(Quantity - saleQty);
             FileHandler.writeAllToFile("data/Items.txt", itemList);
             List<Sales> salesList = manager.getAllSales();
             for (Sales s : salesList){
                if (s.getSaleID().equals(salesid)) {
                   s.setRecordedBy(matchedEmployee);
-                  s.setQuantity(Quantity);
+                  s.setQuantity(saleQty);
                   found = true;
                   break;
                }
@@ -1836,6 +1842,7 @@ public class SMFrame extends javax.swing.JFrame {
       isEditMode = true;
       salesquantityfld.setEditable(true);
       salesitemidcmb.setEnabled(true);
+      oriquantity = Integer.parseInt(this.salesquantityfld.getText().trim());
       salesavebtn.setVisible(true);
     }//GEN-LAST:event_saleeditbtnActionPerformed
 
@@ -1875,7 +1882,7 @@ public class SMFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Sales cannot be removed! Please try again..");
          }
 
-         this.loadAllSuppliers();
+         this.loadAllSales();
       }
     }//GEN-LAST:event_saledeletebtnActionPerformed
 
@@ -2024,7 +2031,13 @@ public class SMFrame extends javax.swing.JFrame {
         if (!prId.isEmpty()) {
             PR result = this.manager.getPRById(prId);
         if (result != null) {
-            model.addRow(new Object[]{result.getPR_ID(), result.getItem().getItemID(), result.getQuantity(), result.getRequestdDate().toString(), result.getRequestedBy(), result.getStatus()});
+            model.addRow(new Object[]
+                {result.getPR_ID(),
+                result.getItem().getItemID(),
+                result.getQuantity(),
+                result.getRequestdDate().toString(),
+                result.getRequestedBy(),
+                result.getStatus()});
         } else {
             JOptionPane.showMessageDialog(this, "No PR found based on the PR ID: " + prId);
             }
@@ -2061,6 +2074,10 @@ public class SMFrame extends javax.swing.JFrame {
         salesdatefld.setText("");
         salesrecordfld.setText("");
         loadAllSales();
+        
+        itemsavebtn.setVisible(false);
+        savesupbtn.setVisible(false);
+        salesavebtn.setVisible(false);
     }//GEN-LAST:event_refreshbtnActionPerformed
 
     private void PrTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrTableMouseClicked
