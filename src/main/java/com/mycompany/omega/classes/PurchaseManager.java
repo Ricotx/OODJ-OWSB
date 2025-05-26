@@ -98,6 +98,12 @@ public class PurchaseManager extends Employee implements Manageable<PO>, Viewabl
                 .collect(Collectors.toList());
     }
     
+    public List<PR> getPendingPRs(){
+        return prList.stream()
+                .filter(pr -> "PENDING".equalsIgnoreCase(pr.getStatus()))
+                .collect(Collectors.toList());
+    }
+    
     public PR getPRById(String id){
         return prList.stream()
                 .filter(pr -> pr.getPR_ID().equals(id))
