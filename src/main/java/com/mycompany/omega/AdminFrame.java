@@ -5,8 +5,12 @@
 package com.mycompany.omega;
 
 import com.mycompany.omega.LoginFrame;
+import com.mycompany.omega.LoginFrame;
 import com.mycompany.omega.classes.Admin;
 import com.mycompany.omega.classes.Session;
+import com.mycompany.omega.classes.Employee;
+import com.mycompany.omega.classes.Employee.Role;
+import com.mycompany.omega.classes.PurchaseManager;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -403,51 +407,24 @@ public class AdminFrame extends javax.swing.JFrame {
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         String employeeId = txtEmployeeID.getText().trim();
     String name = txtName.getText().trim();
-    String role = (String) boxRole.getSelectedItem();
+    String roleStr = (String) boxRole.getSelectedItem();
     String email = txtEmail.getText().trim();
     String password = txtPassword.getText().trim();
 
-    if (employeeId.isEmpty() || name.isEmpty() || role.isEmpty() || email.isEmpty() || password.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Please fill in all fields.");
+    if (employeeId.isEmpty() || name.isEmpty() || roleStr.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill in all fields.");
         return;
     }
 
-    // Define the path to your Employee file
-    java.io.File file = new java.io.File("data/Employee.txt");
+    admin.registerUser(employeeId, name, roleStr, email, password); // Send raw data only
 
-    try {
-        // Check if employee ID or email already exists
-        if (file.exists()) {
-            java.util.Scanner scanner = new java.util.Scanner(file);
-            while (scanner.hasNextLine()) {
-                String[] parts = scanner.nextLine().split(",");
-                if (parts.length >= 5 && (parts[0].equals(employeeId) || parts[3].equalsIgnoreCase(email))) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Employee ID or Email already exists.");
-                    scanner.close();
-                    return;
-                }
-            }
-            scanner.close();
-        }
+    // Clear fields
+    txtEmployeeID.setText("");
+    txtName.setText("");
+    txtEmail.setText("");
+    txtPassword.setText("");
+    boxRole.setSelectedIndex(0);
 
-        // Append the new user
-        java.io.FileWriter writer = new java.io.FileWriter(file, true);
-        writer.write(employeeId + "," + name + "," + role + "," + email + "," + password + "\n");
-        writer.close();
-
-        javax.swing.JOptionPane.showMessageDialog(this, "User registered successfully!");
-
-        // Clear fields
-        txtEmployeeID.setText("");
-        txtName.setText("");
-        txtEmail.setText("");
-        txtPassword.setText("");
-        boxRole.setSelectedIndex(0);
-
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-        e.printStackTrace();
-    }
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
@@ -472,28 +449,17 @@ public class AdminFrame extends javax.swing.JFrame {
 
 
     // Define column names
-    String[] columnNames = { "Employee ID", "Name", "Role", "Email", "Password" };
-    
-    // List to hold rows
-    List<String[]> rowData = new ArrayList<>();
-    
-    // Read the user data file
-    try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\Lee Anwen\\OneDrive - Asia Pacific University\\Documents\\NetBeansProjects\\OODJ-OWSB\\src\\main\\java\\data\\Employee.txt"))) {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] data = line.split(","); // Adjust delimiter if needed
-            if (data.length == 5) {
-                rowData.add(data);
-            }
-        }
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(this, "Error reading user data file.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+     String[] columnNames = { "Employee ID", "Name", "Role", "Email", "Password" };
 
-    // Create table model from data
+    // Get data from admin class
+    List<String[]> rowData = admin.getAllUserData();
+
+    // Convert to table model
     String[][] dataArr = rowData.toArray(new String[0][]);
     javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(dataArr, columnNames);
+
+    // Assuming you have a JTable named tblUsers
+    
     tblUsers.setModel(model);
     btnReturn2.setVisible(true);
     
@@ -555,48 +521,21 @@ public class AdminFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeleteUsersActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        String empIDToDelete = txtDeleteEmployeeID.getText().trim();
+         String empIDToDelete = txtDeleteEmployeeID.getText().trim();
 
     if (empIDToDelete.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please enter an Employee ID.");
         return;
     }
 
-    File file = new File("C:\\Users\\Lee Anwen\\OneDrive - Asia Pacific University\\Documents\\NetBeansProjects\\OODJ-OWSB\\src\\main\\java\\data\\Employee.txt");
-    List<String> updatedUsers = new ArrayList<>();
-    boolean found = false;
+    boolean success = admin.deleteUserById(empIDToDelete);
 
-    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] data = line.split(",");
-            if (data.length > 0 && data[0].equals(empIDToDelete)) {
-                found = true; // Skip this user
-            } else {
-                updatedUsers.add(line);
-            }
-        }
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(this, "Error reading the file.");
-        return;
+    if (success) {
+        JOptionPane.showMessageDialog(this, "User deleted successfully.");
+        txtDeleteEmployeeID.setText(""); // Clear the input field
+    } else {
+        JOptionPane.showMessageDialog(this, "Employee ID not found or error occurred.");
     }
-
-    if (!found) {
-        JOptionPane.showMessageDialog(this, "Employee ID not found.");
-        return;
-    }
-
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-        for (String user : updatedUsers) {
-            writer.write(user);
-            writer.newLine();
-        }
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(this, "Error writing to the file.");
-        return;
-    }
-
-    JOptionPane.showMessageDialog(this, "User deleted successfully.");
     txtDeleteEmployeeID.setText(""); // Clear the input field
 
     }//GEN-LAST:event_btnDeleteActionPerformed
