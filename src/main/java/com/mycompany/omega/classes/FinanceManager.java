@@ -37,7 +37,7 @@ public class FinanceManager extends Employee implements Manageable<PO>, Viewable
     
     @Override
     public void launchDashboard() {
-        new FinanceFrame().setVisible(true);
+        new FinanceFrame(Session.getCurrentUser()).setVisible(true);
         //throw new UnsupportedOperationException("Not supported yet.");
     }
     

@@ -702,7 +702,7 @@ public class PM2Frame extends javax.swing.JFrame {
 
     private void btnCreatePOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreatePOActionPerformed
         // TODO add your handling code here:
-        new PMFrame().setVisible(true);
+        new PMFrame(Session.getCurrentUser()).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCreatePOActionPerformed
 

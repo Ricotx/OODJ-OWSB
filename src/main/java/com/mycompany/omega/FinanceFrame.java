@@ -24,13 +24,22 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class FinanceFrame extends javax.swing.JFrame {
-    final private FinanceManager manager;
+    private FinanceManager manager;
     private final String placeholderText = "Enter PO ID";
     
-    public FinanceFrame() {
+    public FinanceFrame(Employee user) {
         initComponents();
-           this.manager = (FinanceManager) Session.getCurrentUser();
            
+        if (user instanceof FinanceManager) {
+            this.manager = (FinanceManager) user;  // Safe cast
+        } else if (user.getRole() == Employee.Role.ADMINISTRATOR) {
+            // Optional: Admins can access view-only or limited version
+            this.manager = new FinanceManager(user.getEmployeeID(), user.getName(), user.getRole(), user.getEmail(), user.getPassword());
+        } else {
+            JOptionPane.showMessageDialog(this, "Access Denied. You are not authorized to access this page.");
+            dispose();
+            return;
+        }
 
         System.out.println("Session User: " + Session.getCurrentUser());
         System.out.println("Manager assigned? " + (manager != null));

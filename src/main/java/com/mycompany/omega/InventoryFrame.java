@@ -21,20 +21,21 @@ import com.mycompany.omega.classes.Session;
  * @author fikri
  */
 public class InventoryFrame extends javax.swing.JFrame {
-
     private InventoryManager inventoryManager;
-    public InventoryFrame() {
+    public InventoryFrame(Employee user) {
         initComponents();
         
-        Employee currentUser = Session.getCurrentUser();
-        lblGreeting.setText("Welcome, " + currentUser.getRole() + ": " + currentUser.getName());
-        if (currentUser instanceof InventoryManager) {
-            this.inventoryManager = (InventoryManager) currentUser;
-            populatePOComboBox();
+        if (user instanceof InventoryManager) {
+            this.inventoryManager = (InventoryManager) user;  // Safe cast
+        } else if (user.getRole() == Employee.Role.ADMINISTRATOR) {
+            // Optional: Admins can access view-only or limited version
+            this.inventoryManager = new InventoryManager(user.getEmployeeID(), user.getName(), user.getRole(), user.getEmail(), user.getPassword());
         } else {
-            JOptionPane.showMessageDialog(this, "Unauthorized access or no Inventory Manager logged in!", "Access Denied", JOptionPane.ERROR_MESSAGE);
-            this.dispose();
+            JOptionPane.showMessageDialog(this, "Access Denied. You are not authorized to access this page.");
+            dispose();
+            return;
         }
+        lblGreeting.setText("Welcome, " + user.getRole() + ": " + user.getName());
     }
     
     private void populatePOComboBox() {

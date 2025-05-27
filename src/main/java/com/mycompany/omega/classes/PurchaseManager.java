@@ -33,7 +33,7 @@ public class PurchaseManager extends Employee implements Manageable<PO>, Viewabl
     
     @Override
     public void launchDashboard() {
-        new PMFrame().setVisible(true);
+        new PMFrame(Session.getCurrentUser()).setVisible(true);
         //throw new UnsupportedOperationException("Not supported yet.");
     }
     

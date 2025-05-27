@@ -71,10 +71,10 @@ public class AdminFrame extends javax.swing.JFrame {
         btnLogout = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnManageUsers = new javax.swing.JButton();
-        btnManageItems = new javax.swing.JButton();
-        btnManageSupplier = new javax.swing.JButton();
-        btnViewEditPR = new javax.swing.JButton();
-        btnViewEditPO = new javax.swing.JButton();
+        btnManageSM = new javax.swing.JButton();
+        btnManagePM = new javax.swing.JButton();
+        btnManageFM = new javax.swing.JButton();
+        btnManageIM = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btnRegisterUsers = new javax.swing.JButton();
         btnDeleteUsers = new javax.swing.JButton();
@@ -146,26 +146,31 @@ public class AdminFrame extends javax.swing.JFrame {
             }
         });
 
-        btnManageItems.setText("Manage Items");
-        btnManageItems.addActionListener(new java.awt.event.ActionListener() {
+        btnManageSM.setText("Manage Sales Manager");
+        btnManageSM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnManageItemsActionPerformed(evt);
+                btnManageSMActionPerformed(evt);
             }
         });
 
-        btnManageSupplier.setText("Manage Suppliers");
-
-        btnViewEditPR.setText("View/Edit PurchaseRequisition");
-        btnViewEditPR.addActionListener(new java.awt.event.ActionListener() {
+        btnManagePM.setText("Manage Purchase Manager");
+        btnManagePM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewEditPRActionPerformed(evt);
+                btnManagePMActionPerformed(evt);
             }
         });
 
-        btnViewEditPO.setText("View/Edit PurchaseOrder");
-        btnViewEditPO.addActionListener(new java.awt.event.ActionListener() {
+        btnManageFM.setText("Manage Finance Manager");
+        btnManageFM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewEditPOActionPerformed(evt);
+                btnManageFMActionPerformed(evt);
+            }
+        });
+
+        btnManageIM.setText("Manage Inventory Manager");
+        btnManageIM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManageIMActionPerformed(evt);
             }
         });
 
@@ -176,11 +181,11 @@ public class AdminFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnViewEditPR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnManageSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnManageItems, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnManageFM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnManagePM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnManageSM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnManageUsers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnViewEditPO, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnManageIM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -189,13 +194,13 @@ public class AdminFrame extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addComponent(btnManageUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnManageItems, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnManageSM, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnManageSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnManagePM, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnViewEditPR, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnManageFM, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnViewEditPO, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnManageIM, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(258, Short.MAX_VALUE))
         );
 
@@ -357,17 +362,23 @@ public class AdminFrame extends javax.swing.JFrame {
         new LoginFrame().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_btnLogoutActionPerformed
 
-    private void btnManageItemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageItemsActionPerformed
+    private void btnManageSMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageSMActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnManageItemsActionPerformed
+        new SMFrame(Session.getCurrentUser()).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnManageSMActionPerformed
 
-    private void btnViewEditPRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewEditPRActionPerformed
+    private void btnManageFMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageFMActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnViewEditPRActionPerformed
+        new FinanceFrame(Session.getCurrentUser()).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnManageFMActionPerformed
 
-    private void btnViewEditPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewEditPOActionPerformed
+    private void btnManageIMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageIMActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnViewEditPOActionPerformed
+        new InventoryFrame(Session.getCurrentUser()).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnManageIMActionPerformed
 
     private void btnRegisterUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterUsersActionPerformed
         btnRegister.setVisible(true);
@@ -539,6 +550,12 @@ public class AdminFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnDeleteActionPerformed
 
+    private void btnManagePMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagePMActionPerformed
+        // TODO add your handling code here:
+        new PMFrame(Session.getCurrentUser()).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnManagePMActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -581,16 +598,16 @@ public class AdminFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnDeleteUsers;
     private javax.swing.JButton btnLogout;
-    private javax.swing.JButton btnManageItems;
-    private javax.swing.JButton btnManageSupplier;
+    private javax.swing.JButton btnManageFM;
+    private javax.swing.JButton btnManageIM;
+    private javax.swing.JButton btnManagePM;
+    private javax.swing.JButton btnManageSM;
     private javax.swing.JButton btnManageUsers;
     private javax.swing.JButton btnRegister;
     private javax.swing.JButton btnRegisterUsers;
     private javax.swing.JButton btnReturn;
     private javax.swing.JButton btnReturn2;
     private javax.swing.JButton btnReturn3;
-    private javax.swing.JButton btnViewEditPO;
-    private javax.swing.JButton btnViewEditPR;
     private javax.swing.JButton btnViewUsers;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

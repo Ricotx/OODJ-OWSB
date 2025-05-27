@@ -361,7 +361,7 @@ public class ViewItemFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chkLowStockActionPerformed
 
     private void btnUpdateStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateStockActionPerformed
-        new InventoryFrame().setVisible(true);
+        new InventoryFrame(Session.getCurrentUser()).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnUpdateStockActionPerformed
 

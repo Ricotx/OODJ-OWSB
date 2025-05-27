@@ -123,11 +123,11 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="btnViewEditPR" max="32767" attributes="0"/>
-                      <Component id="btnManageSupplier" alignment="0" max="32767" attributes="0"/>
-                      <Component id="btnManageItems" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnManageFM" max="32767" attributes="0"/>
+                      <Component id="btnManagePM" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnManageSM" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnManageUsers" alignment="0" max="32767" attributes="0"/>
-                      <Component id="btnViewEditPO" max="32767" attributes="0"/>
+                      <Component id="btnManageIM" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="68" max="32767" attributes="0"/>
               </Group>
@@ -139,13 +139,13 @@
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                   <Component id="btnManageUsers" min="-2" pref="49" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnManageItems" min="-2" pref="49" max="-2" attributes="0"/>
+                  <Component id="btnManageSM" min="-2" pref="49" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnManageSupplier" min="-2" pref="49" max="-2" attributes="0"/>
+                  <Component id="btnManagePM" min="-2" pref="49" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnViewEditPR" min="-2" pref="49" max="-2" attributes="0"/>
+                  <Component id="btnManageFM" min="-2" pref="49" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnViewEditPO" min="-2" pref="49" max="-2" attributes="0"/>
+                  <Component id="btnManageIM" min="-2" pref="49" max="-2" attributes="0"/>
                   <EmptySpace pref="258" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -160,33 +160,36 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManageUsersActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnManageItems">
+        <Component class="javax.swing.JButton" name="btnManageSM">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Manage Items"/>
+            <Property name="text" type="java.lang.String" value="Manage Sales Manager"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManageItemsActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManageSMActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnManageSupplier">
+        <Component class="javax.swing.JButton" name="btnManagePM">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Manage Suppliers"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnViewEditPR">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="View/Edit PurchaseRequisition"/>
+            <Property name="text" type="java.lang.String" value="Manage Purchase Manager"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnViewEditPRActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManagePMActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnViewEditPO">
+        <Component class="javax.swing.JButton" name="btnManageFM">
           <Properties>
-            <Property name="text" type="java.lang.String" value="View/Edit PurchaseOrder"/>
+            <Property name="text" type="java.lang.String" value="Manage Finance Manager"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnViewEditPOActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManageFMActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnManageIM">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Manage Inventory Manager"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManageIMActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

@@ -22,10 +22,21 @@ public class SMFrame extends javax.swing.JFrame {
     /**
      * Creates new form SMFrame
      */
-    public SMFrame() {
+    public SMFrame(Employee user) {
         initComponents();
         
-        this.manager = (SalesManager) Session.getCurrentUser();
+        if (user instanceof SalesManager) {
+            this.manager = (SalesManager) user;  // Safe cast
+        } else if (user.getRole() == Employee.Role.ADMINISTRATOR) {
+            // Optional: Admins can access view-only or limited version
+            this.manager = new SalesManager(user.getEmployeeID(), user.getName(), user.getRole(), user.getEmail(), user.getPassword());
+        } else {
+            JOptionPane.showMessageDialog(this, "Access Denied. You are not authorized to access this page.");
+            dispose();
+            return;
+        }
+        
+//        this.manager = (SalesManager) user;
         
         System.out.println("Session User: " + Session.getCurrentUser());
         System.out.println("Manager assigned? " + (manager != null));

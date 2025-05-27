@@ -23,10 +23,19 @@ public class PMFrame extends javax.swing.JFrame {
     /**
      * Creates new form PMFrame
      */
-    public PMFrame() {
+    public PMFrame(Employee user) {
         initComponents();
-        this.manager = (PurchaseManager) Session.getCurrentUser();
-        
+        if (user instanceof PurchaseManager) {
+            this.manager = (PurchaseManager) user;  // Safe cast
+        } else if (user.getRole() == Employee.Role.ADMINISTRATOR) {
+            // Optional: Admins can access view-only or limited version
+            this.manager = new PurchaseManager(user.getEmployeeID(), user.getName(), user.getRole(), user.getEmail(), user.getPassword());
+        } else {
+            JOptionPane.showMessageDialog(this, "Access Denied. You are not authorized to access this page.");
+            dispose();
+            return;
+        }
+       
         System.out.println("Session User: " + Session.getCurrentUser());
         System.out.println("Manager assigned? " + (manager != null));
         
