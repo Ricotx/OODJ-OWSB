@@ -5,7 +5,6 @@
 package com.mycompany.omega;
 
 import com.mycompany.omega.LoginFrame;
-import com.mycompany.omega.LoginFrame;
 import com.mycompany.omega.classes.Admin;
 import com.mycompany.omega.classes.Session;
 import com.mycompany.omega.classes.Employee;
@@ -565,6 +564,7 @@ public class AdminFrame extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(AdminFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
