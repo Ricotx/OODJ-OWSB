@@ -718,11 +718,11 @@ public class GenerateReportFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSupplierNameActionPerformed
 
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(()->{
-        new GenerateReportFrame().setVisible(true);
-    });
-    }
+//    public static void main(String args[]) {
+//        java.awt.EventQueue.invokeLater(()->{
+//        new GenerateReportFrame().setVisible(true);
+//    });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnItemList;

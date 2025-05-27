@@ -380,11 +380,11 @@ public class ViewItemFrame extends javax.swing.JFrame {
         new LoginFrame().setVisible(true);
     }//GEN-LAST:event_btnLogoutActionPerformed
 
-   public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(()->{
-        new ViewItemFrame().setVisible(true);
-    });
-    }
+//   public static void main(String args[]) {
+//        java.awt.EventQueue.invokeLater(()->{
+//        new ViewItemFrame().setVisible(true);
+//    });
+//    }
    
     
 
