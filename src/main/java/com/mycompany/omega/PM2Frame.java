@@ -26,9 +26,20 @@ public class PM2Frame extends javax.swing.JFrame {
     /**
      * Creates new form PMFrame
      */
-    public PM2Frame() {
+    public PM2Frame(Employee user) {
         initComponents();
-        this.manager = (PurchaseManager) Session.getCurrentUser();
+        
+        if (user instanceof PurchaseManager) {
+            this.manager = (PurchaseManager) user;  // Safe cast
+        } else if (user.getRole() == Employee.Role.ADMINISTRATOR) {
+            // Optional: Admins can access view-only or limited version
+            this.manager = new PurchaseManager(user.getEmployeeID(), user.getName(), user.getRole(), user.getEmail(), user.getPassword());
+        } else {
+            JOptionPane.showMessageDialog(this, "Access Denied. You are not authorized to access this page.");
+            dispose();
+            return;
+        }
+        
         editBtn.setEnabled(false);
         deleteBtn.setEnabled(false);
         
@@ -708,7 +719,7 @@ public class PM2Frame extends javax.swing.JFrame {
 
     private void btnEditDeletePOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditDeletePOActionPerformed
         // TODO add your handling code here:
-        new PM2Frame().setVisible(true);
+        new PM2Frame(Session.getCurrentUser()).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnEditDeletePOActionPerformed
 

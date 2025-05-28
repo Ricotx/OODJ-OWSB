@@ -754,7 +754,7 @@ public class PMFrame extends javax.swing.JFrame {
 
     private void btnEditDeletePOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditDeletePOActionPerformed
         // TODO add your handling code here:
-        new PM2Frame().setVisible(true);
+        new PM2Frame(Session.getCurrentUser()).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnEditDeletePOActionPerformed
 
