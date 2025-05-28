@@ -361,7 +361,7 @@ public class ViewItemFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chkLowStockActionPerformed
 
     private void btnUpdateStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateStockActionPerformed
-        new InventoryFrame().setVisible(true);
+        new InventoryFrame(Session.getCurrentUser()).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnUpdateStockActionPerformed
 
@@ -380,11 +380,11 @@ public class ViewItemFrame extends javax.swing.JFrame {
         new LoginFrame().setVisible(true);
     }//GEN-LAST:event_btnLogoutActionPerformed
 
-   public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(()->{
-        new ViewItemFrame().setVisible(true);
-    });
-    }
+//   public static void main(String args[]) {
+//        java.awt.EventQueue.invokeLater(()->{
+//        new ViewItemFrame().setVisible(true);
+//    });
+//    }
    
     
 

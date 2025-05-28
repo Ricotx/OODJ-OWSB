@@ -35,7 +35,8 @@ public class SalesManager extends Employee implements Manageable<PO>, Viewable<P
 
     
   public void launchDashboard() {
-      (new SMFrame()).setVisible(true);
+
+      (new SMFrame(Session.getCurrentUser())).setVisible(true);
    }
 
    public void add(PO po) {
