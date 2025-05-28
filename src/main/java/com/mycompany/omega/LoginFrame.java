@@ -23,7 +23,7 @@ public class LoginFrame extends javax.swing.JFrame {
         initComponents();
         
         passwordField.addActionListener((java.awt.event.ActionEvent evt) -> {
-            loginButtonActionPerformed(null);  // or your search method
+            loginButton1ActionPerformed(null);  // or your search method
         });
     }
 
