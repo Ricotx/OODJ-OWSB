@@ -11,6 +11,8 @@ import java.util.ListIterator;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 /**
  *
  * @author ahaiq
@@ -89,7 +91,7 @@ public class FinanceManager extends Employee implements Manageable<PO>, Viewable
         
    
     //View all tables
-    public List<PO> filterPR_byDate(LocalDate date){
+    public List<PO> filterPO_byDate(LocalDate date){
         return poList.stream()
                 .filter(po -> po.getDate().equals(date))
                 .collect(Collectors.toList());
@@ -100,6 +102,12 @@ public class FinanceManager extends Employee implements Manageable<PO>, Viewable
                 .filter(po -> po.getPoID().equals(id))
                 .findFirst()
                 .orElse(null);
+    }
+    
+    public List<PR> filterPR_byDate(LocalDate date){
+    return prList.stream()
+            .filter(pr -> pr.getRequestdDate().equals(date))
+            .collect(Collectors.toList());
     }
     
     public PR getPRById(String id){
@@ -207,6 +215,38 @@ public class FinanceManager extends Employee implements Manageable<PO>, Viewable
         return sb.toString();
     }
     
+    public String generatePaymentReportByDate(Calendar dateFilter) {
+        StringBuilder sb = new StringBuilder();
+        double total = 0;
+        boolean found = false;
+
+        // Format Calendar to String in "yyyy-MM-dd" format
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String filterDateStr = sdf.format(dateFilter.getTime());
+
+        sb.append("==== Payment Report for ").append(filterDateStr).append(" ====\n\n");
+        sb.append(String.format("%-10s %-10s %-10s %-10s %-10s %-12s %-10s %-10s\n",
+            "PayID", "PO_ID", "Supplier", "Item", "Qty", "UnitPrice", "Total", "Date"));
+
+        for (Payment p : paymentList) {
+            if (p.getPaymentDate().equals(filterDateStr)) {
+                found = true;
+                sb.append(String.format("%-10s %-10s %-10s %-10s %-10d %-12.2f %-10.2f %-10s\n",
+                    p.getPaymentID(), p.getPoID(), p.getSupplierID(), p.getItemID(),
+                    p.getQuantity(), p.getUnitPrice(), p.getTotalAmount(), p.getPaymentDate()));
+
+                total += p.getTotalAmount();
+            }
+        }
+
+        if (!found) {
+            sb.append("No payments found on this date.");
+        } else {
+            sb.append("\nTotal for ").append(filterDateStr).append(": RM ").append(String.format("%.2f", total));
+        }
+
+        return sb.toString();
+    }
     
     //List all tables
     public List<PR> getAllPRs(){
