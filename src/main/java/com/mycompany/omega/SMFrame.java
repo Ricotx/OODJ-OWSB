@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 public class SMFrame extends javax.swing.JFrame {
     private SalesManager manager;
     private boolean isEditMode = false;
+    private int oriquantity;
     /**
      * Creates new form SMFrame
      */
@@ -134,17 +135,17 @@ public class SMFrame extends javax.swing.JFrame {
     }
     
     private void loadLowStockItems(){
-        DefaultTableModel model = (DefaultTableModel) itemprtable.getModel();
+        DefaultTableModel model = (DefaultTableModel) lowStockTable.getModel();
         model.setRowCount(0); 
         
-        for(Item i: manager.getLowStockItem(10)){
+        for(Item i: manager.getLowStockItem(20)){
             model.addRow(new Object[]{
                 i.getItemID(),
                 i.getItemName(),
                 i.getStock()
             });
         }
-        System.out.println("Low Stock Items loaded: " + manager.getLowStockItem(10).size());
+        System.out.println("Low Stock Items loaded: " + manager.getLowStockItem(20).size());
     }
     
     private String TodayDate(){
@@ -262,7 +263,7 @@ public class SMFrame extends javax.swing.JFrame {
         jScrollPane6 = new javax.swing.JScrollPane();
         itemprtable = new javax.swing.JTable();
         jScrollPane9 = new javax.swing.JScrollPane();
-        LowStockItemTable = new javax.swing.JTable();
+        lowStockTable = new javax.swing.JTable();
         prclearbtn = new javax.swing.JButton();
         prsearchbtn = new javax.swing.JButton();
         praddbtn = new javax.swing.JButton();
@@ -288,6 +289,11 @@ public class SMFrame extends javax.swing.JFrame {
         prlabel.setText("GENERATE PURCHASE REQUISITION");
 
         saveprbtn.setText("Generate");
+        saveprbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveprbtnActionPerformed(evt);
+            }
+        });
 
         prdatefld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1118,7 +1124,7 @@ public class SMFrame extends javax.swing.JFrame {
         });
         jScrollPane6.setViewportView(itemprtable);
 
-        LowStockItemTable.setModel(new javax.swing.table.DefaultTableModel(
+        lowStockTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -1134,7 +1140,12 @@ public class SMFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane9.setViewportView(LowStockItemTable);
+        lowStockTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lowStockTableMouseClicked(evt);
+            }
+        });
+        jScrollPane9.setViewportView(lowStockTable);
 
         prclearbtn.setText("Clear");
         prclearbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -1164,7 +1175,7 @@ public class SMFrame extends javax.swing.JFrame {
             }
         });
 
-        prdeletebtn.setText("Edit");
+        prdeletebtn.setText("Delete");
         prdeletebtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 prdeletebtnActionPerformed(evt);
@@ -1242,8 +1253,8 @@ public class SMFrame extends javax.swing.JFrame {
                         .addGap(123, 123, 123)
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27))
         );
 
         jTabbedPane1.addTab("Purchase Requisition", jPanel5);
@@ -1710,7 +1721,6 @@ public class SMFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_salesrecordfldActionPerformed
 
     private void salesavebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salesavebtnActionPerformed
-
       String salesid = this.salesidfld.getText().trim();
       String itemid = (String)this.salesitemidcmb.getSelectedItem();
       String quantity = this.salesquantityfld.getText().trim();
@@ -1724,11 +1734,14 @@ public class SMFrame extends javax.swing.JFrame {
 
       try {
          int saleQty = Integer.parseInt(quantity);
-         int Quantity = Integer.parseInt(quantity);
+         
          List<Item> itemList = manager.getAllItems();
          Item matchedItem = (Item)itemList.stream().filter(i -> 
                             i.getItemID().equals(itemid))
                             .findFirst().orElse(null);
+         
+         int Quantity = matchedItem.getStock() + oriquantity;
+         
          if (matchedItem == null) {
             JOptionPane.showMessageDialog(null, "Invalid Item ID!");
             return;
@@ -1739,12 +1752,15 @@ public class SMFrame extends javax.swing.JFrame {
             return;
          }
 
-         if (saleQty > matchedItem.getStock()) {
-            JOptionPane.showMessageDialog(null, "Not Enough stock. Available: " + matchedItem.getStock());
+         if (saleQty > Quantity) {
+            JOptionPane.showMessageDialog(null, "Not Enough stock. Available: " + Quantity);
             return;
          }
-
-         matchedItem.setStock(matchedItem.getStock() - saleQty);
+         
+         System.out.println("new Q:" + saleQty);
+         System.out.println("ori quant:" + Quantity);
+         System.out.println("current quant:" + matchedItem.getStock());
+         matchedItem.setStock(Quantity - saleQty);         
          FileHandler.writeAllToFile("data/Items.txt", itemList);
          String matchedEmployee = manager.getEmployeeID();
          if (matchedEmployee == null) {
@@ -1762,7 +1778,7 @@ public class SMFrame extends javax.swing.JFrame {
                return;
             }
 
-            linetowrite = salesid + "," + matchedItem.getItemID() + "," + Quantity + "," + matchedEmployee + "," + salesdate;
+            linetowrite = salesid + "," + matchedItem.getItemID() + "," + saleQty + "," + matchedEmployee + "," + salesdate;
             FileHandler.appendLine("data/Sale.txt", linetowrite);
             JOptionPane.showMessageDialog(null, "Sales added succesfully!");
             loadAllSales();
@@ -1798,13 +1814,13 @@ public class SMFrame extends javax.swing.JFrame {
                return;
             }
 
-            matchedItem.setStock(stockwithReturn - newQty);
+            matchedItem.setStock(Quantity - saleQty);
             FileHandler.writeAllToFile("data/Items.txt", itemList);
             List<Sales> salesList = manager.getAllSales();
             for (Sales s : salesList){
                if (s.getSaleID().equals(salesid)) {
                   s.setRecordedBy(matchedEmployee);
-                  s.setQuantity(Quantity);
+                  s.setQuantity(saleQty);
                   found = true;
                   break;
                }
@@ -1839,6 +1855,7 @@ public class SMFrame extends javax.swing.JFrame {
       isEditMode = true;
       salesquantityfld.setEditable(true);
       salesitemidcmb.setEnabled(true);
+      oriquantity = Integer.parseInt(this.salesquantityfld.getText().trim());
       salesavebtn.setVisible(true);
     }//GEN-LAST:event_saleeditbtnActionPerformed
 
@@ -1878,7 +1895,7 @@ public class SMFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Sales cannot be removed! Please try again..");
          }
 
-         this.loadAllSuppliers();
+         this.loadAllSales();
       }
     }//GEN-LAST:event_saledeletebtnActionPerformed
 
@@ -1946,9 +1963,16 @@ public class SMFrame extends javax.swing.JFrame {
         LoadIteminCombo(this.itemidcmb);
         pridfld.setText(FileHandler.getNextID("data/PR.txt", "PR"));
         prquantityfld.setText("");
-        prdatefld.setText(Session.getCurrentUser().getEmployeeID());
+        prrequestfld.setText(Session.getCurrentUser().getEmployeeID());
         prdatefld.setText(this.TodayDate());
-        prstatusfld.setText("PENDING");    
+        prstatusfld.setText("PENDING"); 
+        
+        
+        pridfld.setEditable(false);
+        prrequestfld.setEditable(false);
+        prdatefld.setEditable(false);
+        prstatusfld.setEditable(false);   
+        
         prmenu.setVisible(true);
         prmenu.setSize(600, 500);
         prmenu.setLocationRelativeTo(null);
@@ -2001,6 +2025,12 @@ public class SMFrame extends javax.swing.JFrame {
         prdatefld.setText(date);
         prrequestfld.setText(requestedby);
         prstatusfld.setText(status);
+        
+        pridfld.setEditable(false);
+        prrequestfld.setEditable(false);
+        prdatefld.setEditable(false);
+        prstatusfld.setEditable(false);   
+        
         prmenu.setVisible(true);
         prmenu.setSize(600, 500);
         prmenu.setLocationRelativeTo(null);
@@ -2014,7 +2044,13 @@ public class SMFrame extends javax.swing.JFrame {
         if (!prId.isEmpty()) {
             PR result = this.manager.getPRById(prId);
         if (result != null) {
-            model.addRow(new Object[]{result.getPR_ID(), result.getItem().getItemID(), result.getQuantity(), result.getRequestdDate().toString(), result.getRequestedBy(), result.getStatus()});
+            model.addRow(new Object[]
+                {result.getPR_ID(),
+                result.getItem().getItemID(),
+                result.getQuantity(),
+                result.getRequestdDate().toString(),
+                result.getRequestedBy(),
+                result.getStatus()});
         } else {
             JOptionPane.showMessageDialog(this, "No PR found based on the PR ID: " + prId);
             }
@@ -2051,20 +2087,79 @@ public class SMFrame extends javax.swing.JFrame {
         salesdatefld.setText("");
         salesrecordfld.setText("");
         loadAllSales();
+        
+        itemsavebtn.setVisible(false);
+        savesupbtn.setVisible(false);
+        salesavebtn.setVisible(false);
     }//GEN-LAST:event_refreshbtnActionPerformed
 
     private void PrTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrTableMouseClicked
         int selectedRow = PrTable.getSelectedRow();
         if (selectedRow != -1) {
-            String itemId = ItemTable.getValueAt(selectedRow, 0).toString();
+            String itemId = PrTable.getValueAt(selectedRow, 1).toString();
             Item selectedItem = manager.getItemById(itemId);
         if (selectedItem != null) {
             DefaultTableModel model = (DefaultTableModel)itemprtable.getModel();
             model.setRowCount(0);
-            model.addRow(new Object[]{selectedItem.getItemID(), selectedItem.getItemName(), selectedItem.getStock()});
+            model.addRow(new Object[]{
+                selectedItem.getItemID(),
+                selectedItem.getItemName(),
+                selectedItem.getStock()});
          }
       }
     }//GEN-LAST:event_PrTableMouseClicked
+
+    private void saveprbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveprbtnActionPerformed
+      String prid = pridfld.getText().trim();
+      String itemid = (String) itemidcmb.getSelectedItem();
+      String quantity = prquantityfld.getText().trim();
+      String requestedby = prrequestfld.getText().trim();
+      String date = prdatefld.getText().trim();
+      String status = prstatusfld.getText().trim();
+      if (prid.isEmpty() || quantity.isEmpty() || itemid.isEmpty()) {
+         JOptionPane.showMessageDialog(null, "Please fill all fields.");
+      }
+
+      try {
+         int Quantity = Integer.parseInt(quantity);
+         Item matchedItem = (Item) manager.getAllItems().stream()
+                            .filter(i -> i.getItemID().equals(itemid))
+                            .findFirst().orElse(null);
+         if (!this.isEditMode) {
+            String linetowrite = prid + "," + itemid + "," + Quantity + "," + date + "," + requestedby + "," + status;
+            FileHandler.appendLine("data/PR.txt", linetowrite);
+            JOptionPane.showMessageDialog(null, "PR generated succesfully!");
+         } else {
+            List<PR> prList = this.manager.getAllPRs();
+            for (PR pr : prList){
+               if (pr.getPR_ID().equals(prid)) {
+                  pr.setItem(matchedItem);
+                  pr.setQuantity(Quantity);
+                  break;
+               }
+            }
+
+            FileHandler.writeAllToFile("data/PR.txt", prList);
+            JOptionPane.showMessageDialog(null, "PR record editted succesfully!");
+         }
+      } catch (NumberFormatException e) {
+         JOptionPane.showMessageDialog(null, "Quantity must be a number.");
+      }
+      
+        pridfld.setText("");
+        prquantityfld.setText("");
+        prrequestfld.setText("");
+        prdatefld.setText("");
+        prstatusfld.setText("");
+        loadAllItems();
+        loadAllPRs();
+        loadLowStockItems();
+        prmenu.setVisible(false);
+    }//GEN-LAST:event_saveprbtnActionPerformed
+
+    private void lowStockTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lowStockTableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lowStockTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -2105,7 +2200,6 @@ public class SMFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Contact;
     private javax.swing.JTable ItemTable;
-    private javax.swing.JTable LowStockItemTable;
     private javax.swing.JTable PoTable;
     private javax.swing.JTable PrTable;
     private javax.swing.JTable SaleTable;
@@ -2164,6 +2258,7 @@ public class SMFrame extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblwelcome;
     private javax.swing.JButton logoutbtn;
+    private javax.swing.JTable lowStockTable;
     private javax.swing.JButton poclearbtn;
     private javax.swing.JButton posearchbtn;
     private javax.swing.JTextField posearchfld;
