@@ -36,6 +36,7 @@ public class InventoryFrame extends javax.swing.JFrame {
             return;
         }
         lblGreeting.setText("Welcome, " + user.getRole() + ": " + user.getName());
+        populatePOComboBox();
     }
     
     private void populatePOComboBox() {
