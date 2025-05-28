@@ -7,7 +7,18 @@ package com.mycompany.omega;
 import com.mycompany.omega.LoginFrame;
 import com.mycompany.omega.classes.Admin;
 import com.mycompany.omega.classes.Session;
-
+import com.mycompany.omega.classes.Employee;
+import com.mycompany.omega.classes.Employee.Role;
+import com.mycompany.omega.classes.PurchaseManager;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+import java.util.List;
+import java.util.ArrayList;
 /**
  *
  * @author Lee Anwen
@@ -22,7 +33,29 @@ public class AdminFrame extends javax.swing.JFrame {
         initComponents();
         admin = (Admin) Session.getCurrentUser();
         LabelWelcome.setText("Welcome, " + admin.getRole() + ": " + admin.getName());
-        lblUsername.setVisible(false);
+        btnRegisterUsers.setVisible(false);
+        btnDeleteUsers.setVisible(false);
+        btnViewUsers.setVisible(false);
+        btnRegister.setVisible(false);
+        lblEmail.setVisible(false);
+        lblEmployeeID.setVisible(false);
+        lblName.setVisible(false);
+        lblPassword.setVisible(false);
+        lblRole.setVisible(false);
+        txtEmail.setVisible(false);
+        txtEmployeeID.setVisible(false);
+        txtName.setVisible(false);
+        txtPassword.setVisible(false);
+        boxRole.setVisible(false);
+        btnReturn.setVisible(false);
+        tblUsers.setVisible(false);
+        btnReturn2.setVisible(false);
+        lblDeleteEmployee.setVisible(false);
+        btnDelete.setVisible(false);
+        txtDeleteEmployeeID.setVisible(false);
+        btnReturn3.setVisible(false);
+        jScrollPane2.setVisible(false);
+
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,12 +71,33 @@ public class AdminFrame extends javax.swing.JFrame {
         btnLogout = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnManageUsers = new javax.swing.JButton();
-        btnManageItems = new javax.swing.JButton();
-        btnManageSupplier = new javax.swing.JButton();
-        btnViewEditPR = new javax.swing.JButton();
-        btnViewEditPO = new javax.swing.JButton();
+        btnManageSM = new javax.swing.JButton();
+        btnManagePM = new javax.swing.JButton();
+        btnManageFM = new javax.swing.JButton();
+        btnManageIM = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        lblUsername = new javax.swing.JLabel();
+        btnRegisterUsers = new javax.swing.JButton();
+        btnDeleteUsers = new javax.swing.JButton();
+        btnViewUsers = new javax.swing.JButton();
+        lblEmployeeID = new javax.swing.JLabel();
+        lblName = new javax.swing.JLabel();
+        lblRole = new javax.swing.JLabel();
+        lblEmail = new javax.swing.JLabel();
+        lblPassword = new javax.swing.JLabel();
+        txtEmployeeID = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JTextField();
+        boxRole = new javax.swing.JComboBox<>();
+        btnRegister = new javax.swing.JButton();
+        btnReturn = new javax.swing.JButton();
+        lblDeleteEmployee = new javax.swing.JLabel();
+        txtDeleteEmployeeID = new javax.swing.JTextField();
+        btnDelete = new javax.swing.JButton();
+        btnReturn3 = new javax.swing.JButton();
+        btnReturn2 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblUsers = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -86,27 +140,37 @@ public class AdminFrame extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 153));
 
         btnManageUsers.setText("Manage Users");
-
-        btnManageItems.setText("Manage Items");
-        btnManageItems.addActionListener(new java.awt.event.ActionListener() {
+        btnManageUsers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnManageItemsActionPerformed(evt);
+                btnManageUsersActionPerformed(evt);
             }
         });
 
-        btnManageSupplier.setText("Manage Suppliers");
-
-        btnViewEditPR.setText("View/Edit PurchaseRequisition");
-        btnViewEditPR.addActionListener(new java.awt.event.ActionListener() {
+        btnManageSM.setText("Manage Sales Manager");
+        btnManageSM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewEditPRActionPerformed(evt);
+                btnManageSMActionPerformed(evt);
             }
         });
 
-        btnViewEditPO.setText("View/Edit PurchaseOrder");
-        btnViewEditPO.addActionListener(new java.awt.event.ActionListener() {
+        btnManagePM.setText("Manage Purchase Manager");
+        btnManagePM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewEditPOActionPerformed(evt);
+                btnManagePMActionPerformed(evt);
+            }
+        });
+
+        btnManageFM.setText("Manage Finance Manager");
+        btnManageFM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManageFMActionPerformed(evt);
+            }
+        });
+
+        btnManageIM.setText("Manage Inventory Manager");
+        btnManageIM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManageIMActionPerformed(evt);
             }
         });
 
@@ -117,11 +181,11 @@ public class AdminFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnViewEditPR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnManageSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnManageItems, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnManageFM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnManagePM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnManageSM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnManageUsers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnViewEditPO, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnManageIM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -130,34 +194,139 @@ public class AdminFrame extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addComponent(btnManageUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnManageItems, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnManageSM, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnManageSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnManagePM, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnViewEditPR, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnManageFM, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnViewEditPO, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnManageIM, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(258, Short.MAX_VALUE))
         );
 
-        lblUsername.setText("Username");
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addComponent(lblUsername)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        btnRegisterUsers.setText("Register Users");
+        btnRegisterUsers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterUsersActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnRegisterUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 54, 143, 71));
+
+        btnDeleteUsers.setText("Delete Users");
+        btnDeleteUsers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteUsersActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnDeleteUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(378, 54, 143, 71));
+
+        btnViewUsers.setText("View Users");
+        btnViewUsers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewUsersActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnViewUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(217, 54, 143, 71));
+
+        lblEmployeeID.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblEmployeeID.setText("EmployeeID");
+        lblEmployeeID.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.add(lblEmployeeID, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 177, -1, -1));
+
+        lblName.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblName.setText("Name");
+        lblName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.add(lblName, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 222, 104, -1));
+
+        lblRole.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblRole.setText("Role");
+        lblRole.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.add(lblRole, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 267, 104, -1));
+
+        lblEmail.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblEmail.setText("Email");
+        lblEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 312, 104, -1));
+
+        lblPassword.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblPassword.setText("Password");
+        lblPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 357, 104, -1));
+        jPanel3.add(txtEmployeeID, new org.netbeans.lib.awtextra.AbsoluteConstraints(217, 177, 350, -1));
+        jPanel3.add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(217, 227, 350, -1));
+        jPanel3.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(217, 312, 350, -1));
+        jPanel3.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(217, 362, 350, -1));
+
+        boxRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMINISTRATOR", "SALES_MANAGER", "PURCHASE_MANAGER", "FINANCE_MANAGER", "INVENTORY_MANAGER", " " }));
+        boxRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxRoleActionPerformed(evt);
+            }
+        });
+        jPanel3.add(boxRole, new org.netbeans.lib.awtextra.AbsoluteConstraints(217, 267, -1, -1));
+
+        btnRegister.setText("REGISTER");
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 428, 123, 39));
+
+        btnReturn.setText("RETURN");
+        btnReturn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReturnActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnReturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(444, 428, 123, 39));
+
+        lblDeleteEmployee.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblDeleteEmployee.setText("Enter EmployeeID to Delete:");
+        lblDeleteEmployee.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.add(lblDeleteEmployee, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, -1, -1));
+        jPanel3.add(txtDeleteEmployeeID, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, 220, 30));
+
+        btnDelete.setText("DELETE");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 240, 110, 40));
+
+        btnReturn3.setText("RETURN");
+        btnReturn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReturn3ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnReturn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 340, 130, 40));
+
+        btnReturn2.setText("RETURN");
+        btnReturn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReturn2ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnReturn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 190, 130, 40));
+
+        tblUsers.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblUsers);
+
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 560, 470));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -168,7 +337,7 @@ public class AdminFrame extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -193,64 +362,268 @@ public class AdminFrame extends javax.swing.JFrame {
         new LoginFrame().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_btnLogoutActionPerformed
 
-    private void btnManageItemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageItemsActionPerformed
+    private void btnManageSMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageSMActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnManageItemsActionPerformed
+        new SMFrame(Session.getCurrentUser()).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnManageSMActionPerformed
 
-    private void btnViewEditPRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewEditPRActionPerformed
+    private void btnManageFMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageFMActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnViewEditPRActionPerformed
+        new FinanceFrame(Session.getCurrentUser()).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnManageFMActionPerformed
 
-    private void btnViewEditPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewEditPOActionPerformed
+    private void btnManageIMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageIMActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnViewEditPOActionPerformed
+        new InventoryFrame(Session.getCurrentUser()).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnManageIMActionPerformed
+
+    private void btnRegisterUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterUsersActionPerformed
+        btnRegister.setVisible(true);
+        lblEmail.setVisible(true);
+        lblEmployeeID.setVisible(true);
+        lblName.setVisible(true);
+        lblPassword.setVisible(true);
+        lblRole.setVisible(true);
+        txtEmail.setVisible(true);
+        txtEmployeeID.setVisible(true);
+        txtName.setVisible(true);
+        txtPassword.setVisible(true);
+        boxRole.setVisible(true);
+        btnReturn.setVisible(true);
+        
+        tblUsers.setVisible(false);
+        btnReturn2.setVisible(false);
+        jScrollPane2.setVisible(false);
+        
+        lblDeleteEmployee.setVisible(false);
+        btnDelete.setVisible(false);
+        txtDeleteEmployeeID.setVisible(false);
+        btnReturn3.setVisible(false);
+    }//GEN-LAST:event_btnRegisterUsersActionPerformed
+
+    private void btnManageUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageUsersActionPerformed
+       btnRegisterUsers.setVisible(true);
+        btnDeleteUsers.setVisible(true);
+        btnViewUsers.setVisible(true);
+    }//GEN-LAST:event_btnManageUsersActionPerformed
+
+    private void boxRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxRoleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_boxRoleActionPerformed
+
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+        String employeeId = txtEmployeeID.getText().trim();
+    String name = txtName.getText().trim();
+    String roleStr = (String) boxRole.getSelectedItem();
+    String email = txtEmail.getText().trim();
+    String password = txtPassword.getText().trim();
+
+    if (employeeId.isEmpty() || name.isEmpty() || roleStr.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill in all fields.");
+        return;
+    }
+
+    admin.registerUser(employeeId, name, roleStr, email, password); // Send raw data only
+
+    // Clear fields
+    txtEmployeeID.setText("");
+    txtName.setText("");
+    txtEmail.setText("");
+    txtPassword.setText("");
+    boxRole.setSelectedIndex(0);
+
+    }//GEN-LAST:event_btnRegisterActionPerformed
+
+    private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
+        btnRegister.setVisible(false);
+        lblEmail.setVisible(false);
+        lblEmployeeID.setVisible(false);
+        lblName.setVisible(false);
+        lblPassword.setVisible(false);
+        lblRole.setVisible(false);
+        txtEmail.setVisible(false);
+        txtEmployeeID.setVisible(false);
+        txtName.setVisible(false);
+        txtPassword.setVisible(false);
+        boxRole.setVisible(false);
+        btnReturn.setVisible(false);
+    }//GEN-LAST:event_btnReturnActionPerformed
+
+    private void btnViewUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewUsersActionPerformed
+         tblUsers.setVisible(true);
+         btnReturn2.setVisible(true);
+         jScrollPane2.setVisible(true);
+
+
+    // Define column names
+     String[] columnNames = { "Employee ID", "Name", "Role", "Email", "Password" };
+
+    // Get data from admin class
+    List<String[]> rowData = admin.getAllUserData();
+
+    // Convert to table model
+    String[][] dataArr = rowData.toArray(new String[0][]);
+    javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(dataArr, columnNames);
+
+    // Assuming you have a JTable named tblUsers
+    
+    tblUsers.setModel(model);
+    btnReturn2.setVisible(true);
+    
+     btnRegister.setVisible(false);
+        lblEmail.setVisible(false);
+        lblEmployeeID.setVisible(false);
+        lblName.setVisible(false);
+        lblPassword.setVisible(false);
+        lblRole.setVisible(false);
+        txtEmail.setVisible(false);
+        txtEmployeeID.setVisible(false);
+        txtName.setVisible(false);
+        txtPassword.setVisible(false);
+        boxRole.setVisible(false);
+        btnReturn.setVisible(false);
+        
+        lblDeleteEmployee.setVisible(false);
+        btnDelete.setVisible(false);
+        txtDeleteEmployeeID.setVisible(false);
+        btnReturn3.setVisible(false);
+    }//GEN-LAST:event_btnViewUsersActionPerformed
+
+    private void btnReturn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturn2ActionPerformed
+        tblUsers.setVisible(false);
+        btnReturn2.setVisible(false);
+        jScrollPane2.setVisible(false);
+
+    }//GEN-LAST:event_btnReturn2ActionPerformed
+
+    private void btnReturn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturn3ActionPerformed
+        lblDeleteEmployee.setVisible(false);
+        btnDelete.setVisible(false);
+        txtDeleteEmployeeID.setVisible(false);
+        btnReturn3.setVisible(false);
+    }//GEN-LAST:event_btnReturn3ActionPerformed
+
+    private void btnDeleteUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUsersActionPerformed
+        lblDeleteEmployee.setVisible(true);
+        btnDelete.setVisible(true);
+        txtDeleteEmployeeID.setVisible(true);
+        btnReturn3.setVisible(true);
+        
+        btnRegister.setVisible(false);
+        lblEmail.setVisible(false);
+        lblEmployeeID.setVisible(false);
+        lblName.setVisible(false);
+        lblPassword.setVisible(false);
+        lblRole.setVisible(false);
+        txtEmail.setVisible(false);
+        txtEmployeeID.setVisible(false);
+        txtName.setVisible(false);
+        txtPassword.setVisible(false);
+        boxRole.setVisible(false);
+        btnReturn.setVisible(false);
+        
+         tblUsers.setVisible(false);
+        btnReturn2.setVisible(false);
+        jScrollPane2.setVisible(false);
+    }//GEN-LAST:event_btnDeleteUsersActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+         String empIDToDelete = txtDeleteEmployeeID.getText().trim();
+
+    if (empIDToDelete.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter an Employee ID.");
+        return;
+    }
+
+    boolean success = admin.deleteUserById(empIDToDelete);
+
+    if (success) {
+        JOptionPane.showMessageDialog(this, "User deleted successfully.");
+        txtDeleteEmployeeID.setText(""); // Clear the input field
+    } else {
+        JOptionPane.showMessageDialog(this, "Employee ID not found or error occurred.");
+    }
+    txtDeleteEmployeeID.setText(""); // Clear the input field
+
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnManagePMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagePMActionPerformed
+        // TODO add your handling code here:
+        new PMFrame(Session.getCurrentUser()).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnManagePMActionPerformed
 
     /**
      * @param args the command line arguments
      */
-   public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdminFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdminFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdminFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-               new AdminFrame().setVisible(true);
-            }
-        });
-    }
+//   public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(AdminFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(AdminFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(AdminFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(AdminFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//               new AdminFrame().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LabelWelcome;
+    private javax.swing.JComboBox<String> boxRole;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnDeleteUsers;
     private javax.swing.JButton btnLogout;
-    private javax.swing.JButton btnManageItems;
-    private javax.swing.JButton btnManageSupplier;
+    private javax.swing.JButton btnManageFM;
+    private javax.swing.JButton btnManageIM;
+    private javax.swing.JButton btnManagePM;
+    private javax.swing.JButton btnManageSM;
     private javax.swing.JButton btnManageUsers;
-    private javax.swing.JButton btnViewEditPO;
-    private javax.swing.JButton btnViewEditPR;
+    private javax.swing.JButton btnRegister;
+    private javax.swing.JButton btnRegisterUsers;
+    private javax.swing.JButton btnReturn;
+    private javax.swing.JButton btnReturn2;
+    private javax.swing.JButton btnReturn3;
+    private javax.swing.JButton btnViewUsers;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JLabel lblUsername;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblDeleteEmployee;
+    private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblEmployeeID;
+    private javax.swing.JLabel lblName;
+    private javax.swing.JLabel lblPassword;
+    private javax.swing.JLabel lblRole;
+    private javax.swing.JTable tblUsers;
+    private javax.swing.JTextField txtDeleteEmployeeID;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtEmployeeID;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtPassword;
     // End of variables declaration//GEN-END:variables
 }

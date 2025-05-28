@@ -26,9 +26,20 @@ public class PM2Frame extends javax.swing.JFrame {
     /**
      * Creates new form PMFrame
      */
-    public PM2Frame() {
+    public PM2Frame(Employee user) {
         initComponents();
-        this.manager = (PurchaseManager) Session.getCurrentUser();
+        
+        if (user instanceof PurchaseManager) {
+            this.manager = (PurchaseManager) user;  // Safe cast
+        } else if (user.getRole() == Employee.Role.ADMINISTRATOR) {
+            // Optional: Admins can access view-only or limited version
+            this.manager = new PurchaseManager(user.getEmployeeID(), user.getName(), user.getRole(), user.getEmail(), user.getPassword());
+        } else {
+            JOptionPane.showMessageDialog(this, "Access Denied. You are not authorized to access this page.");
+            dispose();
+            return;
+        }
+        
         editBtn.setEnabled(false);
         deleteBtn.setEnabled(false);
         
@@ -702,18 +713,22 @@ public class PM2Frame extends javax.swing.JFrame {
 
     private void btnCreatePOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreatePOActionPerformed
         // TODO add your handling code here:
-        new PMFrame().setVisible(true);
+        new PMFrame(Session.getCurrentUser()).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCreatePOActionPerformed
 
     private void btnEditDeletePOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditDeletePOActionPerformed
         // TODO add your handling code here:
-        new PM2Frame().setVisible(true);
+        new PM2Frame(Session.getCurrentUser()).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnEditDeletePOActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
+        Session.clear();
+        System.out.println("User Logged Out: " + Session.getCurrentUser());
+        this.dispose();
+        new LoginFrame().setVisible(true);
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void quantityTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantityTextFieldActionPerformed
@@ -760,39 +775,39 @@ public class PM2Frame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PM2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PM2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PM2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PM2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new PM2Frame().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(PM2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(PM2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(PM2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(PM2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                new PM2Frame().setVisible(true);
+//            }
+//        });
+//    }
     
     
 

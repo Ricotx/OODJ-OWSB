@@ -58,6 +58,10 @@ public class Sales {
         return item;
     }
 
+    public String getSaleID() {
+        return saleID;
+    }
+    
     public void setItem(Item item) {
         this.item = item;
     }

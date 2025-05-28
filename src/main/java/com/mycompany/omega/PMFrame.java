@@ -23,22 +23,26 @@ public class PMFrame extends javax.swing.JFrame {
     /**
      * Creates new form PMFrame
      */
-    public PMFrame() {
+    public PMFrame(Employee user) {
         initComponents();
-        this.manager = (PurchaseManager) Session.getCurrentUser();
-        
+        if (user instanceof PurchaseManager) {
+            this.manager = (PurchaseManager) user;  // Safe cast
+        } else if (user.getRole() == Employee.Role.ADMINISTRATOR) {
+            // Optional: Admins can access view-only or limited version
+            this.manager = new PurchaseManager(user.getEmployeeID(), user.getName(), user.getRole(), user.getEmail(), user.getPassword());
+        } else {
+            JOptionPane.showMessageDialog(this, "Access Denied. You are not authorized to access this page.");
+            dispose();
+            return;
+        }
+       
         System.out.println("Session User: " + Session.getCurrentUser());
         System.out.println("Manager assigned? " + (manager != null));
         
-        loadAllPRs();
+        loadAllPendingPRs();
         loadAllPOs();
         loadAllSuppliers();
         lblGreeting.setText("Welcome, " + manager.getRole() + ": " + manager.getName());
-        //List<PO> poList = manager.viewAll();
-
-        //for (PO po : poList) {
-        //    System.out.println(po);
-        //}
     }
     
     private void loadAllPRs(){
@@ -57,6 +61,33 @@ public class PMFrame extends javax.swing.JFrame {
         }
         System.out.println("PRs loaded" + manager.getAllPRs().size());
     }
+    
+    private void loadAllPendingPRs(){
+        DefaultTableModel model = (DefaultTableModel) prTable.getModel();
+        model.setRowCount(0); 
+       
+        List<PR> pendingList = manager.getPendingPRs();
+        
+        for(PR pr: manager.getPendingPRs()){
+            model.addRow(new Object[]{
+                pr.getPR_ID(),
+                pr.getItem().getItemID(),
+                pr.getQuantity(),
+                pr.getRequestdDate().toString(),
+                pr.getRequestedBy(),
+                pr.getStatus()
+            });
+        }
+        System.out.println("PENDING PRs loaded" + manager.getPendingPRs().size());
+        
+        if (pendingList.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Hooray! There are no PRs to be converted into POs. Enjoy a cup of tea and snacks", 
+                    "No Pending PRs", 
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    
+    
    
     private void loadAllPOs(){
         DefaultTableModel model = (DefaultTableModel) poTable.getModel();
@@ -143,6 +174,7 @@ public class PMFrame extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         searchPRButton = new javax.swing.JButton();
         clearPRButton = new javax.swing.JButton();
+        btnShowAllPRs = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         newPO_IDLabel = new javax.swing.JLabel();
         newPO_IDTextField = new javax.swing.JTextField();
@@ -166,7 +198,7 @@ public class PMFrame extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(162, 102));
 
         lblGreeting.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblGreeting.setText("Hello, Purchase Manager, Richard Ong");
+        lblGreeting.setText("Hello, Purchase Manager. Richard Ong");
 
         btnCreatePO.setText("Create PO");
         btnCreatePO.addActionListener(new java.awt.event.ActionListener() {
@@ -296,6 +328,13 @@ public class PMFrame extends javax.swing.JFrame {
             }
         });
 
+        btnShowAllPRs.setText("Show All Purchase Requisition");
+        btnShowAllPRs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowAllPRsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -319,7 +358,10 @@ public class PMFrame extends javax.swing.JFrame {
                         .addGap(60, 60, 60)
                         .addComponent(searchPRButton)
                         .addGap(38, 38, 38)
-                        .addComponent(clearPRButton)))
+                        .addComponent(clearPRButton))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnShowAllPRs)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -336,11 +378,13 @@ public class PMFrame extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(searchPRButton)
                         .addComponent(clearPRButton)))
-                .addGap(43, 43, 43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnShowAllPRs)
+                .addGap(9, 9, 9)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 204));
@@ -578,7 +622,7 @@ public class PMFrame extends javax.swing.JFrame {
         manager.updatePRStatus(prID, "Approved"); //Update PR status from pending to approve
         
         JOptionPane.showMessageDialog(this, "Purchase Order recorded Successfully.");
-        loadAllPRs();
+        loadAllPendingPRs();
         loadAllSuppliers();
         loadAllPOs();
         clearPOForm();
@@ -597,7 +641,7 @@ public class PMFrame extends javax.swing.JFrame {
         manager.updatePRStatus(prID, "REJECTED");
         
         JOptionPane.showMessageDialog(this, "PR with the " + prID + " has been rejected");
-        loadAllPRs();
+        loadAllPendingPRs();
     }//GEN-LAST:event_rejectPR_ButtonActionPerformed
 
     private void prSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prSearchTextFieldActionPerformed
@@ -710,49 +754,58 @@ public class PMFrame extends javax.swing.JFrame {
 
     private void btnEditDeletePOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditDeletePOActionPerformed
         // TODO add your handling code here:
-        new PM2Frame().setVisible(true);
+        new PM2Frame(Session.getCurrentUser()).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnEditDeletePOActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
+        Session.clear();
+        System.out.println("User Logged Out: " + Session.getCurrentUser());
+        this.dispose();
+        new LoginFrame().setVisible(true);
     }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnShowAllPRsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowAllPRsActionPerformed
+        // TODO add your handling code here:
+        loadAllPRs();
+    }//GEN-LAST:event_btnShowAllPRsActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PMFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PMFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PMFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PMFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new PMFrame().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(PMFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(PMFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(PMFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(PMFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                new PMFrame().setVisible(true);
+//            }
+//        });
+//    }
     
     
 
@@ -760,6 +813,7 @@ public class PMFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnCreatePO;
     private javax.swing.JButton btnEditDeletePO;
     private javax.swing.JButton btnLogout;
+    private javax.swing.JButton btnShowAllPRs;
     private javax.swing.JButton clearPRButton;
     private com.toedter.calendar.JDateChooser dateSearchTextField;
     private javax.swing.JLabel itemIDLabel;

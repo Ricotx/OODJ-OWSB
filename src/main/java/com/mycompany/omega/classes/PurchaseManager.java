@@ -33,7 +33,7 @@ public class PurchaseManager extends Employee implements Manageable<PO>, Viewabl
     
     @Override
     public void launchDashboard() {
-        new PMFrame().setVisible(true);
+        new PMFrame(Session.getCurrentUser()).setVisible(true);
         //throw new UnsupportedOperationException("Not supported yet.");
     }
     
@@ -95,6 +95,12 @@ public class PurchaseManager extends Employee implements Manageable<PO>, Viewabl
     public List<PO> filterPO_byDate(LocalDate date){
         return poList.stream()
                 .filter(po -> po.getDate().equals(date))
+                .collect(Collectors.toList());
+    }
+    
+    public List<PR> getPendingPRs(){
+        return prList.stream()
+                .filter(pr -> "PENDING".equalsIgnoreCase(pr.getStatus()))
                 .collect(Collectors.toList());
     }
     
