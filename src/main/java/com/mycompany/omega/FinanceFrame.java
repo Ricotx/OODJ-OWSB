@@ -229,9 +229,6 @@ public class FinanceFrame extends javax.swing.JFrame {
         buttonGroup2 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
         jMenu1 = new javax.swing.JMenu();
-        darkStar1 = new com.jgoodies.looks.plastic.theme.DarkStar();
-        darkStar2 = new com.jgoodies.looks.plastic.theme.DarkStar();
-        darkStar3 = new com.jgoodies.looks.plastic.theme.DarkStar();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lblGreeting = new javax.swing.JLabel();
@@ -1515,9 +1512,6 @@ public class FinanceFrame extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
-    private com.jgoodies.looks.plastic.theme.DarkStar darkStar1;
-    private com.jgoodies.looks.plastic.theme.DarkStar darkStar2;
-    private com.jgoodies.looks.plastic.theme.DarkStar darkStar3;
     private com.toedter.calendar.JDateChooser dateChooserPO;
     private com.toedter.calendar.JDateChooser dateChooserPR;
     private com.toedter.calendar.JDateChooser dateChooserReport;

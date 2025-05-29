@@ -17,12 +17,6 @@
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
     </Container>
-    <Component class="com.jgoodies.looks.plastic.theme.DarkStar" name="darkStar1">
-    </Component>
-    <Component class="com.jgoodies.looks.plastic.theme.DarkStar" name="darkStar2">
-    </Component>
-    <Component class="com.jgoodies.looks.plastic.theme.DarkStar" name="darkStar3">
-    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
