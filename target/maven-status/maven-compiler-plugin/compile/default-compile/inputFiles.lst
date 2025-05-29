@@ -2,9 +2,11 @@ C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\om
 C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\omega\classes\Admin.java
 C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\omega\classes\Employee.java
 C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\omega\classes\FileHandler.java
+C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\omega\classes\FinanceManager.java
 C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\omega\classes\InventoryManager.java
 C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\omega\classes\Item.java
 C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\omega\classes\Manageable.java
+C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\omega\classes\Payment.java
 C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\omega\classes\PO.java
 C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\omega\classes\PR.java
 C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\omega\classes\PurchaseManager.java
@@ -14,6 +16,7 @@ C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\om
 C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\omega\classes\Supplier.java
 C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\omega\classes\UserAuth.java
 C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\omega\classes\Viewable.java
+C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\omega\FinanceFrame.java
 C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\omega\GenerateReportFrame.java
 C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\omega\InventoryFrame.java
 C:\Users\adham\Desktop\OODJ-OWSB-master\OODJ-OWSB\src\main\java\com\mycompany\omega\LoginFrame.java
