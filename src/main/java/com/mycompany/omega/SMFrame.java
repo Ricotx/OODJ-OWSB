@@ -6,9 +6,7 @@ package com.mycompany.omega;
 import com.mycompany.omega.classes.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -51,8 +49,6 @@ public class SMFrame extends javax.swing.JFrame {
         loadAllPRs();
         loadAllPOs();
         loadLowStockItems();
-        LoadSupplierinCombo(supfiltercmb);
-        LoadIteminCombo(itemfiltercmb);
         lblwelcome.setText("Welcome, " + manager.getRole() + ": " + manager.getName());
     }
     
@@ -162,25 +158,10 @@ public class SMFrame extends javax.swing.JFrame {
     private void LoadIteminCombo(JComboBox<String> combo) {
       List<Item> ItemList = this.manager.getAllItems();
       combo.removeAllItems();
-      combo.addItem("--- Select Item ID ---");
       for (Item item : ItemList){
          combo.addItem(item.getItemID());
       }
 
-   }
-      
-    private void LoadSupplierinCombo(JComboBox<String> combo) {
-      List<Supplier> SupList = this.manager.getAllSuppliers();
-      Set<String> uniqueNames = new HashSet<>();
-      
-      combo.removeAllItems();
-      combo.addItem("--- Select Supplier ---");
-      for (Supplier sup : SupList){
-        String name = sup.getSupplierName();
-        if (uniqueNames.add(name)){
-         combo.addItem(sup.getSupplierName());
-        }
-    }
    }
     
     
@@ -210,7 +191,6 @@ public class SMFrame extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         logoutbtn = new javax.swing.JButton();
         refreshbtn = new javax.swing.JButton();
@@ -235,13 +215,12 @@ public class SMFrame extends javax.swing.JFrame {
         jScrollPane7 = new javax.swing.JScrollPane();
         supitemtable = new javax.swing.JTable();
         jLabel24 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         SupplierTable = new javax.swing.JTable();
         supclearbtn = new javax.swing.JButton();
         supsearchbtn = new javax.swing.JButton();
+        supsearchfld = new javax.swing.JTextField();
         supaddbtn = new javax.swing.JButton();
         supeditbtn = new javax.swing.JButton();
         supdeletebtn = new javax.swing.JButton();
@@ -257,12 +236,6 @@ public class SMFrame extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         Contact = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        itemfiltercmb = new javax.swing.JComboBox<>();
-        supfiltercmb = new javax.swing.JComboBox<>();
-        jLabel30 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         SaleTable = new javax.swing.JTable();
@@ -284,8 +257,6 @@ public class SMFrame extends javax.swing.JFrame {
         salesearchbtn = new javax.swing.JButton();
         salesearchfld = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        jLabel36 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         PrTable = new javax.swing.JTable();
@@ -301,8 +272,6 @@ public class SMFrame extends javax.swing.JFrame {
         prsearchfld = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         PoTable = new javax.swing.JTable();
@@ -310,7 +279,6 @@ public class SMFrame extends javax.swing.JFrame {
         posearchbtn = new javax.swing.JButton();
         posearchfld = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        jLabel35 = new javax.swing.JLabel();
 
         prmenu.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -428,11 +396,6 @@ public class SMFrame extends javax.swing.JFrame {
             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jLabel27.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel27.setText("ITEM PR DETAILS");
-        jLabel27.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
@@ -483,7 +446,6 @@ public class SMFrame extends javax.swing.JFrame {
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ItemTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -519,16 +481,12 @@ public class SMFrame extends javax.swing.JFrame {
             ItemTable.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 82, 599, 380));
-        jPanel2.add(itemsearchfld, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 207, -1));
-
         itemsearchbtn.setText("search");
         itemsearchbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemsearchbtnActionPerformed(evt);
             }
         });
-        jPanel2.add(itemsearchbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 50, -1, -1));
 
         itemclearbtn.setText("clear");
         itemclearbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -536,16 +494,12 @@ public class SMFrame extends javax.swing.JFrame {
                 itemclearbtnActionPerformed(evt);
             }
         });
-        jPanel2.add(itemclearbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, -1, -1));
 
         jLabel1.setText("Item ID:");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 130, 50, 20));
 
         jLabel2.setText("Item Name:");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 160, -1, 20));
 
         jLabel3.setText("Item Stock:");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 190, -1, -1));
 
         itemidfld.setEditable(false);
         itemidfld.addActionListener(new java.awt.event.ActionListener() {
@@ -553,7 +507,6 @@ public class SMFrame extends javax.swing.JFrame {
                 itemidfldActionPerformed(evt);
             }
         });
-        jPanel2.add(itemidfld, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 130, 290, -1));
 
         itemnamefld.setEditable(false);
         itemnamefld.addActionListener(new java.awt.event.ActionListener() {
@@ -561,10 +514,8 @@ public class SMFrame extends javax.swing.JFrame {
                 itemnamefldActionPerformed(evt);
             }
         });
-        jPanel2.add(itemnamefld, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 160, 290, -1));
 
         itemstockfld.setEditable(false);
-        jPanel2.add(itemstockfld, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 190, 290, -1));
 
         itemaddbtn.setText("Add");
         itemaddbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -572,7 +523,6 @@ public class SMFrame extends javax.swing.JFrame {
                 itemaddbtnActionPerformed(evt);
             }
         });
-        jPanel2.add(itemaddbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 380, -1, -1));
 
         itemeditbtn.setText("Edit");
         itemeditbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -580,7 +530,6 @@ public class SMFrame extends javax.swing.JFrame {
                 itemeditbtnActionPerformed(evt);
             }
         });
-        jPanel2.add(itemeditbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 380, -1, -1));
 
         itemdeletebtn.setText("Delete");
         itemdeletebtn.addActionListener(new java.awt.event.ActionListener() {
@@ -588,7 +537,6 @@ public class SMFrame extends javax.swing.JFrame {
                 itemdeletebtnActionPerformed(evt);
             }
         });
-        jPanel2.add(itemdeletebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 380, -1, -1));
 
         itemsavebtn.setText("Save");
         itemsavebtn.addActionListener(new java.awt.event.ActionListener() {
@@ -596,8 +544,6 @@ public class SMFrame extends javax.swing.JFrame {
                 itemsavebtnActionPerformed(evt);
             }
         });
-        jPanel2.add(itemsavebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 420, 91, 30));
-        itemsavebtn.setVisible(false);
 
         supitemtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -624,28 +570,101 @@ public class SMFrame extends javax.swing.JFrame {
         });
         jScrollPane7.setViewportView(supitemtable);
 
-        jPanel2.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 220, 290, 152));
-
         jLabel24.setBackground(new java.awt.Color(0, 0, 0));
         jLabel24.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel24.setText("ITEM ENTRY");
         jLabel24.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 4));
-        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 189, -1));
 
-        jLabel28.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel28.setText("ITEM DETAILS");
-        jLabel28.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 90, 350, -1));
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(itemsearchfld, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(itemsearchbtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(itemclearbtn)
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(4, 4, 4)
+                                        .addComponent(jLabel3)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                        .addComponent(itemidfld)
+                                        .addComponent(itemnamefld)
+                                        .addComponent(itemstockfld, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(itemaddbtn)
+                                        .addGap(36, 36, 36)
+                                        .addComponent(itemeditbtn)
+                                        .addGap(29, 29, 29)
+                                        .addComponent(itemdeletebtn)))
+                                .addGap(65, 65, 65))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(itemsavebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(170, 170, 170))))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(itemsearchfld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(itemsearchbtn)
+                            .addComponent(itemclearbtn)
+                            .addComponent(jLabel24))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(93, 93, 93)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(itemidfld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(itemnamefld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(itemstockfld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(itemaddbtn)
+                            .addComponent(itemeditbtn)
+                            .addComponent(itemdeletebtn))
+                        .addGap(18, 18, 18)
+                        .addComponent(itemsavebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27))
+        );
 
-        jLabel29.setText("Search By Item ID:");
-        jPanel2.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, -1, 20));
+        itemsavebtn.setVisible(false);
 
         jTabbedPane1.addTab("Item Entry", jPanel2);
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         SupplierTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -677,15 +696,12 @@ public class SMFrame extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(SupplierTable);
 
-        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 79, 624, 390));
-
         supclearbtn.setText("Clear");
         supclearbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 supclearbtnActionPerformed(evt);
             }
         });
-        jPanel3.add(supclearbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 50, -1, -1));
 
         supsearchbtn.setText("Search");
         supsearchbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -693,7 +709,6 @@ public class SMFrame extends javax.swing.JFrame {
                 supsearchbtnActionPerformed(evt);
             }
         });
-        jPanel3.add(supsearchbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 50, -1, -1));
 
         supaddbtn.setText("Add");
         supaddbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -701,7 +716,6 @@ public class SMFrame extends javax.swing.JFrame {
                 supaddbtnActionPerformed(evt);
             }
         });
-        jPanel3.add(supaddbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 350, -1, -1));
 
         supeditbtn.setText("Edit");
         supeditbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -709,7 +723,6 @@ public class SMFrame extends javax.swing.JFrame {
                 supeditbtnActionPerformed(evt);
             }
         });
-        jPanel3.add(supeditbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 350, -1, -1));
 
         supdeletebtn.setText("Delete");
         supdeletebtn.addActionListener(new java.awt.event.ActionListener() {
@@ -717,7 +730,6 @@ public class SMFrame extends javax.swing.JFrame {
                 supdeletebtnActionPerformed(evt);
             }
         });
-        jPanel3.add(supdeletebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 350, -1, -1));
 
         savesupbtn.setText("Save");
         savesupbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -725,68 +737,126 @@ public class SMFrame extends javax.swing.JFrame {
                 savesupbtnActionPerformed(evt);
             }
         });
-        jPanel3.add(savesupbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 390, 101, 40));
-        savesupbtn.setVisible(false);
 
         supidfld.setEditable(false);
-        jPanel3.add(supidfld, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 150, 270, -1));
 
         supnamefld.setEditable(false);
-        jPanel3.add(supnamefld, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 230, 270, -1));
-
-        jPanel3.add(supitemidcmb, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 190, 270, -1));
 
         supcontactfld.setEditable(false);
-        jPanel3.add(supcontactfld, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 270, 270, -1));
 
         unitpricefld.setEditable(false);
-        jPanel3.add(unitpricefld, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 310, 270, -1));
 
         jLabel4.setText("Supplier ID:");
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 160, -1, -1));
 
         jLabel5.setText("Supplier Name:");
-        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 240, -1, -1));
 
         jLabel6.setText("Item ID:");
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 200, -1, -1));
 
         jLabel7.setText("Unit Price:");
-        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 320, -1, -1));
 
         Contact.setText("Contact:");
-        jPanel3.add(Contact, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 280, -1, -1));
 
         jLabel23.setBackground(new java.awt.Color(0, 0, 0));
         jLabel23.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel23.setText("SUPPLIER ENTRY");
         jLabel23.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 4));
-        jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 189, -1));
 
-        jPanel3.add(itemfiltercmb, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, 120, -1));
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(supsearchfld, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(supsearchbtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(supclearbtn))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(Contact))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(supcontactfld)
+                            .addComponent(supnamefld)
+                            .addComponent(supitemidcmb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(supidfld)
+                            .addComponent(unitpricefld, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(90, 90, 90)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(savesupbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(83, 83, 83))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(supaddbtn)
+                                .addGap(31, 31, 31)
+                                .addComponent(supeditbtn)
+                                .addGap(29, 29, 29)
+                                .addComponent(supdeletebtn)))))
+                .addContainerGap(51, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(33, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(supclearbtn)
+                    .addComponent(supsearchbtn)
+                    .addComponent(supsearchfld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel23))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(supidfld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(supitemidcmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(supnamefld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(supcontactfld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Contact))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(unitpricefld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addGap(60, 60, 60)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(supaddbtn)
+                            .addComponent(supeditbtn)
+                            .addComponent(supdeletebtn))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(savesupbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
+        );
 
-        jPanel3.add(supfiltercmb, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, 130, -1));
-
-        jLabel30.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel30.setText("SUPPLIER DETAILS");
-        jLabel30.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel3.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 110, 350, -1));
-
-        jLabel32.setText("Filter By:");
-        jPanel3.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, -1, 20));
-
-        jLabel33.setText("Supplier Name");
-        jPanel3.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, -1, -1));
-
-        jLabel34.setText("Item ID");
-        jPanel3.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, -1, -1));
+        savesupbtn.setVisible(false);
 
         jTabbedPane1.addTab("Supplier Entry", jPanel3);
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         SaleTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -818,15 +888,12 @@ public class SMFrame extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(SaleTable);
 
-        jPanel4.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 90, 622, 380));
-
         saleaddbtn.setText("Add");
         saleaddbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saleaddbtnActionPerformed(evt);
             }
         });
-        jPanel4.add(saleaddbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 350, -1, -1));
 
         saleeditbtn.setText("Edit");
         saleeditbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -834,7 +901,6 @@ public class SMFrame extends javax.swing.JFrame {
                 saleeditbtnActionPerformed(evt);
             }
         });
-        jPanel4.add(saleeditbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 350, -1, -1));
 
         saledeletebtn.setText("Delete");
         saledeletebtn.addActionListener(new java.awt.event.ActionListener() {
@@ -842,7 +908,6 @@ public class SMFrame extends javax.swing.JFrame {
                 saledeletebtnActionPerformed(evt);
             }
         });
-        jPanel4.add(saledeletebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 350, -1, -1));
 
         salesavebtn.setText("Save");
         salesavebtn.addActionListener(new java.awt.event.ActionListener() {
@@ -850,8 +915,6 @@ public class SMFrame extends javax.swing.JFrame {
                 salesavebtnActionPerformed(evt);
             }
         });
-        jPanel4.add(salesavebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 390, 103, 33));
-        salesavebtn.setVisible(false);
 
         salesidfld.setEditable(false);
         salesidfld.addActionListener(new java.awt.event.ActionListener() {
@@ -859,7 +922,6 @@ public class SMFrame extends javax.swing.JFrame {
                 salesidfldActionPerformed(evt);
             }
         });
-        jPanel4.add(salesidfld, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 150, 260, -1));
 
         salesquantityfld.setEditable(false);
         salesquantityfld.addActionListener(new java.awt.event.ActionListener() {
@@ -867,10 +929,8 @@ public class SMFrame extends javax.swing.JFrame {
                 salesquantityfldActionPerformed(evt);
             }
         });
-        jPanel4.add(salesquantityfld, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 230, 260, -1));
 
         salesdatefld.setEditable(false);
-        jPanel4.add(salesdatefld, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 270, 260, -1));
 
         salesrecordfld.setEditable(false);
         salesrecordfld.addActionListener(new java.awt.event.ActionListener() {
@@ -878,29 +938,22 @@ public class SMFrame extends javax.swing.JFrame {
                 salesrecordfldActionPerformed(evt);
             }
         });
-        jPanel4.add(salesrecordfld, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 310, 260, -1));
 
         salesitemidcmb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 salesitemidcmbActionPerformed(evt);
             }
         });
-        jPanel4.add(salesitemidcmb, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 190, 260, -1));
 
         jLabel8.setText("Item ID:");
-        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 190, -1, -1));
 
         jLabel9.setText("Sales ID:");
-        jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 150, -1, -1));
 
         jLabel10.setText("Quantity:");
-        jPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 230, -1, -1));
 
         jLabel11.setText("Sales Date:");
-        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 270, -1, -1));
 
         jLabel12.setText("Recorded By:");
-        jPanel4.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 310, -1, -1));
 
         saleclearbtn.setText("Clear");
         saleclearbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -908,7 +961,6 @@ public class SMFrame extends javax.swing.JFrame {
                 saleclearbtnActionPerformed(evt);
             }
         });
-        jPanel4.add(saleclearbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, -1, -1));
 
         salesearchbtn.setText("Search");
         salesearchbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -916,30 +968,106 @@ public class SMFrame extends javax.swing.JFrame {
                 salesearchbtnActionPerformed(evt);
             }
         });
-        jPanel4.add(salesearchbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 60, -1, -1));
-        jPanel4.add(salesearchfld, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 168, -1));
 
         jLabel22.setBackground(new java.awt.Color(0, 0, 0));
         jLabel22.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("SALES ENTRY");
         jLabel22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 4));
-        jPanel4.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 259, -1));
 
-        jLabel31.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel31.setText("SALE DETAILS");
-        jLabel31.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel4.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 100, 330, -1));
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(salesearchfld, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(salesearchbtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(saleclearbtn)
+                        .addGap(6, 6, 6))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(salesidfld)
+                            .addComponent(salesrecordfld)
+                            .addComponent(salesdatefld)
+                            .addComponent(salesquantityfld)
+                            .addComponent(salesitemidcmb, 0, 286, Short.MAX_VALUE))
+                        .addGap(53, 53, 53))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(saleaddbtn)
+                        .addGap(30, 30, 30)
+                        .addComponent(saleeditbtn)
+                        .addGap(28, 28, 28)
+                        .addComponent(saledeletebtn)
+                        .addGap(69, 69, 69))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(salesavebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(154, 154, 154))))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel22)
+                    .addComponent(saleclearbtn)
+                    .addComponent(salesearchbtn)
+                    .addComponent(salesearchfld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(29, 29, 29))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(98, 98, 98)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(salesidfld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(salesitemidcmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(salesquantityfld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(salesdatefld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(salesrecordfld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
+                .addGap(40, 40, 40)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saleaddbtn)
+                    .addComponent(saleeditbtn)
+                    .addComponent(saledeletebtn))
+                .addGap(31, 31, 31)
+                .addComponent(salesavebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(102, Short.MAX_VALUE))
+        );
 
-        jLabel36.setText("Search By Sales ID:");
-        jPanel4.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 60, -1, 20));
+        salesavebtn.setVisible(false);
 
         jTabbedPane1.addTab("Sales Entry", jPanel4);
 
         jPanel5.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel5.setPreferredSize(new java.awt.Dimension(1253, 620));
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         PrTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -971,8 +1099,6 @@ public class SMFrame extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(PrTable);
 
-        jPanel5.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 100, 710, 320));
-
         itemprtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -998,8 +1124,6 @@ public class SMFrame extends javax.swing.JFrame {
         });
         jScrollPane6.setViewportView(itemprtable);
 
-        jPanel5.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 130, 272, 106));
-
         lowStockTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -1023,15 +1147,12 @@ public class SMFrame extends javax.swing.JFrame {
         });
         jScrollPane9.setViewportView(lowStockTable);
 
-        jPanel5.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 300, 272, 140));
-
         prclearbtn.setText("Clear");
         prclearbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 prclearbtnActionPerformed(evt);
             }
         });
-        jPanel5.add(prclearbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, -1, -1));
 
         prsearchbtn.setText("Search");
         prsearchbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -1039,7 +1160,6 @@ public class SMFrame extends javax.swing.JFrame {
                 prsearchbtnActionPerformed(evt);
             }
         });
-        jPanel5.add(prsearchbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 70, -1, -1));
 
         praddbtn.setText("Add");
         praddbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -1047,7 +1167,6 @@ public class SMFrame extends javax.swing.JFrame {
                 praddbtnActionPerformed(evt);
             }
         });
-        jPanel5.add(praddbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 430, -1, -1));
 
         preditbtn.setText("Edit");
         preditbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -1055,7 +1174,6 @@ public class SMFrame extends javax.swing.JFrame {
                 preditbtnActionPerformed(evt);
             }
         });
-        jPanel5.add(preditbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 430, -1, -1));
 
         prdeletebtn.setText("Delete");
         prdeletebtn.addActionListener(new java.awt.event.ActionListener() {
@@ -1063,36 +1181,85 @@ public class SMFrame extends javax.swing.JFrame {
                 prdeletebtnActionPerformed(evt);
             }
         });
-        jPanel5.add(prdeletebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 430, -1, -1));
-        jPanel5.add(prsearchfld, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 70, 215, -1));
 
         jLabel19.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 51, 51));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setText("ITEM PR DETAILS");
+        jLabel19.setText("LOW STOCK ITEM ALERT");
         jLabel19.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel5.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 100, 272, -1));
 
         jLabel20.setBackground(new java.awt.Color(0, 0, 0));
         jLabel20.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText("PURCHASE REQUISITION ENTRY");
         jLabel20.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 4));
-        jPanel5.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 6, 353, 49));
 
-        jLabel25.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel25.setText("LOW STOCK ITEM ALERT");
-        jLabel25.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel5.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 270, 272, -1));
-
-        jLabel26.setText("Search By PR ID:");
-        jPanel5.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, -1, 20));
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(praddbtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(preditbtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(prdeletebtn)
+                        .addGap(57, 57, 57))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(prsearchfld, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(prsearchbtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(prclearbtn)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(prclearbtn)
+                            .addComponent(prsearchbtn)
+                            .addComponent(prsearchfld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(praddbtn)
+                            .addComponent(preditbtn)
+                            .addComponent(prdeletebtn)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(123, 123, 123)
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27))
+        );
 
         jTabbedPane1.addTab("Purchase Requisition", jPanel5);
 
         jPanel6.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         PoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1115,15 +1282,12 @@ public class SMFrame extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(PoTable);
 
-        jPanel6.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 1030, 390));
-
         poclearbtn.setText("Clear");
         poclearbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 poclearbtnActionPerformed(evt);
             }
         });
-        jPanel6.add(poclearbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 40, -1, -1));
 
         posearchbtn.setText("Search");
         posearchbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -1131,18 +1295,46 @@ public class SMFrame extends javax.swing.JFrame {
                 posearchbtnActionPerformed(evt);
             }
         });
-        jPanel6.add(posearchbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 40, -1, -1));
-        jPanel6.add(posearchfld, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 40, 190, -1));
 
         jLabel21.setBackground(new java.awt.Color(0, 0, 0));
         jLabel21.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("PURCHASE ORDER DISPLAY");
         jLabel21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 4));
-        jPanel6.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 353, 47));
 
-        jLabel35.setText("Search By PO ID:");
-        jPanel6.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 40, -1, 20));
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap(40, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 1056, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(329, 329, 329)
+                        .addComponent(posearchfld, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(posearchbtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(poclearbtn)
+                        .addGap(29, 29, 29))))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(poclearbtn)
+                    .addComponent(posearchbtn)
+                    .addComponent(posearchfld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
+        );
 
         jTabbedPane1.addTab("Purchase Order", jPanel6);
 
@@ -1151,14 +1343,14 @@ public class SMFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1251, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1))
         );
 
         pack();
@@ -1464,51 +1656,31 @@ public class SMFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_SupplierTableMouseClicked
 
     private void supsearchbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supsearchbtnActionPerformed
-String itemId = itemfiltercmb.getSelectedItem().toString().trim();
-      String SupplierName = supfiltercmb.getSelectedItem().toString().trim();
+      String suppliersId = supsearchfld.getText().trim();
       DefaultTableModel model = (DefaultTableModel)SupplierTable.getModel();
       model.setRowCount(0);
       
-      if (itemId.equals("--- Select Item ID ---")){
-          //treat as null
+      if (!suppliersId.isEmpty()) {
+         Supplier result = manager.getSupplierById(suppliersId);
+         if (result != null) {
+            model.addRow(new Object[]{
+                result.getSupplierID(), 
+                result.getSupplierName(),
+                result.getContact(), 
+                result.getItem().getItemID(),
+                result.getPrice()
+            });
+         } else {
+            JOptionPane.showMessageDialog(null, "No Supplier found based on the supplier ID: " + suppliersId);
+         }
+      } else {
+         JOptionPane.showMessageDialog(null, "Please enter a valid Supplier ID!");
       }
-      
-       if (SupplierName.equals("--- Select Supplier ---")){
-          //treat as null
-      }
-      
-      for (Supplier s : manager.getAllSuppliers()){
-      boolean matchItem = true;
-      boolean matchSupplier =true;
-      
-      
-      if (itemId != null && !itemId.isEmpty()){
-          matchItem = s.getItem().getItemID().equalsIgnoreCase(itemId);
-      }
-      
-      if (SupplierName != null && !SupplierName.isEmpty()){
-         matchSupplier =s.getSupplierName().equalsIgnoreCase(SupplierName);
-      }
-      
-      if (matchItem || matchSupplier){
-          model.addRow(new Object[]{
-                s.getSupplierID(), 
-                s.getItem().getItemID(),
-                s.getSupplierName(),
-                s.getContact(), 
-                s.getPrice()
-          });
-        }
-      } 
+
     }//GEN-LAST:event_supsearchbtnActionPerformed
 
     private void supclearbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supclearbtnActionPerformed
-       LoadIteminCombo(itemfiltercmb);
-       LoadSupplierinCombo(supfiltercmb);
-       
-       itemfiltercmb.setSelectedIndex(0);
-       supfiltercmb.setSelectedIndex(0);
-       loadAllSuppliers();
+       supsearchfld.setText("");
        loadAllSuppliers();
     }//GEN-LAST:event_supclearbtnActionPerformed
 
@@ -2036,7 +2208,6 @@ String itemId = itemfiltercmb.getSelectedItem().toString().trim();
     private javax.swing.JButton itemclearbtn;
     private javax.swing.JButton itemdeletebtn;
     private javax.swing.JButton itemeditbtn;
-    private javax.swing.JComboBox<String> itemfiltercmb;
     private javax.swing.JComboBox<String> itemidcmb;
     private javax.swing.JTextField itemidfld;
     private javax.swing.JTextField itemnamefld;
@@ -2062,19 +2233,7 @@ String itemId = itemfiltercmb.getSelectedItem().toString().trim();
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -2136,12 +2295,12 @@ String itemId = itemfiltercmb.getSelectedItem().toString().trim();
     private javax.swing.JTextField supcontactfld;
     private javax.swing.JButton supdeletebtn;
     private javax.swing.JButton supeditbtn;
-    private javax.swing.JComboBox<String> supfiltercmb;
     private javax.swing.JTextField supidfld;
     private javax.swing.JComboBox<String> supitemidcmb;
     private javax.swing.JTable supitemtable;
     private javax.swing.JTextField supnamefld;
     private javax.swing.JButton supsearchbtn;
+    private javax.swing.JTextField supsearchfld;
     private javax.swing.JTextField unitpricefld;
     // End of variables declaration//GEN-END:variables
 }

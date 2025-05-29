@@ -109,12 +109,6 @@ public class SalesManager extends Employee implements Manageable<PO>, Viewable<P
          return s.getSupplierID().equals(supplierid);
       }).findFirst().orElse(null);
    }
-   
-   public List<Supplier> getSupplierByItemId(String itemId) {
-      return this.supplierList.stream()
-              .filter(s -> s.getItem().getItemID().equalsIgnoreCase(itemId))
-              .collect(Collectors.toList());
-   }
 
    public Sales getSalesById(String salesid) {
       return salesList.stream()
