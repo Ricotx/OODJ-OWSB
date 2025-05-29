@@ -17,7 +17,7 @@ import java.util.Calendar;
  *
  * @author ahaiq
  */
-public class FinanceManager extends Employee implements Manageable<PO>, Viewable<PO> {
+public class FinanceManager extends Employee implements Viewable<PO> {
     private List<PO> poList;
     private List<PR> prList;
     private List<Supplier> supplierList;
@@ -40,37 +40,10 @@ public class FinanceManager extends Employee implements Manageable<PO>, Viewable
     @Override
     public void launchDashboard() {
         new FinanceFrame(Session.getCurrentUser()).setVisible(true);
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
     
     public void launchLogin(){
         new LoginFrame().setVisible(true);
-    }
-    
-    // Interface: Manageable 
-    @Override
-    public void add(PO po){
-        poList.add(po);
-        FileHandler.appendLine("data/PO.txt",po.toString());
-    }
-    
-    
-    @Override
-    public void edit(PO po){
-        ListIterator<PO> iterator = poList.listIterator();
-        while(iterator.hasNext()){
-            PO current = iterator.next();
-            if (current.getPoID().equals(po.getPoID())){
-                iterator.set(po);
-                break;
-            }
-        }
-    }
-    
-    @Override
-    public void delete(PO po){
-        poList.removeIf(p -> p.getPoID().equals(po.getPoID()));
-        FileHandler.writeAllToFile("data/PO.txt", poList);
     }
     
         // Interface: Viewable 

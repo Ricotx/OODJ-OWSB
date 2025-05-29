@@ -34,7 +34,6 @@ public class PurchaseManager extends Employee implements Manageable<PO>, Viewabl
     @Override
     public void launchDashboard() {
         new PMFrame(Session.getCurrentUser()).setVisible(true);
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
     
     // Interface: Manageable 
@@ -76,7 +75,7 @@ public class PurchaseManager extends Employee implements Manageable<PO>, Viewabl
                 .orElse(null);
     }
     
-    // ========= Logic for Purchase Manager ========== //
+    // Logic for Purchase Manager
     
     //generateNextPOID()
     public String generateNextPO_ID(){

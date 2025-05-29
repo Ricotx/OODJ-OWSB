@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  *
  * @author adham
  */
-public class SalesManager extends Employee implements Manageable<PO>, Viewable<PO> {
+public class SalesManager extends Employee implements Viewable<PO> {
     private List<PO> poList;
     private List<PR> prList;
     private List<Supplier> supplierList;
@@ -39,31 +39,7 @@ public class SalesManager extends Employee implements Manageable<PO>, Viewable<P
       (new SMFrame(Session.getCurrentUser())).setVisible(true);
    }
 
-   public void add(PO po) {
-      this.poList.add(po);
-      FileHandler.appendLine("data/PO.txt", po.toString());
-   }
-
-   public void edit(PO po) {
-      ListIterator iterator = this.poList.listIterator();
-
-      while(iterator.hasNext()) {
-         PO current = (PO)iterator.next();
-         if (current.getPoID().equals(po.getPoID())) {
-            iterator.set(po);
-            break;
-         }
-      }
-
-   }
-
-   public void delete(PO po) {
-      this.poList.removeIf((p) -> {
-         return p.getPoID().equals(po.getPoID());
-      });
-      FileHandler.writeAllToFile("data/PO.txt", this.poList);
-   }
-
+    @Override
    public List<PO> viewAll() {
       return this.poList;
    }
