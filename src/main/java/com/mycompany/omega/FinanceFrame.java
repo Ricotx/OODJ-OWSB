@@ -27,7 +27,9 @@ import javax.swing.table.DefaultTableModel;
 
 public class FinanceFrame extends javax.swing.JFrame {
     private FinanceManager manager;
-    private final String placeholderText = "Enter PO ID";
+    private final String placeholderTextPO = "Enter PO ID";
+    private final String placeholderTextPR = "Enter PR ID";
+    private final String placeholderTextPayment = "Enter Payment ID";
     
     public FinanceFrame(Employee user) {
         initComponents();
@@ -46,8 +48,14 @@ public class FinanceFrame extends javax.swing.JFrame {
         System.out.println("Session User: " + Session.getCurrentUser());
         System.out.println("Manager assigned? " + (manager != null));
         
-        txtFindPO.setText(placeholderText);
+        txtFindPO.setText(placeholderTextPO);
         txtFindPO.setForeground(Color.LIGHT_GRAY);
+        
+        txtFindPR.setText(placeholderTextPR);
+        txtFindPR.setForeground(Color.LIGHT_GRAY);
+        
+        txtFindPay.setText(placeholderTextPayment);
+        txtFindPay.setForeground(Color.LIGHT_GRAY);
         
         loadAllPRs();
         loadAllPOs();
@@ -59,7 +67,7 @@ public class FinanceFrame extends javax.swing.JFrame {
         txtFindPO.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
-                if (txtFindPO.getText().equals(placeholderText)) {
+                if (txtFindPO.getText().equals(placeholderTextPO)) {
                     txtFindPO.setText("");
                     txtFindPO.setForeground(Color.BLACK); // user typing
                 }
@@ -68,8 +76,44 @@ public class FinanceFrame extends javax.swing.JFrame {
             @Override
             public void focusLost(java.awt.event.FocusEvent evt) {
                 if (txtFindPO.getText().isEmpty()) {
-                    txtFindPO.setText(placeholderText);
+                    txtFindPO.setText(placeholderTextPO);
                     txtFindPO.setForeground(Color.GRAY);
+                }
+            }
+        });
+        
+        txtFindPR.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (txtFindPR.getText().equals(placeholderTextPR)) {
+                    txtFindPR.setText("");
+                    txtFindPR.setForeground(Color.BLACK); // user typing
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (txtFindPR.getText().isEmpty()) {
+                    txtFindPR.setText(placeholderTextPR);
+                    txtFindPR.setForeground(Color.GRAY);
+                }
+            }
+        });
+        
+        txtFindPay.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (txtFindPay.getText().equals(placeholderTextPayment)) {
+                    txtFindPay.setText("");
+                    txtFindPay.setForeground(Color.BLACK); // user typing
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (txtFindPay.getText().isEmpty()) {
+                    txtFindPay.setText(placeholderTextPayment);
+                    txtFindPay.setForeground(Color.GRAY);
                 }
             }
         });
@@ -241,14 +285,14 @@ public class FinanceFrame extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         btn1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblPO = new javax.swing.JTable();
+        dateChooserPO = new com.toedter.calendar.JDateChooser();
+        btnSearchPO = new javax.swing.JButton();
         btnApprove = new javax.swing.JButton();
-        btnReject = new javax.swing.JButton();
         txtFindPO = new javax.swing.JTextField();
+        btnReject = new javax.swing.JButton();
+        boxFilter = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        boxFilter = new javax.swing.JComboBox<>();
         jPanel6 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -266,21 +310,19 @@ public class FinanceFrame extends javax.swing.JFrame {
         txtPrice = new javax.swing.JTextField();
         lblPrice = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        btnSearchPO = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
-        dateChooserPO = new com.toedter.calendar.JDateChooser();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblPO = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblPR = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         txtFindPR = new javax.swing.JTextField();
         btnSearchPR = new javax.swing.JButton();
         dateChooserPR = new com.toedter.calendar.JDateChooser();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblPR = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblPayment = new javax.swing.JTable();
         txtFindPay = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -304,12 +346,14 @@ public class FinanceFrame extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         btnDeletePayment = new javax.swing.JButton();
         btnSearchPay = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblPayment = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         btnGenerateReport = new javax.swing.JButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        txtAreaReport = new javax.swing.JTextArea();
         jLabel24 = new javax.swing.JLabel();
         dateChooserReport = new com.toedter.calendar.JDateChooser();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        txtAreaReport = new javax.swing.JTextArea();
 
         jMenu1.setText("jMenu1");
 
@@ -327,6 +371,7 @@ public class FinanceFrame extends javax.swing.JFrame {
         lblGreeting.setText("Welcome <Username>");
 
         btnLogout.setText("Logout");
+        btnLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLogoutActionPerformed(evt);
@@ -348,8 +393,8 @@ public class FinanceFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblGreeting))
+                    .addComponent(lblGreeting)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 834, Short.MAX_VALUE)
                 .addComponent(btnRefresh)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -370,7 +415,7 @@ public class FinanceFrame extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnLogout)
                             .addComponent(btnRefresh))))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 35, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 110));
@@ -447,59 +492,15 @@ public class FinanceFrame extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel3.add(dateChooserPO, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 160, -1));
 
-        tblPO.setAutoCreateRowSorter(true);
-        tblPO.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        tblPO.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "PO_ID", "PR_ID", "Supplier", "Item", "Quantity", "Date", "Ordered By", "Approval", "Asign By"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        btnSearchPO.setText("Search");
+        btnSearchPO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchPOActionPerformed(evt);
             }
         });
-        tblPO.setGridColor(new java.awt.Color(0, 0, 0));
-        tblPO.setSelectionBackground(new java.awt.Color(204, 204, 255));
-        tblPO.getTableHeader().setReorderingAllowed(false);
-        tblPO.addContainerListener(new java.awt.event.ContainerAdapter() {
-            public void componentAdded(java.awt.event.ContainerEvent evt) {
-                tblPOComponentAdded(evt);
-            }
-        });
-        tblPO.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblPOMouseClicked(evt);
-            }
-        });
-        tblPO.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-                tblPOCaretPositionChanged(evt);
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-            }
-        });
-        jScrollPane1.setViewportView(tblPO);
-        tblPO.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 718, -1));
+        jPanel3.add(btnSearchPO, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, -1, -1));
 
         btnApprove.setText("Approve");
         btnApprove.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -509,15 +510,6 @@ public class FinanceFrame extends javax.swing.JFrame {
             }
         });
         jPanel3.add(btnApprove, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 510, -1, -1));
-
-        btnReject.setText("Reject");
-        btnReject.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnReject.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRejectActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnReject, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 510, -1, -1));
 
         txtFindPO.setForeground(new java.awt.Color(204, 204, 204));
         txtFindPO.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -536,11 +528,14 @@ public class FinanceFrame extends javax.swing.JFrame {
         });
         jPanel3.add(txtFindPO, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 185, -1));
 
-        jLabel3.setText("Find");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 30, 20));
-
-        jLabel4.setText("Filter by: ");
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, -1, -1));
+        btnReject.setText("Reject");
+        btnReject.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnReject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRejectActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnReject, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 510, -1, -1));
 
         boxFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Clear", "Approved", "Pending", "Rejected" }));
         boxFilter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -550,6 +545,12 @@ public class FinanceFrame extends javax.swing.JFrame {
             }
         });
         jPanel3.add(boxFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, 127, -1));
+
+        jLabel3.setText("Find");
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 30, 20));
+
+        jLabel4.setText("Filter by: ");
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, -1, -1));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -707,22 +708,86 @@ public class FinanceFrame extends javax.swing.JFrame {
         jLabel11.setText("Purchase Order Details");
         jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 100, -1, -1));
 
-        btnSearchPO.setText("Search");
-        btnSearchPO.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchPOActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnSearchPO, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, -1, -1));
-
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel13.setText("Purchase Order");
         jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
-        jPanel3.add(dateChooserPO, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 160, -1));
+
+        tblPO.setAutoCreateRowSorter(true);
+        tblPO.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tblPO.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "PO_ID", "PR_ID", "Supplier", "Item", "Quantity", "Date", "Ordered By", "Approval", "Asign By"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblPO.setGridColor(new java.awt.Color(0, 0, 0));
+        tblPO.setSelectionBackground(new java.awt.Color(204, 204, 255));
+        tblPO.getTableHeader().setReorderingAllowed(false);
+        tblPO.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                tblPOComponentAdded(evt);
+            }
+        });
+        tblPO.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPOMouseClicked(evt);
+            }
+        });
+        tblPO.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+                tblPOCaretPositionChanged(evt);
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+            }
+        });
+        jScrollPane1.setViewportView(tblPO);
+        tblPO.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 718, -1));
 
         btn1.addTab("PO", jPanel3);
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setText("Purchase Requisition");
+
+        jLabel12.setText("Find");
+
+        txtFindPR.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtFindPR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFindPRActionPerformed(evt);
+            }
+        });
+
+        btnSearchPR.setText("Search");
+        btnSearchPR.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSearchPR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchPRActionPerformed(evt);
+            }
+        });
 
         tblPR.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -743,25 +808,9 @@ public class FinanceFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblPR.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tblPR);
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setText("Purchase Requisition");
-
-        jLabel12.setText("Find");
-
-        txtFindPR.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFindPRActionPerformed(evt);
-            }
-        });
-
-        btnSearchPR.setText("Search");
-        btnSearchPR.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchPRActionPerformed(evt);
-            }
-        });
+        tblPR.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -782,7 +831,7 @@ public class FinanceFrame extends javax.swing.JFrame {
                                 .addComponent(dateChooserPR, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(12, 12, 12)
                         .addComponent(btnSearchPR)))
-                .addContainerGap(262, Short.MAX_VALUE))
+                .addContainerGap(252, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -812,29 +861,7 @@ public class FinanceFrame extends javax.swing.JFrame {
         jLabel14.setText("Payment ");
         jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        tblPayment.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Payment ID", "PO ID", "Supplier ID", "Item ID", "Quantity", "Unit Price", "Total Amount", "Payment Date", "Paid By"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane3.setViewportView(tblPayment);
-
-        jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 324, 785, 204));
-
+        txtFindPay.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtFindPay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFindPayActionPerformed(evt);
@@ -864,12 +891,15 @@ public class FinanceFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblUnpaidPO.setColumnSelectionAllowed(true);
+        tblUnpaidPO.getTableHeader().setReorderingAllowed(false);
         tblUnpaidPO.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblUnpaidPOMouseClicked(evt);
             }
         });
         jScrollPane4.setViewportView(tblUnpaidPO);
+        tblUnpaidPO.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         jPanel5.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 105, 785, 189));
 
@@ -884,6 +914,7 @@ public class FinanceFrame extends javax.swing.JFrame {
         jLabel20.setText("Date");
 
         jButton1.setText("Pay");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -978,6 +1009,7 @@ public class FinanceFrame extends javax.swing.JFrame {
         jPanel5.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(823, 61, -1, -1));
 
         btnDeletePayment.setText("Delete Payment");
+        btnDeletePayment.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDeletePayment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeletePaymentActionPerformed(evt);
@@ -986,25 +1018,57 @@ public class FinanceFrame extends javax.swing.JFrame {
         jPanel5.add(btnDeletePayment, new org.netbeans.lib.awtextra.AbsoluteConstraints(681, 295, -1, -1));
 
         btnSearchPay.setText("Search");
-        jPanel5.add(btnSearchPay, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, -1, -1));
+        btnSearchPay.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSearchPay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchPayActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnSearchPay, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, -1, -1));
+
+        tblPayment.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Payment ID", "PO ID", "Supplier ID", "Item ID", "Quantity", "Unit Price", "Total Amount", "Payment Date", "Paid By"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblPayment.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(tblPayment);
+        tblPayment.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 324, 785, 204));
 
         btn1.addTab("$", jPanel5);
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
         btnGenerateReport.setText("Generate report");
+        btnGenerateReport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGenerateReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGenerateReportActionPerformed(evt);
             }
         });
 
+        jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel24.setText("Generate Report");
+
         txtAreaReport.setColumns(20);
         txtAreaReport.setRows(5);
         jScrollPane5.setViewportView(txtAreaReport);
-
-        jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel24.setText("Generate Report");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -1014,13 +1078,12 @@ public class FinanceFrame extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel8Layout.createSequentialGroup()
-                            .addComponent(dateChooserReport, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnGenerateReport))
-                        .addComponent(jLabel24)))
-                .addContainerGap(521, Short.MAX_VALUE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(dateChooserReport, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnGenerateReport))
+                    .addComponent(jLabel24))
+                .addContainerGap(511, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1038,7 +1101,7 @@ public class FinanceFrame extends javax.swing.JFrame {
 
         btn1.addTab("report", jPanel8);
 
-        getContentPane().add(btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 1130, 550));
+        getContentPane().add(btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 1120, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1061,8 +1124,12 @@ public class FinanceFrame extends javax.swing.JFrame {
         loadAllPRs();
         loadUnpaidPOs();
         loadAllPayments();
-        txtFindPO.setText(placeholderText);
+        txtFindPO.setText(placeholderTextPO);
         txtFindPO.setForeground(Color.LIGHT_GRAY);
+        txtFindPR.setText(placeholderTextPR);
+        txtFindPR.setForeground(Color.LIGHT_GRAY);
+        txtFindPay.setText(placeholderTextPayment);
+        txtFindPay.setForeground(Color.LIGHT_GRAY);
         boxFilter.setSelectedIndex(0);
     }//GEN-LAST:event_btnRefreshActionPerformed
 
@@ -1198,23 +1265,9 @@ public class FinanceFrame extends javax.swing.JFrame {
 
         DefaultTableModel model = (DefaultTableModel) tblPR.getModel();
 
-        if(!prId.isEmpty()){
-            PR result = manager.getPRById(prId);
-            if (result != null){
-                model.setRowCount(0);
-                model.addRow(new Object[]{
-                    result.getPR_ID(),
-                    result.getItem().getItemID(),
-                    result.getQuantity(),
-                    result.getRequestdDate().toString(),
-                    result.getRequestedBy(),
-                    result.getStatus()
-                });
-            }else{
-                JOptionPane.showMessageDialog(this, "No PR found based on the PR ID: " + prId);
-            }
-        }
-        else if (selectedDate != null){
+        if(prId.equals(placeholderTextPR.toUpperCase().trim()) )
+        {
+           if (selectedDate != null){
             LocalDate searchDate = selectedDate.toInstant()
             .atZone(java.time.ZoneId.systemDefault())
             .toLocalDate();
@@ -1237,8 +1290,28 @@ public class FinanceFrame extends javax.swing.JFrame {
                 }
             }
         }
+           else {
+                JOptionPane.showMessageDialog(this, "Please enter a PR ID!", "Error", JOptionPane.WARNING_MESSAGE);
+           }
+        }
+        else if(!prId.isEmpty()){
+                PR result = manager.getPRById(prId);
+                if (result != null){
+                    model.setRowCount(0);
+                    model.addRow(new Object[]{
+                        result.getPR_ID(),
+                        result.getItem().getItemID(),
+                        result.getQuantity(),
+                        result.getRequestdDate().toString(),
+                        result.getRequestedBy(),
+                        result.getStatus()
+                    });
+                }else{
+                    JOptionPane.showMessageDialog(this, "No PR found based on the PR ID: " + prId);
+                }
+            }
         else {
-            JOptionPane.showMessageDialog(this,"Please enter a valid PR ID!");
+            JOptionPane.showMessageDialog(this,"Please enter a valid PR ID! or Date");
         }
     }//GEN-LAST:event_btnSearchPRActionPerformed
 
@@ -1253,7 +1326,7 @@ public class FinanceFrame extends javax.swing.JFrame {
 
         DefaultTableModel model = (DefaultTableModel) tblPO.getModel();
 
-        if(poId.equals(placeholderText.toUpperCase()))
+        if(poId.equals(placeholderTextPO.toUpperCase()))
         {
             if (selectedDate != null){
                 LocalDate searchDate = selectedDate.toInstant()
@@ -1262,7 +1335,7 @@ public class FinanceFrame extends javax.swing.JFrame {
                 List<PO> results = manager.filterPO_byDate(searchDate);
 
                 if(results.isEmpty()){
-                    JOptionPane.showMessageDialog(this,"No PR found based on selected date. ");
+                    JOptionPane.showMessageDialog(this,"No PO found based on selected date. ");
 
                 } else {
                     for (PO po : results){
@@ -1455,6 +1528,50 @@ public class FinanceFrame extends javax.swing.JFrame {
     private void tblPOComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tblPOComponentAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_tblPOComponentAdded
+
+    private void btnSearchPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchPayActionPerformed
+        String poId = txtFindPay.getText().trim().toUpperCase();
+        
+        DefaultTableModel model = (DefaultTableModel) tblUnpaidPO.getModel();
+            
+        if(!poId.isEmpty())
+        {
+            
+            if(poId.equals(placeholderTextPayment.toUpperCase().trim()) )
+            {
+                JOptionPane.showMessageDialog(this, "Please Enter a Payment ID ");
+            }
+            else
+            {
+                PO po = manager.getPOById(poId);
+                if (po != null)
+                {
+                 model.setRowCount(0);
+                 model.addRow(new Object[]{
+                     po.getPoID(),
+                     po.getPr().getPR_ID(),
+                     po.getSup().getSupplierName(),
+                     po.getItem().getItemName(),
+                     po.getQuantity(),
+                     po.getDate().toString(),
+                     po.getRequestedBy(),
+                     po.getApproval(),
+                     po.getApprovalBy()
+                 });
+                }
+                
+                else{
+                    JOptionPane.showMessageDialog(this, "No PO found based on the PO ID: " + poId);
+
+                }
+            }
+        }
+        
+           else {
+                JOptionPane.showMessageDialog(this, "Please enter a PR ID!", "Error", JOptionPane.WARNING_MESSAGE);
+           }
+        
+    }//GEN-LAST:event_btnSearchPayActionPerformed
 
     /**
      * @param args the command line arguments
