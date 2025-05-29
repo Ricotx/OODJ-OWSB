@@ -211,8 +211,9 @@ public class FinanceFrame extends javax.swing.JFrame {
         txtSupplier.setText("");
         txtStatus.setText("");      
         txtPrice.setText("");
-        dateChooserPO.setText("");
-        dateChooserPR.setText("");
+        dateChooserPO.setDate(null);
+        dateChooserReport.setDate(null);
+        dateChooserPR.setDate(null);
     }
 
     /**
@@ -228,9 +229,6 @@ public class FinanceFrame extends javax.swing.JFrame {
         buttonGroup2 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
         jMenu1 = new javax.swing.JMenu();
-        darkStar1 = new com.jgoodies.looks.plastic.theme.DarkStar();
-        darkStar2 = new com.jgoodies.looks.plastic.theme.DarkStar();
-        darkStar3 = new com.jgoodies.looks.plastic.theme.DarkStar();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lblGreeting = new javax.swing.JLabel();
@@ -270,7 +268,7 @@ public class FinanceFrame extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         btnSearchPO = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
-        dateChooserPO = new datechooser.beans.DateChooserCombo();
+        dateChooserPO = new com.toedter.calendar.JDateChooser();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblPR = new javax.swing.JTable();
@@ -278,7 +276,7 @@ public class FinanceFrame extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         txtFindPR = new javax.swing.JTextField();
         btnSearchPR = new javax.swing.JButton();
-        dateChooserPR = new datechooser.beans.DateChooserCombo();
+        dateChooserPR = new com.toedter.calendar.JDateChooser();
         jPanel5 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -311,7 +309,7 @@ public class FinanceFrame extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         txtAreaReport = new javax.swing.JTextArea();
         jLabel24 = new javax.swing.JLabel();
-        dateChooserReport = new datechooser.beans.DateChooserCombo();
+        dateChooserReport = new com.toedter.calendar.JDateChooser();
 
         jMenu1.setText("jMenu1");
 
@@ -720,410 +718,329 @@ public class FinanceFrame extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel13.setText("Purchase Order");
         jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        jPanel3.add(dateChooserPO, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 160, -1));
 
-        dateChooserPO.setCurrentView(new datechooser.view.appearance.AppearancesList("Contrast",
-            new datechooser.view.appearance.ViewAppearance("custom",
-                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12),
-                    new java.awt.Color(0, 0, 0),
-                    new java.awt.Color(0, 0, 255),
-                    false,
-                    true,
-                    new datechooser.view.appearance.swing.ButtonPainter()),
-                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12),
-                    new java.awt.Color(0, 0, 0),
-                    new java.awt.Color(0, 0, 255),
-                    true,
-                    true,
-                    new datechooser.view.appearance.swing.ButtonPainter()),
-                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12),
-                    new java.awt.Color(0, 0, 255),
-                    new java.awt.Color(0, 0, 255),
-                    false,
-                    true,
-                    new datechooser.view.appearance.swing.ButtonPainter()),
-                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12),
-                    new java.awt.Color(128, 128, 128),
-                    new java.awt.Color(0, 0, 255),
-                    false,
-                    true,
-                    new datechooser.view.appearance.swing.LabelPainter()),
-                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12),
-                    new java.awt.Color(0, 0, 0),
-                    new java.awt.Color(0, 0, 255),
-                    false,
-                    true,
-                    new datechooser.view.appearance.swing.LabelPainter()),
-                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12),
-                    new java.awt.Color(0, 0, 0),
-                    new java.awt.Color(255, 0, 0),
-                    false,
-                    false,
-                    new datechooser.view.appearance.swing.ButtonPainter()),
-                (datechooser.view.BackRenderer)null,
-                false,
-                true)));
-    dateChooserPO.setBehavior(datechooser.model.multiple.MultyModelBehavior.SELECT_SINGLE);
-    jPanel3.add(dateChooserPO, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 70, -1, -1));
+        btn1.addTab("PO", jPanel3);
 
-    btn1.addTab("PO", jPanel3);
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-    jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        tblPR.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "PR_ID", "Item_ID", "Quantity", "Request Date", "Requester", "Status"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
 
-    tblPR.setModel(new javax.swing.table.DefaultTableModel(
-        new Object [][] {
-            {null, null, null, null, null, null},
-            {null, null, null, null, null, null},
-            {null, null, null, null, null, null},
-            {null, null, null, null, null, null}
-        },
-        new String [] {
-            "PR_ID", "Item_ID", "Quantity", "Request Date", "Requester", "Status"
-        }
-    ) {
-        boolean[] canEdit = new boolean [] {
-            false, false, false, false, false, false
-        };
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tblPR);
 
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return canEdit [columnIndex];
-        }
-    });
-    jScrollPane2.setViewportView(tblPR);
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setText("Purchase Requisition");
 
-    jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-    jLabel2.setText("Purchase Requisition");
+        jLabel12.setText("Find");
 
-    jLabel12.setText("Find");
+        txtFindPR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFindPRActionPerformed(evt);
+            }
+        });
 
-    txtFindPR.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            txtFindPRActionPerformed(evt);
-        }
-    });
+        btnSearchPR.setText("Search");
+        btnSearchPR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchPRActionPerformed(evt);
+            }
+        });
 
-    btnSearchPR.setText("Search");
-    btnSearchPR.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            btnSearchPRActionPerformed(evt);
-        }
-    });
-
-    dateChooserPR.setCurrentView(new datechooser.view.appearance.AppearancesList("Contrast",
-        new datechooser.view.appearance.ViewAppearance("custom",
-            new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12),
-                new java.awt.Color(0, 0, 0),
-                new java.awt.Color(0, 0, 255),
-                false,
-                true,
-                new datechooser.view.appearance.swing.ButtonPainter()),
-            new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12),
-                new java.awt.Color(0, 0, 0),
-                new java.awt.Color(0, 0, 255),
-                true,
-                true,
-                new datechooser.view.appearance.swing.ButtonPainter()),
-            new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12),
-                new java.awt.Color(0, 0, 255),
-                new java.awt.Color(0, 0, 255),
-                false,
-                true,
-                new datechooser.view.appearance.swing.ButtonPainter()),
-            new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12),
-                new java.awt.Color(128, 128, 128),
-                new java.awt.Color(0, 0, 255),
-                false,
-                true,
-                new datechooser.view.appearance.swing.LabelPainter()),
-            new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12),
-                new java.awt.Color(0, 0, 0),
-                new java.awt.Color(0, 0, 255),
-                false,
-                true,
-                new datechooser.view.appearance.swing.LabelPainter()),
-            new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12),
-                new java.awt.Color(0, 0, 0),
-                new java.awt.Color(255, 0, 0),
-                false,
-                false,
-                new datechooser.view.appearance.swing.ButtonPainter()),
-            (datechooser.view.BackRenderer)null,
-            false,
-            true)));
-dateChooserPR.setBehavior(datechooser.model.multiple.MultyModelBehavior.SELECT_SINGLE);
-
-javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-jPanel4.setLayout(jPanel4Layout);
-jPanel4Layout.setHorizontalGroup(
-    jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-    .addGroup(jPanel4Layout.createSequentialGroup()
-        .addGap(19, 19, 19)
-        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2)
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtFindPR, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dateChooserPR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSearchPR))
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 788, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addContainerGap(262, Short.MAX_VALUE))
-    );
-    jPanel4Layout.setVerticalGroup(
-        jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(jPanel4Layout.createSequentialGroup()
-            .addGap(18, 18, 18)
-            .addComponent(jLabel2)
-            .addGap(16, 16, 16)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(txtFindPR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(dateChooserPR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnSearchPR))
-            .addGap(18, 18, 18)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(16, Short.MAX_VALUE))
-    );
+                .addGap(19, 19, 19)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 788, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtFindPR, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(dateChooserPR, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(12, 12, 12)
+                        .addComponent(btnSearchPR)))
+                .addContainerGap(262, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addGap(16, 16, 16)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel12)
+                                .addComponent(txtFindPR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnSearchPR))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dateChooserPR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
 
-    btn1.addTab("PR", jPanel4);
+        btn1.addTab("PR", jPanel4);
 
-    jPanel5.setBackground(new java.awt.Color(204, 204, 204));
-    jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel5.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-    jLabel14.setText("Payment ");
-    jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel14.setText("Payment ");
+        jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-    tblPayment.setModel(new javax.swing.table.DefaultTableModel(
-        new Object [][] {
-            {null, null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null, null}
-        },
-        new String [] {
-            "Payment ID", "PO ID", "Supplier ID", "Item ID", "Quantity", "Unit Price", "Total Amount", "Payment Date", "Paid By"
-        }
-    ) {
-        boolean[] canEdit = new boolean [] {
-            false, false, false, false, false, false, false, false, false
-        };
+        tblPayment.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Payment ID", "PO ID", "Supplier ID", "Item ID", "Quantity", "Unit Price", "Total Amount", "Payment Date", "Paid By"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
 
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return canEdit [columnIndex];
-        }
-    });
-    jScrollPane3.setViewportView(tblPayment);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tblPayment);
 
-    jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 324, 785, 204));
+        jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 324, 785, 204));
 
-    txtFindPay.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            txtFindPayActionPerformed(evt);
-        }
-    });
-    jPanel5.add(txtFindPay, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 145, -1));
+        txtFindPay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFindPayActionPerformed(evt);
+            }
+        });
+        jPanel5.add(txtFindPay, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 145, -1));
 
-    jLabel15.setText("Find");
-    jPanel5.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 43, -1));
+        jLabel15.setText("Find");
+        jPanel5.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 43, -1));
 
-    tblUnpaidPO.setModel(new javax.swing.table.DefaultTableModel(
-        new Object [][] {
-            {null, null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null, null}
-        },
-        new String [] {
-            "PO ID", "PR ID", "Supplier", "Item ", "Quantity", "Date", "Request By", "Approval", "Approve By"
-        }
-    ) {
-        boolean[] canEdit = new boolean [] {
-            false, false, false, false, false, false, false, false, false
-        };
+        tblUnpaidPO.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "PO ID", "PR ID", "Supplier", "Item ", "Quantity", "Date", "Request By", "Approval", "Approve By"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
 
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return canEdit [columnIndex];
-        }
-    });
-    tblUnpaidPO.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            tblUnpaidPOMouseClicked(evt);
-        }
-    });
-    jScrollPane4.setViewportView(tblUnpaidPO);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblUnpaidPO.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblUnpaidPOMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(tblUnpaidPO);
 
-    jPanel5.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 105, 785, 189));
+        jPanel5.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 105, 785, 189));
 
-    jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
 
-    jLabel17.setText("PO ID");
+        jLabel17.setText("PO ID");
 
-    jLabel18.setText("Supplier");
+        jLabel18.setText("Supplier");
 
-    jLabel19.setText("Item");
+        jLabel19.setText("Item");
 
-    jLabel20.setText("Date");
+        jLabel20.setText("Date");
 
-    jButton1.setText("Pay");
-    jButton1.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jButton1ActionPerformed(evt);
-        }
-    });
+        jButton1.setText("Pay");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-    jLabel21.setText("Approval");
+        jLabel21.setText("Approval");
 
-    jLabel22.setText("Cost");
+        jLabel22.setText("Cost");
 
-    jLabel23.setText("Quantity");
+        jLabel23.setText("Quantity");
 
-    javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-    jPanel7.setLayout(jPanel7Layout);
-    jPanel7Layout.setHorizontalGroup(
-        jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(jPanel7Layout.createSequentialGroup()
-            .addGap(15, 15, 15)
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addComponent(jLabel20)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtDatePayment, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addComponent(jLabel19)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtItemPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addComponent(jLabel17)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtPOID, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addComponent(jLabel18)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtSupplierPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addComponent(jLabel21)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtApprovalPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addComponent(jLabel22)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtCostPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addComponent(jLabel23)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtQuantityPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(38, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(txtPOID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(txtSupplierPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(txtItemPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(txtDatePayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(txtQuantityPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(txtApprovalPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel22)
+                    .addComponent(txtCostPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel20)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtDatePayment, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel19)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtItemPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtPOID, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel18)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtSupplierPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel21)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtApprovalPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel22)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtCostPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel23)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtQuantityPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
-            .addContainerGap(38, Short.MAX_VALUE))
-    );
-    jPanel7Layout.setVerticalGroup(
-        jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(jPanel7Layout.createSequentialGroup()
-            .addGap(16, 16, 16)
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel17)
-                .addComponent(txtPOID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(16, 16, 16)
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel18)
-                .addComponent(txtSupplierPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(16, 16, 16)
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel19)
-                .addComponent(txtItemPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(16, 16, 16)
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel20)
-                .addComponent(txtDatePayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(16, 16, 16)
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel23)
-                .addComponent(txtQuantityPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(16, 16, 16)
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel21)
-                .addComponent(txtApprovalPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(16, 16, 16)
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel22)
-                .addComponent(txtCostPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
-            .addComponent(jButton1)
-            .addGap(43, 43, 43))
-    );
+                .addGap(43, 43, 43))
+        );
 
-    jPanel5.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(823, 105, -1, -1));
+        jPanel5.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(823, 105, -1, -1));
 
-    jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-    jLabel16.setText("Payment Details");
-    jPanel5.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(823, 61, -1, -1));
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel16.setText("Payment Details");
+        jPanel5.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(823, 61, -1, -1));
 
-    btnDeletePayment.setText("Delete Payment");
-    btnDeletePayment.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            btnDeletePaymentActionPerformed(evt);
-        }
-    });
-    jPanel5.add(btnDeletePayment, new org.netbeans.lib.awtextra.AbsoluteConstraints(681, 295, -1, -1));
+        btnDeletePayment.setText("Delete Payment");
+        btnDeletePayment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletePaymentActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnDeletePayment, new org.netbeans.lib.awtextra.AbsoluteConstraints(681, 295, -1, -1));
 
-    btnSearchPay.setText("Search");
-    jPanel5.add(btnSearchPay, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, -1, -1));
+        btnSearchPay.setText("Search");
+        jPanel5.add(btnSearchPay, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, -1, -1));
 
-    btn1.addTab("$", jPanel5);
+        btn1.addTab("$", jPanel5);
 
-    jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-    btnGenerateReport.setText("Generate report");
-    btnGenerateReport.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            btnGenerateReportActionPerformed(evt);
-        }
-    });
+        btnGenerateReport.setText("Generate report");
+        btnGenerateReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerateReportActionPerformed(evt);
+            }
+        });
 
-    txtAreaReport.setColumns(20);
-    txtAreaReport.setRows(5);
-    jScrollPane5.setViewportView(txtAreaReport);
+        txtAreaReport.setColumns(20);
+        txtAreaReport.setRows(5);
+        jScrollPane5.setViewportView(txtAreaReport);
 
-    jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-    jLabel24.setText("Generate Report");
+        jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel24.setText("Generate Report");
 
-    javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-    jPanel8.setLayout(jPanel8Layout);
-    jPanel8Layout.setHorizontalGroup(
-        jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(jPanel8Layout.createSequentialGroup()
-            .addGap(20, 20, 20)
-            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel8Layout.createSequentialGroup()
-                    .addComponent(dateChooserReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(btnGenerateReport))
-                .addComponent(jLabel24))
-            .addContainerGap(521, Short.MAX_VALUE))
-    );
-    jPanel8Layout.setVerticalGroup(
-        jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-            .addContainerGap(21, Short.MAX_VALUE)
-            .addComponent(jLabel24)
-            .addGap(18, 18, 18)
-            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(dateChooserReport, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnGenerateReport, javax.swing.GroupLayout.Alignment.TRAILING))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap())
-    );
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel8Layout.createSequentialGroup()
+                            .addComponent(dateChooserReport, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnGenerateReport))
+                        .addComponent(jLabel24)))
+                .addContainerGap(521, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(21, Short.MAX_VALUE)
+                .addComponent(jLabel24)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnGenerateReport)
+                    .addComponent(dateChooserReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
-    btn1.addTab("report", jPanel8);
+        btn1.addTab("report", jPanel8);
 
-    getContentPane().add(btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 1130, 550));
+        getContentPane().add(btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 1130, 550));
 
-    pack();
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPOActionPerformed
@@ -1162,9 +1079,176 @@ jPanel4Layout.setHorizontalGroup(
         btn1.setSelectedIndex(3);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void btnGenerateReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateReportActionPerformed
+        Calendar selectedDate = dateChooserReport.getCalendar();
+        if (selectedDate != null)
+        {
+            System.out.println(selectedDate);
+            String report = manager.generatePaymentReportByDate(selectedDate);
+            txtAreaReport.setText(report);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Please Select a Date", "Error No Date Selected", JOptionPane.WARNING_MESSAGE);
+            
+        }
+
+    }//GEN-LAST:event_btnGenerateReportActionPerformed
+
+    private void btnDeletePaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePaymentActionPerformed
+        int selectedRow = tblPayment.getSelectedRow();
+
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a payment to delete.");
+            return;
+        }
+
+        String paymentID = tblPayment.getValueAt(selectedRow, 0).toString();
+
+        int confirm = JOptionPane.showConfirmDialog(this,
+            "Are you sure you want to delete Payment ID: " + paymentID + "?",
+            "Confirm Delete", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            List<Payment> paymentList = manager.getAllPayments();
+            boolean removed = paymentList.removeIf(p -> p.getPaymentID().equals(paymentID));
+
+            if (removed) {
+                manager.saveAllPaymentsToFile();
+                loadAllPayments();
+                JOptionPane.showMessageDialog(this, "Payment deleted successfully.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Payment not found in memory.");
+            }
+        }// TODO add your handling code here:
+    }//GEN-LAST:event_btnDeletePaymentActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int selectedRow = tblUnpaidPO.getSelectedRow();
+        System.out.println(selectedRow);
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a PO to pay.");
+            return;
+        }
+
+        String poID = tblUnpaidPO.getValueAt(selectedRow, 0).toString();
+        PO po = manager.getPOById(poID);
+
+        if (po == null || !"APPROVED".equalsIgnoreCase(po.getApproval())) {
+            JOptionPane.showMessageDialog(this, "PO must be approved before payment.");
+            return;
+        }
+
+        String paymentID = manager.generateNextPaymentID();
+
+        String supplierID = po.getSup().getSupplierID();
+        String itemID = po.getItem().getItemID();
+        int quantity = po.getQuantity();
+        double price = po.getSup().getPrice();
+        double total = quantity * price;
+        String paidBy = Session.getCurrentUser().getEmployeeID();
+        String paymentDate = LocalDate.now().toString();
+
+        Payment payment = new Payment(
+            paymentID, poID, supplierID, itemID,
+            quantity, price, total, paymentDate, paidBy
+        );
+
+        manager.getAllPayments().add(payment);
+        manager.saveAllPaymentsToFile();
+
+        JOptionPane.showMessageDialog(this, "Payment recorded: " + total);
+        loadAllPayments();
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tblUnpaidPOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUnpaidPOMouseClicked
+        int selectedRow = tblUnpaidPO.getSelectedRow();
+        if (selectedRow >= 0){
+            String poID = tblUnpaidPO.getValueAt(selectedRow, 0).toString(); //get POID
+            PO selectedPO = manager.getPOById(poID);
+
+            if (selectedPO != null){
+
+                NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("en", "MY"));
+
+                txtPOID.setText(selectedPO.getPoID());
+                txtItemPayment.setText(selectedPO.getItem().getItemName());
+                txtSupplierPayment.setText(selectedPO.getSup().getSupplierName());
+                txtQuantityPayment.setText(String.valueOf(selectedPO.getQuantity()));
+                txtApprovalPayment.setText(selectedPO.getApproval());
+                txtDatePayment.setText(selectedPO.getDate().toString());
+
+                Double Price = manager.getPriceByPOID(selectedPO.getPoID());
+                int Quantity = selectedPO.getQuantity();
+                double Cost = Quantity * Price;
+                txtCostPayment.setText(currencyFormat.format(Cost));
+            }
+
+        }
+    }//GEN-LAST:event_tblUnpaidPOMouseClicked
+
+    private void txtFindPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindPayActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFindPayActionPerformed
+
+    private void btnSearchPRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchPRActionPerformed
+        String prId = txtFindPR.getText().trim().toUpperCase();
+        Calendar selectedDate = dateChooserPR.getCalendar();
+
+        DefaultTableModel model = (DefaultTableModel) tblPR.getModel();
+
+        if(!prId.isEmpty()){
+            PR result = manager.getPRById(prId);
+            if (result != null){
+                model.setRowCount(0);
+                model.addRow(new Object[]{
+                    result.getPR_ID(),
+                    result.getItem().getItemID(),
+                    result.getQuantity(),
+                    result.getRequestdDate().toString(),
+                    result.getRequestedBy(),
+                    result.getStatus()
+                });
+            }else{
+                JOptionPane.showMessageDialog(this, "No PR found based on the PR ID: " + prId);
+            }
+        }
+        else if (selectedDate != null){
+            LocalDate searchDate = selectedDate.toInstant()
+            .atZone(java.time.ZoneId.systemDefault())
+            .toLocalDate();
+            List<PR> results = manager.filterPR_byDate(searchDate);
+
+            if(results.isEmpty()){
+                JOptionPane.showMessageDialog(this,"No PR found based on selected date. ");
+
+            } else {
+                for (PR pr : results){
+                    model.setRowCount(0);
+                    model.addRow(new Object[]{
+                        pr.getPR_ID(),
+                        pr.getItem().getItemID(),
+                        pr.getQuantity(),
+                        pr.getRequestdDate().toString(),
+                        pr.getRequestedBy(),
+                        pr.getStatus()
+                    });
+                }
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(this,"Please enter a valid PR ID!");
+        }
+    }//GEN-LAST:event_btnSearchPRActionPerformed
+
+    private void txtFindPRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindPRActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFindPRActionPerformed
+
     private void btnSearchPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchPOActionPerformed
         String poId = txtFindPO.getText().trim().toUpperCase();
-        Calendar selectedDate = dateChooserPO.getSelectedDate();
+        Calendar selectedDate = dateChooserPO.getCalendar();
         boxFilter.setSelectedIndex(0);
 
         DefaultTableModel model = (DefaultTableModel) tblPO.getModel();
@@ -1172,31 +1256,31 @@ jPanel4Layout.setHorizontalGroup(
         if(poId.equals(placeholderText.toUpperCase()))
         {
             if (selectedDate != null){
-            LocalDate searchDate = selectedDate.toInstant()
-            .atZone(java.time.ZoneId.systemDefault())
-            .toLocalDate();
-            List<PO> results = manager.filterPO_byDate(searchDate);
+                LocalDate searchDate = selectedDate.toInstant()
+                .atZone(java.time.ZoneId.systemDefault())
+                .toLocalDate();
+                List<PO> results = manager.filterPO_byDate(searchDate);
 
-            if(results.isEmpty()){
-                JOptionPane.showMessageDialog(this,"No PR found based on selected date. ");
+                if(results.isEmpty()){
+                    JOptionPane.showMessageDialog(this,"No PR found based on selected date. ");
 
-            } else {
-                for (PO po : results){
-                    model.setRowCount(0);
-                    model.addRow(new Object[]{
-                        po.getPoID(),
-                        po.getPr().getPR_ID(),
-                        po.getSup().getSupplierName(),
-                        po.getItem().getItemName(),
-                        po.getQuantity(),
-                        po.getDate().toString(),
-                        po.getRequestedBy(),
-                        po.getApproval(),
-                        po.getApprovalBy()
-                    });
+                } else {
+                    for (PO po : results){
+                        model.setRowCount(0);
+                        model.addRow(new Object[]{
+                            po.getPoID(),
+                            po.getPr().getPR_ID(),
+                            po.getSup().getSupplierName(),
+                            po.getItem().getItemName(),
+                            po.getQuantity(),
+                            po.getDate().toString(),
+                            po.getRequestedBy(),
+                            po.getApproval(),
+                            po.getApprovalBy()
+                        });
+                    }
                 }
             }
-        }
             else {
                 JOptionPane.showMessageDialog(this, "Please enter a PO ID!", "Error", JOptionPane.WARNING_MESSAGE);
             }
@@ -1222,7 +1306,7 @@ jPanel4Layout.setHorizontalGroup(
                 //                loadAllPOs();
             }
         }
-        
+
         else {
             JOptionPane.showMessageDialog(this,"Please enter a valid PO ID or Select a Date!");
             //            loadAllPOs();
@@ -1372,173 +1456,6 @@ jPanel4Layout.setHorizontalGroup(
         // TODO add your handling code here:
     }//GEN-LAST:event_tblPOComponentAdded
 
-    private void btnGenerateReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateReportActionPerformed
-        Calendar selectedDate = dateChooserReport.getSelectedDate();
-        if (selectedDate != null)
-        {
-            System.out.println(selectedDate);
-            String report = manager.generatePaymentReportByDate(selectedDate);
-            txtAreaReport.setText(report);
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(this, "Please Select a Date", "Error No Date Selected", JOptionPane.WARNING_MESSAGE);
-            
-        }
-
-    }//GEN-LAST:event_btnGenerateReportActionPerformed
-
-    private void btnDeletePaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePaymentActionPerformed
-        int selectedRow = tblPayment.getSelectedRow();
-
-        if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(this, "Please select a payment to delete.");
-            return;
-        }
-
-        String paymentID = tblPayment.getValueAt(selectedRow, 0).toString();
-
-        int confirm = JOptionPane.showConfirmDialog(this,
-            "Are you sure you want to delete Payment ID: " + paymentID + "?",
-            "Confirm Delete", JOptionPane.YES_NO_OPTION);
-
-        if (confirm == JOptionPane.YES_OPTION) {
-            List<Payment> paymentList = manager.getAllPayments();
-            boolean removed = paymentList.removeIf(p -> p.getPaymentID().equals(paymentID));
-
-            if (removed) {
-                manager.saveAllPaymentsToFile();
-                loadAllPayments();
-                JOptionPane.showMessageDialog(this, "Payment deleted successfully.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Payment not found in memory.");
-            }
-        }// TODO add your handling code here:
-    }//GEN-LAST:event_btnDeletePaymentActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int selectedRow = tblUnpaidPO.getSelectedRow();
-        System.out.println(selectedRow);
-        if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(this, "Please select a PO to pay.");
-            return;
-        }
-
-        String poID = tblUnpaidPO.getValueAt(selectedRow, 0).toString();
-        PO po = manager.getPOById(poID);
-
-        if (po == null || !"APPROVED".equalsIgnoreCase(po.getApproval())) {
-            JOptionPane.showMessageDialog(this, "PO must be approved before payment.");
-            return;
-        }
-
-        String paymentID = manager.generateNextPaymentID();
-
-        String supplierID = po.getSup().getSupplierID();
-        String itemID = po.getItem().getItemID();
-        int quantity = po.getQuantity();
-        double price = po.getSup().getPrice();
-        double total = quantity * price;
-        String paidBy = Session.getCurrentUser().getEmployeeID();
-        String paymentDate = LocalDate.now().toString();
-
-        Payment payment = new Payment(
-            paymentID, poID, supplierID, itemID,
-            quantity, price, total, paymentDate, paidBy
-        );
-
-        manager.getAllPayments().add(payment);
-        manager.saveAllPaymentsToFile();
-
-        JOptionPane.showMessageDialog(this, "Payment recorded: " + total);
-        loadAllPayments();
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void tblUnpaidPOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUnpaidPOMouseClicked
-        int selectedRow = tblUnpaidPO.getSelectedRow();
-        if (selectedRow >= 0){
-            String poID = tblUnpaidPO.getValueAt(selectedRow, 0).toString(); //get POID
-            PO selectedPO = manager.getPOById(poID);
-
-            if (selectedPO != null){
-
-                NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("en", "MY"));
-
-                txtPOID.setText(selectedPO.getPoID());
-                txtItemPayment.setText(selectedPO.getItem().getItemName());
-                txtSupplierPayment.setText(selectedPO.getSup().getSupplierName());
-                txtQuantityPayment.setText(String.valueOf(selectedPO.getQuantity()));
-                txtApprovalPayment.setText(selectedPO.getApproval());
-                txtDatePayment.setText(selectedPO.getDate().toString());
-
-                Double Price = manager.getPriceByPOID(selectedPO.getPoID());
-                int Quantity = selectedPO.getQuantity();
-                double Cost = Quantity * Price;
-                txtCostPayment.setText(currencyFormat.format(Cost));
-            }
-
-        }
-    }//GEN-LAST:event_tblUnpaidPOMouseClicked
-
-    private void txtFindPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindPayActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFindPayActionPerformed
-
-    private void btnSearchPRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchPRActionPerformed
-        String prId = txtFindPR.getText().trim().toUpperCase();
-        Calendar selectedDate = dateChooserPR.getSelectedDate();
-
-        DefaultTableModel model = (DefaultTableModel) tblPR.getModel();
-
-        if(!prId.isEmpty()){
-            PR result = manager.getPRById(prId);
-            if (result != null){
-                model.setRowCount(0);
-                model.addRow(new Object[]{
-                    result.getPR_ID(),
-                    result.getItem().getItemID(),
-                    result.getQuantity(),
-                    result.getRequestdDate().toString(),
-                    result.getRequestedBy(),
-                    result.getStatus()
-                });
-            }else{
-                JOptionPane.showMessageDialog(this, "No PR found based on the PR ID: " + prId);
-            }
-        }
-        else if (selectedDate != null){
-            LocalDate searchDate = selectedDate.toInstant()
-            .atZone(java.time.ZoneId.systemDefault())
-            .toLocalDate();
-            List<PR> results = manager.filterPR_byDate(searchDate);
-
-            if(results.isEmpty()){
-                JOptionPane.showMessageDialog(this,"No PR found based on selected date. ");
-
-            } else {
-                for (PR pr : results){
-                    model.setRowCount(0);
-                    model.addRow(new Object[]{
-                        pr.getPR_ID(),
-                        pr.getItem().getItemID(),
-                        pr.getQuantity(),
-                        pr.getRequestdDate().toString(),
-                        pr.getRequestedBy(),
-                        pr.getStatus()
-                    });
-                }
-            }
-        }
-        else {
-            JOptionPane.showMessageDialog(this,"Please enter a valid PR ID!");
-        }
-    }//GEN-LAST:event_btnSearchPRActionPerformed
-
-    private void txtFindPRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindPRActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFindPRActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -1595,12 +1512,9 @@ jPanel4Layout.setHorizontalGroup(
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
-    private com.jgoodies.looks.plastic.theme.DarkStar darkStar1;
-    private com.jgoodies.looks.plastic.theme.DarkStar darkStar2;
-    private com.jgoodies.looks.plastic.theme.DarkStar darkStar3;
-    private datechooser.beans.DateChooserCombo dateChooserPO;
-    private datechooser.beans.DateChooserCombo dateChooserPR;
-    private datechooser.beans.DateChooserCombo dateChooserReport;
+    private com.toedter.calendar.JDateChooser dateChooserPO;
+    private com.toedter.calendar.JDateChooser dateChooserPR;
+    private com.toedter.calendar.JDateChooser dateChooserReport;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;

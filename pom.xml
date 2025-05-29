@@ -23,16 +23,6 @@
             <artifactId>AbsoluteLayout</artifactId>
             <version>RELEASE250</version>
         </dependency>
-        <dependency>
-            <groupId>unknown.binary</groupId>
-            <artifactId>DateChooser</artifactId>
-            <version>SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>unknown.binary</groupId>
-            <artifactId>jgoodies-looks-2.4.1</artifactId>
-            <version>SNAPSHOT</version>
-        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
