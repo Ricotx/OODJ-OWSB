@@ -55,8 +55,6 @@ public class PM2Frame extends javax.swing.JFrame {
         
     }
     
-    
-   
     private void loadAllPOs(){
         DefaultTableModel model = (DefaultTableModel) poTable.getModel();
         model.setRowCount(0);
@@ -73,13 +71,10 @@ public class PM2Frame extends javax.swing.JFrame {
                 po.getApproval(),
                 po.getApprovalBy(),
                 po.getReceivedQuantity()
-                
             });
         }
         //System.out.println("POs Loaded" + manager.get);
     }
-    
-    
     
     private void clearPOForm(){
         poIDTextField.setText("");
@@ -112,7 +107,7 @@ public class PM2Frame extends javax.swing.JFrame {
                 quantityTextField.setEditable(true);
                 editBtn.setEnabled(true);
                 deleteBtn.setEnabled(true);
-                JOptionPane.showMessageDialog(this, "This Purchase Order has yet been APPROVED and is in PENDING status \n ONLY item quantity can be adjusted.");
+                JOptionPane.showMessageDialog(this, "This Purchase Order has yet been APPROVED and is in PENDING status \n ONLY item quantity can be adjusted. \n If a change of supplier is needed, please DELETE the PO and Request a new PO.");
 
             } else {
                 quantityTextField.setEditable(false);
@@ -259,17 +254,17 @@ public class PM2Frame extends javax.swing.JFrame {
 
         poTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "PO_ID", "PR_ID", "Item_ID", "Supplier_ID", "Quantity", "Requested_Date", "Requested_By", "Status", "Appproval_By", "Received_Quantity"
+                "PO_ID", "PR_ID", "Item_ID", "Supplier_ID", "Quantity", "Requested_Date", "Requested_By", "Status", "Appproval_By"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, true
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -290,7 +285,7 @@ public class PM2Frame extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1139, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(searchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -303,7 +298,7 @@ public class PM2Frame extends javax.swing.JFrame {
                         .addComponent(searchPOButton)
                         .addGap(38, 38, 38)
                         .addComponent(clearPOButton)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -439,12 +434,8 @@ public class PM2Frame extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(81, 81, 81)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(supplierIDLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(supplierIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -459,93 +450,107 @@ public class PM2Frame extends javax.swing.JFrame {
                                 .addComponent(itemIDLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(itemIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(65, 65, 65)
+                        .addGap(69, 69, 69)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addComponent(quantityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(quantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGap(91, 91, 91))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                    .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(256, 256, 256)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(requestedByLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(requestedByTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(91, 91, 91)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(requestedByTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(quantityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(quantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(receivedQtyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(receivedQtyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(approvalByLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(approvalByTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(statusTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(224, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(statusTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(supplierIDLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(supplierIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59)
+                        .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(121, 121, 121)
+                        .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(73, 73, 73))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(poIDLabel)
-                    .addComponent(poIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(quantityLabel)
-                    .addComponent(quantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(statusLabel)
-                    .addComponent(statusTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(prIDLabel)
-                    .addComponent(prIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dateLabel)
-                    .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(approvalByLabel)
-                    .addComponent(approvalByTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(itemIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(itemIDLabel)
-                    .addComponent(requestedByLabel)
-                    .addComponent(requestedByTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(receivedQtyLabel)
-                    .addComponent(receivedQtyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(supplierIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(supplierIDLabel))
-                .addGap(43, 43, 43)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(statusLabel)
+                                    .addComponent(statusTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(approvalByLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(approvalByTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(receivedQtyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(receivedQtyLabel)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(poIDLabel)
+                                    .addComponent(poIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(prIDLabel)
+                                    .addComponent(prIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(itemIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(itemIDLabel))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(supplierIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(supplierIDLabel))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(quantityLabel)
+                            .addComponent(quantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(dateLabel)
+                            .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(requestedByLabel)
+                            .addComponent(requestedByTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(39, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1297, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1285, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1189, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1189, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -559,90 +564,6 @@ public class PM2Frame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void poIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_poIDTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_poIDTextFieldActionPerformed
-
-    private void prIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prIDTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_prIDTextFieldActionPerformed
-
-    private void dateTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dateTextFieldActionPerformed
-
-    private void itemIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemIDTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_itemIDTextFieldActionPerformed
-
-    private void supplierIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierIDTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_supplierIDTextFieldActionPerformed
-
-    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        // TODO add your handling code here:
-        //Validate fields
-        int oldQuantity = selectedPO.getQuantity();
-        if(selectedPO == null){
-            JOptionPane.showMessageDialog(this, "Select a PO from the PO table to edit the quantity");
-        }
-        
-        if (quantityTextField.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please make Quantity is not empty!");
-            return;
-        }
-        String quantityText = quantityTextField.getText().trim();
-        int newQuantity;
-        try{
-            newQuantity = Integer.parseInt(quantityText);
-            if (newQuantity <= 0){
-                JOptionPane.showMessageDialog(this, "Quantity must be greater than 0!");
-                return;
-            }
-        }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(this, "Quantity must be a valid number.");
-            return;
-        }
-        
-        
-        selectedPO.setQuantity(newQuantity);
-        manager.edit(selectedPO);
-        FH.writeAllToFile("data/PO.txt",manager.viewAll());
-        JOptionPane.showMessageDialog(this, "PO " + selectedPO.getPoID() + " updated: \nQuantity changed from" + oldQuantity + " to " + newQuantity, 
-                "Update Successful!", JOptionPane.INFORMATION_MESSAGE);
-        
-        loadAllPOs();
-        clearPOForm();
-        selectedPO = null;
-    }//GEN-LAST:event_editBtnActionPerformed
-
-    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        // TODO add your handling code here:
-        //Validate all fields except supplier field
-        if (selectedPO == null){
-            JOptionPane.showMessageDialog(this, "Please select the PO to delete from the PR table before deleting it!");
-            return;
-        }
-        
-        int confirm = JOptionPane.showConfirmDialog(this, 
-                "Are you sure you want to delete PO: " + selectedPO.getPoID() + "?",
-                "Confirm Deletion",
-                JOptionPane.YES_NO_OPTION);
-   
-        if (confirm == JOptionPane.YES_OPTION){
-            manager.delete(selectedPO);
-            FH.writeAllToFile("data/PO.txt", manager.viewAll());
-            
-            manager.updatePRStatus(selectedPO.getPr().getPR_ID(), "REJECTED");
-            
-            JOptionPane.showMessageDialog(this, "Purchase Order " + selectedPO.getPoID() + " has been rejected and deleted.");
-            loadAllPOs();
-            clearPOForm();
-            selectedPO = null;
-        }
-        
-    }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void poSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_poSearchTextFieldActionPerformed
         // TODO add your handling code here:
@@ -672,7 +593,7 @@ public class PM2Frame extends javax.swing.JFrame {
                     result.getReceivedQuantity()
                 });
             }else{
-                JOptionPane.showMessageDialog(this, "No PO found based on the PR ID: " + poId);
+                JOptionPane.showMessageDialog(this, "No PO found based on the PO ID: " + poId);
             }
         } else if (selectedDate != null){
             LocalDate searchDate = selectedDate.toInstant()
@@ -700,7 +621,7 @@ public class PM2Frame extends javax.swing.JFrame {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(this,"Please enter a valid PR ID or select a date!");
+            JOptionPane.showMessageDialog(this,"Please enter a valid PO ID or select a date!");
         }
     }//GEN-LAST:event_searchPOButtonActionPerformed
 
@@ -731,27 +652,6 @@ public class PM2Frame extends javax.swing.JFrame {
         new LoginFrame().setVisible(true);
     }//GEN-LAST:event_btnLogoutActionPerformed
 
-    private void quantityTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantityTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_quantityTextFieldActionPerformed
-
-    private void requestedByTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestedByTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_requestedByTextFieldActionPerformed
-
-    private void statusTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_statusTextFieldActionPerformed
-
-    private void approvalByTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approvalByTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_approvalByTextFieldActionPerformed
-
-    private void supplierIDTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supplierIDTextFieldMouseClicked
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_supplierIDTextFieldMouseClicked
-
     private void poTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_poTableMouseClicked
         // TODO add your handling code here:
         int selectedRow = poTable.getSelectedRow();
@@ -771,6 +671,110 @@ public class PM2Frame extends javax.swing.JFrame {
     private void receivedQtyTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receivedQtyTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_receivedQtyTextFieldActionPerformed
+
+    private void approvalByTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approvalByTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_approvalByTextFieldActionPerformed
+
+    private void statusTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_statusTextFieldActionPerformed
+
+    private void requestedByTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestedByTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_requestedByTextFieldActionPerformed
+
+    private void quantityTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantityTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quantityTextFieldActionPerformed
+
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        // TODO add your handling code here:
+        //Validate all fields except supplier field
+        if (selectedPO == null){
+            JOptionPane.showMessageDialog(this, "Please select the PO to delete from the PR table before deleting it!");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(this,
+            "Are you sure you want to delete PO: " + selectedPO.getPoID() + "?",
+            "Confirm Deletion",
+            JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION){
+            manager.delete(selectedPO);
+            FH.writeAllToFile("data/PO.txt", manager.viewAll());
+
+            manager.updatePRStatus(selectedPO.getPr().getPR_ID(), "REJECTED");
+
+            JOptionPane.showMessageDialog(this, "Purchase Order " + selectedPO.getPoID() + " has been rejected and deleted.");
+            loadAllPOs();
+            clearPOForm();
+            selectedPO = null;
+        }
+
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+        // TODO add your handling code here:
+        //Validate fields
+        int oldQuantity = selectedPO.getQuantity();
+        if(selectedPO == null){
+            JOptionPane.showMessageDialog(this, "Select a PO from the PO table to edit the quantity");
+        }
+
+        if (quantityTextField.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please make Quantity is not empty!");
+            return;
+        }
+        String quantityText = quantityTextField.getText().trim();
+        int newQuantity;
+        try{
+            newQuantity = Integer.parseInt(quantityText);
+            if (newQuantity <= 0){
+                JOptionPane.showMessageDialog(this, "Quantity must be greater than 0!");
+                return;
+            }
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Quantity must be a valid number.");
+            return;
+        }
+
+        selectedPO.setQuantity(newQuantity);
+        manager.edit(selectedPO);
+        FH.writeAllToFile("data/PO.txt",manager.viewAll());
+        JOptionPane.showMessageDialog(this, "PO " + selectedPO.getPoID() + " updated: \nQuantity changed from " + oldQuantity + " to " + newQuantity,
+            "Update Successful!", JOptionPane.INFORMATION_MESSAGE);
+
+        loadAllPOs();
+        clearPOForm();
+        selectedPO = null;
+    }//GEN-LAST:event_editBtnActionPerformed
+
+    private void supplierIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierIDTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_supplierIDTextFieldActionPerformed
+
+    private void supplierIDTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supplierIDTextFieldMouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_supplierIDTextFieldMouseClicked
+
+    private void itemIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemIDTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemIDTextFieldActionPerformed
+
+    private void dateTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dateTextFieldActionPerformed
+
+    private void prIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prIDTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_prIDTextFieldActionPerformed
+
+    private void poIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_poIDTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_poIDTextFieldActionPerformed
 
     /**
      * @param args the command line arguments

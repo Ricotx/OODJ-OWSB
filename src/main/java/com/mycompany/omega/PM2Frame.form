@@ -26,15 +26,9 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" pref="1297" max="32767" attributes="0"/>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jPanel2" max="32767" attributes="0"/>
-                  <Component id="jPanel3" pref="1285" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
+          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
+          <Component id="jPanel3" alignment="0" pref="1189" max="32767" attributes="0"/>
+          <Component id="jPanel1" alignment="0" pref="1189" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -142,7 +136,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane2" min="-2" pref="1220" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" pref="1139" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="searchLabel" min="-2" pref="336" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -157,7 +151,7 @@
                           <Component id="clearPOButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="19" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -233,7 +227,7 @@
             <Component class="javax.swing.JTable" name="poTable">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="10" rowCount="4">
+                  <Table columnCount="9" rowCount="4">
                     <Column editable="false" title="PO_ID" type="java.lang.Object"/>
                     <Column editable="false" title="PR_ID" type="java.lang.Object"/>
                     <Column editable="false" title="Item_ID" type="java.lang.Object"/>
@@ -243,16 +237,10 @@
                     <Column editable="false" title="Requested_By" type="java.lang.Object"/>
                     <Column editable="false" title="Status" type="java.lang.Object"/>
                     <Column editable="false" title="Appproval_By" type="java.lang.Object"/>
-                    <Column editable="true" title="Received_Quantity" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
@@ -323,13 +311,8 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="supplierIDLabel" min="-2" pref="139" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="supplierIDTextField" min="-2" pref="147" max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
@@ -348,57 +331,56 @@
                                   <Component id="itemIDTextField" min="-2" pref="147" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="quantityLabel" min="-2" pref="139" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="quantityTextField" min="-2" pref="147" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="dateLabel" min="-2" pref="139" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="dateTextField" min="-2" pref="147" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="editBtn" min="-2" pref="76" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="256" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="requestedByLabel" min="-2" pref="139" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="requestedByTextField" min="-2" pref="147" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="quantityLabel" min="-2" pref="139" max="-2" attributes="0"/>
+                                      <Component id="dateLabel" min="-2" pref="139" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="dateTextField" min="-2" pref="147" max="-2" attributes="0"/>
+                                      <Component id="quantityTextField" alignment="0" min="-2" pref="147" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <Component id="receivedQtyLabel" min="-2" pref="139" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="receivedQtyTextField" min="-2" pref="147" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
                                   <Component id="approvalByLabel" min="-2" pref="139" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="approvalByTextField" min="-2" pref="147" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <Component id="statusLabel" min="-2" pref="139" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="statusTextField" min="-2" pref="147" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="deleteBtn" alignment="0" min="-2" pref="76" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="supplierIDLabel" min="-2" pref="139" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="supplierIDTextField" min="-2" pref="147" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                          <Component id="editBtn" min="-2" pref="76" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
+                          <Component id="deleteBtn" min="-2" pref="76" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="224" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -406,43 +388,72 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="poIDLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="poIDTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="quantityLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="quantityTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="statusLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="statusTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="statusLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="statusTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="approvalByLabel" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
+                                      <Component id="approvalByTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="receivedQtyTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="receivedQtyLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="poIDLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="poIDTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="prIDLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="prIDTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="itemIDTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="itemIDLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="supplierIDTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="supplierIDLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="quantityLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="quantityTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="dateLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="dateTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="requestedByLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="requestedByTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="editBtn" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                              <Component id="deleteBtn" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="39" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="17" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="prIDLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="prIDTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="dateLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="dateTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="approvalByLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="approvalByTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="itemIDTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="itemIDLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="requestedByLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="requestedByTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="receivedQtyLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="receivedQtyTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="supplierIDTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="supplierIDLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="deleteBtn" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="editBtn" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
