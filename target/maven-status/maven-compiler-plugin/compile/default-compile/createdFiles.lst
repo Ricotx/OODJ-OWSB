@@ -29,6 +29,7 @@ com\mycompany\omega\classes\Payment.class
 com\mycompany\omega\GenerateReportFrame$8.class
 com\mycompany\omega\PMFrame$18.class
 com\mycompany\omega\classes\Session.class
+com\mycompany\omega\FinanceFrame$38.class
 com\mycompany\omega\classes\UserAuth.class
 com\mycompany\omega\FinanceFrame$31.class
 com\mycompany\omega\SMFrame$10.class
@@ -41,6 +42,7 @@ com\mycompany\omega\PM2Frame$1.class
 com\mycompany\omega\AdminFrame$11.class
 com\mycompany\omega\SMFrame$15.class
 com\mycompany\omega\ViewItemFrame$6.class
+com\mycompany\omega\FinanceFrame$37.class
 com\mycompany\omega\PM2Frame$17.class
 com\mycompany\omega\SMFrame$44.class
 com\mycompany\omega\GenerateReportFrame$3.class
@@ -60,6 +62,7 @@ com\mycompany\omega\FinanceFrame$33.class
 com\mycompany\omega\PMFrame$5.class
 com\mycompany\omega\SMFrame$35.class
 com\mycompany\omega\FinanceFrame$26.class
+com\mycompany\omega\FinanceFrame$36.class
 com\mycompany\omega\PMFrame$17.class
 com\mycompany\omega\LoginFrame.class
 com\mycompany\omega\FinanceFrame$1.class
