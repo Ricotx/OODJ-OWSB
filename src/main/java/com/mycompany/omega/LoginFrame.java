@@ -21,6 +21,10 @@ public class LoginFrame extends javax.swing.JFrame {
 
     public LoginFrame() {
         initComponents();
+        
+        passwordField.addActionListener((java.awt.event.ActionEvent evt) -> {
+            loginButton1ActionPerformed(null);  // or your search method
+        });
     }
 
     /**
@@ -196,6 +200,10 @@ public class LoginFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Failed to reset password. Email not found.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnForgetPasswordActionPerformed
+
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordFieldActionPerformed
 
     /**
      * @param args the command line arguments
