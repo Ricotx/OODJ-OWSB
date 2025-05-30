@@ -1228,13 +1228,15 @@ public class SMFrame extends javax.swing.JFrame {
       }
 
       try {
+        List<Item> itemList = this.manager.getAllItems();
          int Stock = Integer.parseInt(stock);
          Item newItem = new Item(id, name, Stock);
          if (!this.isEditMode) {
+            itemList.add(newItem);
             FileHandler.appendLine("data/Items.txt", newItem.toString());
             JOptionPane.showMessageDialog(null, "Item added succesfully!");
          } else {
-            List<Item> itemList = this.manager.getAllItems();
+           
             for (Item item : itemList){
                if (item.getItemID().equals(id)) {
                   item.setItemName(name);
@@ -1380,6 +1382,7 @@ public class SMFrame extends javax.swing.JFrame {
       }
 
       try {
+          List<Supplier> supList = this.manager.getAllSuppliers();
          float Price = Float.parseFloat(price);
          Item matchedItem = (Item)manager.getAllItems().stream()
                             .filter(i -> i.getItemID().equals(itemid))
@@ -1404,7 +1407,7 @@ public class SMFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Supplier added succesfully!");
          } else {
             found = false;
-            List<Supplier> supList = this.manager.getAllSuppliers();
+            
             
             for (Supplier s : supList){
                if (s.getSupplierID().equals(id)) {
