@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  *
  * @author adham
  */
-public class SalesManager extends Employee implements Viewable<PO> {
+public class SalesManager extends Employee implements Viewable<Sales>,Manageable<Sales>{
     private List<PO> poList;
     private List<PR> prList;
     private List<Supplier> supplierList;
@@ -40,17 +40,58 @@ public class SalesManager extends Employee implements Viewable<PO> {
    }
 
     @Override
-   public List<PO> viewAll() {
-      return this.poList;
+   public List<Sales> viewAll() {
+      return this.salesList;
    }
-
+   
     @Override
-    public PO viewById(String id){
-        return poList.stream()
-                .filter(po -> po.getPoID().equals(id))
+    public Sales viewById(String id){
+        return salesList.stream()
+                .filter(sales -> sales.getSaleID().equals(id))
                 .findFirst()
                 .orElse(null);
     }
+    
+    
+    @Override
+    public void add(Sales sales){
+        salesList.add(sales);
+        FileHandler.appendLine("data/Sale.txt",sales.toString());
+    }
+    
+    @Override
+    public void edit(Sales sales){
+        ListIterator<Sales> iterator = salesList.listIterator();
+        while(iterator.hasNext()){
+            Sales current = iterator.next();
+            if (current.getSaleID().equals(sales.getSaleID())){
+                iterator.set(sales);
+                break;
+            }
+        }
+    }
+    
+    @Override
+    public void delete(Sales sale){
+        salesList.removeIf(s -> s.getSaleID().equals(sale.getSaleID()));
+        FileHandler.writeAllToFile("data/Sale.txt", salesList);
+    }
+    
+    
+    public boolean removeSales(String salesID) {
+      boolean removed = this.salesList.removeIf((Sales) -> {
+         return Sales.getSaleID().equals(salesID);
+      });
+      if (removed) {
+         FileHandler.writeAllToFile("data/Sale.txt", this.salesList);
+         System.out.println("Sale with ID: " + salesID + " removed.");
+         return true;
+      } else {
+         System.out.println("Sale with ID: " + salesID + "not found.");
+         return false;
+      }
+   }
+    
 
    public List<Supplier> getSupplierForItem(String itemID) {
       return (List)this.supplierList.stream().filter((s) -> {
@@ -70,8 +111,13 @@ public class SalesManager extends Employee implements Viewable<PO> {
       return this.itemList;
    }
 
-   public List<Sales> getAllSales() {
-      return this.salesList;
+//   public List<Sales> getAllSales() {
+//      return this.salesList;
+//   }
+   
+   
+   public List<PO> getAllPO() {
+      return this.poList;
    }
 
    public Item getItemById(String itemid) {
@@ -92,11 +138,11 @@ public class SalesManager extends Employee implements Viewable<PO> {
               .collect(Collectors.toList());
    }
 
-   public Sales getSalesById(String salesid) {
-      return salesList.stream()
-              .filter(s -> s.getSaleID().equals(salesid))
-              .findFirst().orElse(null);
-   }
+//   public Sales getSalesById(String salesid) {
+//      return salesList.stream()
+//              .filter(s -> s.getSaleID().equals(salesid))
+//              .findFirst().orElse(null);
+//   }
    
     public PR getPRById(String id){
         return prList.stream()
@@ -139,19 +185,7 @@ public class SalesManager extends Employee implements Viewable<PO> {
       }
    }
 
-   public boolean removeSales(String salesID) {
-      boolean removed = this.salesList.removeIf((Sales) -> {
-         return Sales.getSaleID().equals(salesID);
-      });
-      if (removed) {
-         FileHandler.writeAllToFile("data/Sale.txt", this.salesList);
-         System.out.println("Sale with ID: " + salesID + " removed.");
-         return true;
-      } else {
-         System.out.println("Sale with ID: " + salesID + "not found.");
-         return false;
-      }
-   }
+
 
    public boolean removePR(String PRID) {
       boolean removed = this.prList.removeIf((PR) -> {

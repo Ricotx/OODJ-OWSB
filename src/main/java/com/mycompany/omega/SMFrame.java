@@ -90,7 +90,7 @@ public class SMFrame extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) SaleTable.getModel();
         model.setRowCount(0); 
         
-        for(Sales sale: manager.getAllSales()){
+        for(Sales sale: manager.viewAll()){
             model.addRow(new Object[]{
                 sale.getSaleID(),
                 sale.getItem().getItemID(),
@@ -98,7 +98,7 @@ public class SMFrame extends javax.swing.JFrame {
                 sale.getDate().toString()
             });
         }
-        System.out.println("Sales loaded: " + manager.getAllSales().size());
+        System.out.println("Sales loaded: " + manager.viewAll().size());
     }
     
         private void loadAllPRs(){
@@ -122,7 +122,7 @@ public class SMFrame extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) PoTable.getModel();
         model.setRowCount(0); 
         
-        for(PO po: manager.viewAll()){
+        for(PO po: manager.getAllPO()){
             model.addRow(new Object[]{
                 po.getPoID(),
                 po.getPr().getPR_ID(),
@@ -1387,6 +1387,8 @@ public class SMFrame extends javax.swing.JFrame {
          Item matchedItem = (Item)manager.getAllItems().stream()
                             .filter(i -> i.getItemID().equals(itemid))
                             .findFirst().orElse(null);
+         Supplier newSupplier = new Supplier(id, name, contact, matchedItem, Price);
+         
          if (matchedItem == null) {
             JOptionPane.showMessageDialog(null, "Invalid Item ID!");
             return;
@@ -1402,8 +1404,9 @@ public class SMFrame extends javax.swing.JFrame {
                return;
             }
 
-            String linetowrite = id + "," + name + "," + contact + "," + matchedItem.getItemID() + "," + Price;
-            FileHandler.appendLine("data/Supplier.txt", linetowrite);
+            //String linetowrite = id + "," + name + "," + contact + "," + matchedItem.getItemID() + "," + Price;
+            supList.add(newSupplier);
+            FileHandler.appendLine("data/Supplier.txt", newSupplier.toString());
             JOptionPane.showMessageDialog(null, "Supplier added succesfully!");
          } else {
             found = false;
@@ -1524,7 +1527,7 @@ String itemId = itemfiltercmb.getSelectedItem().toString().trim();
          String saleid = SaleTable.getValueAt(selectedRow, 0).toString();
          String itemid = SaleTable.getValueAt(selectedRow, 1).toString();
          String Quantity = SaleTable.getValueAt(selectedRow, 2).toString();
-         Sales selectedsales = manager.getSalesById(saleid);
+         Sales selectedsales = manager.viewById(saleid);
          if (selectedsales != null) {
             salesidfld.setText(selectedsales.getSaleID());
             salesitemidcmb.setSelectedItem(itemid);
@@ -1564,6 +1567,7 @@ String itemId = itemfiltercmb.getSelectedItem().toString().trim();
       }
 
       try {
+         List<Sales> salesList = manager.viewAll(); 
          int saleQty = Integer.parseInt(quantity);
          
          List<Item> itemList = manager.getAllItems();
@@ -1591,7 +1595,12 @@ String itemId = itemfiltercmb.getSelectedItem().toString().trim();
          System.out.println("new Q:" + saleQty);
          System.out.println("ori quant:" + Quantity);
          System.out.println("current quant:" + matchedItem.getStock());
-         matchedItem.setStock(Quantity - saleQty);         
+         matchedItem.setStock(Quantity - saleQty);
+         
+         
+         Sales newSales = new Sales(salesid, matchedItem,saleQty,recordedby,LocalDate.now());
+         
+         
          FileHandler.writeAllToFile("data/Items.txt", itemList);
          String matchedEmployee = manager.getEmployeeID();
          if (matchedEmployee == null) {
@@ -1602,15 +1611,18 @@ String itemId = itemfiltercmb.getSelectedItem().toString().trim();
          boolean found;
          String linetowrite;
          if (!this.isEditMode) {
-            found = manager.getAllSales().stream()
+            found = manager.viewAll().stream()
                     .anyMatch(s -> s.getSaleID().equals(salesid));
             if (found) {
                JOptionPane.showMessageDialog(null, "Sales ID already exists!");
                return;
             }
 
-            linetowrite = salesid + "," + matchedItem.getItemID() + "," + saleQty + "," + matchedEmployee + "," + salesdate;
-            FileHandler.appendLine("data/Sale.txt", linetowrite);
+            //linetowrite = salesid + "," + matchedItem.getItemID() + "," + saleQty + "," + matchedEmployee + "," + salesdate;
+            
+            manager.add(newSales);
+//            salesList.add(newSales);
+//            FileHandler.appendLine("data/Sale.txt", newSales.toString());
             JOptionPane.showMessageDialog(null, "Sales added succesfully!");
             loadAllSales();
          } else {
@@ -1647,7 +1659,7 @@ String itemId = itemfiltercmb.getSelectedItem().toString().trim();
 
             matchedItem.setStock(Quantity - saleQty);
             FileHandler.writeAllToFile("data/Items.txt", itemList);
-            List<Sales> salesList = manager.getAllSales();
+            
             for (Sales s : salesList){
                if (s.getSaleID().equals(salesid)) {
                   s.setRecordedBy(matchedEmployee);
@@ -1661,8 +1673,10 @@ String itemId = itemfiltercmb.getSelectedItem().toString().trim();
                JOptionPane.showMessageDialog(null, "Sales not found!");
                return;
             }
-
-            FileHandler.writeAllToFile("data/Sale.txt", salesList);
+            
+            Sales updatedSale = new Sales(salesid, matchedItem,saleQty,recordedby,LocalDate.now());
+            manager.edit(updatedSale);
+//            FileHandler.writeAllToFile("data/Sale.txt", salesList);
             JOptionPane.showMessageDialog(null, "Sales editted succesfully!");
          }
 
@@ -1698,36 +1712,51 @@ String itemId = itemfiltercmb.getSelectedItem().toString().trim();
       LoadIteminCombo(this.salesitemidcmb);
       salesitemidcmb.setEnabled(true);
       salesquantityfld.setText("");
+      oriquantity = 0;
       salesdatefld.setText(this.TodayDate());
       salesrecordfld.setText(Session.getCurrentUser().getEmployeeID());
       salesavebtn.setVisible(true);
     }//GEN-LAST:event_saleaddbtnActionPerformed
 
     private void saledeletebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saledeletebtnActionPerformed
-        int selectedRow = SaleTable.getSelectedRow();
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(null, "Please select a sales record to delete.");
-        } else {
-         String itemId = SaleTable.getValueAt(selectedRow, 1).toString();
-         int qty = Integer.parseInt(SaleTable.getValueAt(selectedRow, 2).toString());
-         List<Item> itemList = manager.getAllItems();
-         Item item = (Item)itemList.stream()
-                 .filter(i -> i.getItemID().equals(itemId))
-                 .findFirst().orElse(null);
-         String selectedSalesId = SaleTable.getValueAt(selectedRow, 0).toString();
-         if (manager.removeSales(selectedSalesId)) {
+    int selectedRow = SaleTable.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(null, "Please select a sales record to delete.");
+    } else {
+        String selectedSalesId = SaleTable.getValueAt(selectedRow, 0).toString();
+
+        // Find the Sales object in the manager's list by ID
+        Sales selectedSale = manager.viewAll().stream()
+            .filter(s -> s.getSaleID().equals(selectedSalesId))
+            .findFirst()
+            .orElse(null);
+
+        if (selectedSale != null) {
+            String itemId = selectedSale.getItem().getItemID();
+            int qty = selectedSale.getQuantity();
+
+            List<Item> itemList = manager.getAllItems();
+            Item item = itemList.stream()
+                .filter(i -> i.getItemID().equals(itemId))
+                .findFirst()
+                .orElse(null);
+
+            // Delete the sale by passing the Sales object
+            manager.delete(selectedSale);
+
+            // Update stock if item exists
             if (item != null) {
-               item.setStock(item.getStock() + qty);
-               FileHandler.writeAllToFile("data/Items.txt", itemList);
+                item.setStock(item.getStock() + qty);
+                FileHandler.writeAllToFile("data/Items.txt", itemList);
             }
 
-            JOptionPane.showMessageDialog(null, "Sales is sucessfully removed!.");
-         } else {
-            JOptionPane.showMessageDialog(null, "Sales cannot be removed! Please try again..");
-         }
+            JOptionPane.showMessageDialog(null, "Sales is successfully removed!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Sales record not found. Please try again.");
+        }
+    }
 
-         this.loadAllSales();
-      }
+    this.loadAllSales();
     }//GEN-LAST:event_saledeletebtnActionPerformed
 
     private void saleclearbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saleclearbtnActionPerformed
@@ -1740,7 +1769,7 @@ String itemId = itemfiltercmb.getSelectedItem().toString().trim();
         DefaultTableModel model = (DefaultTableModel)SaleTable.getModel();
         model.setRowCount(0);
         if (!salesId.isEmpty()) {
-            Sales result = manager.getSalesById(salesId);
+            Sales result = manager.viewById(salesId);
         if (result != null) {
             model.addRow(new Object[]{
                 result.getSaleID(),
@@ -1919,6 +1948,9 @@ String itemId = itemfiltercmb.getSelectedItem().toString().trim();
         salesrecordfld.setText("");
         loadAllSales();
         
+        LoadSupplierinCombo(supfiltercmb);
+        LoadIteminCombo(itemfiltercmb);
+        
         itemsavebtn.setVisible(false);
         savesupbtn.setVisible(false);
         salesavebtn.setVisible(false);
@@ -1952,16 +1984,18 @@ String itemId = itemfiltercmb.getSelectedItem().toString().trim();
       }
 
       try {
+         List<PR> prList = this.manager.getAllPRs(); 
          int Quantity = Integer.parseInt(quantity);
          Item matchedItem = (Item) manager.getAllItems().stream()
                             .filter(i -> i.getItemID().equals(itemid))
                             .findFirst().orElse(null);
+         PR newPR = new PR(prid, matchedItem,Quantity,LocalDate.now(),requestedby,status);
          if (!this.isEditMode) {
-            String linetowrite = prid + "," + itemid + "," + Quantity + "," + date + "," + requestedby + "," + status;
-            FileHandler.appendLine("data/PR.txt", linetowrite);
+//            String linetowrite = prid + "," + itemid + "," + Quantity + "," + date + "," + requestedby + "," + status;
+             prList.add(newPR);
+            FileHandler.appendLine("data/PR.txt", newPR.toString());
             JOptionPane.showMessageDialog(null, "PR generated succesfully!");
          } else {
-            List<PR> prList = this.manager.getAllPRs();
             for (PR pr : prList){
                if (pr.getPR_ID().equals(prid)) {
                   pr.setItem(matchedItem);
