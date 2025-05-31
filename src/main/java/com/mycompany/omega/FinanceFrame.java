@@ -1187,7 +1187,8 @@ public class FinanceFrame extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Payment not found in memory.");
             }
-        }// TODO add your handling code here:
+        }
+// TODO add your handling code here:
     }//GEN-LAST:event_btnDeletePaymentActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
