@@ -248,7 +248,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="180" y="110" width="1120" height="550"/>
+          <AbsoluteConstraints x="160" y="120" width="1120" height="550"/>
         </Constraint>
       </Constraints>
 
@@ -982,6 +982,7 @@
                         <Column editable="false" title="Approve By" type="java.lang.Object"/>
                       </Table>
                     </Property>
+                    <Property name="cellSelectionEnabled" type="boolean" value="false"/>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                       <TableColumnModel selectionModel="1">
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
@@ -1031,7 +1032,6 @@
                         </Column>
                       </TableColumnModel>
                     </Property>
-                    <Property name="columnSelectionAllowed" type="boolean" value="true"/>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                       <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                     </Property>
@@ -1332,6 +1332,7 @@
                         </Column>
                       </TableColumnModel>
                     </Property>
+                    <Property name="columnSelectionAllowed" type="boolean" value="true"/>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                       <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                     </Property>

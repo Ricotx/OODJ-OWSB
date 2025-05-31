@@ -1183,12 +1183,12 @@ public class FinanceFrame extends javax.swing.JFrame {
             if (removed) {
                 manager.saveAllPaymentsToFile();
                 loadAllPayments();
+                loadUnpaidPOs();
                 JOptionPane.showMessageDialog(this, "Payment deleted successfully.");
             } else {
                 JOptionPane.showMessageDialog(this, "Payment not found in memory.");
             }
         }
-// TODO add your handling code here:
     }//GEN-LAST:event_btnDeletePaymentActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -1227,6 +1227,7 @@ public class FinanceFrame extends javax.swing.JFrame {
 
         JOptionPane.showMessageDialog(this, "Payment recorded: " + total);
         loadAllPayments();
+        loadUnpaidPOs();
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
