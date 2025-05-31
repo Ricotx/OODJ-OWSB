@@ -72,23 +72,13 @@ public class PO {
             matchedPR,
             matchedSupplier,
             matchedItem,
-            Integer.parseInt(parts[4]),               // quantity ordered
+            Integer.parseInt(parts[4]),
             LocalDate.parse(parts[5], formatter),
-            parts[6],                                // orderedBy
-            parts[7],                                // approval
-            parts[8],                                 // approvalBy
-            Integer.parseInt(parts[9])    
+            parts[6],
+            parts[7],
+            parts[8],
+            Integer.parseInt(parts[9])
         );
-
-        // Check if parts[9] exists (receivedQuantity) and set it
-        /*if (parts.length > 9) {
-            po.setReceivedQuantity(Integer.parseInt(parts[9]));
-        } else {
-            po.setReceivedQuantity(0); // default to 0 if missing
-        }
-
-        return po;
-        */
 
     } catch (Exception e) {
         System.out.println("Error parsing PO from line: " + line);
@@ -158,13 +148,11 @@ public class PO {
         this.approvalBy = approvalBy;
     }
     
-    //private int receivedQuantity = 0;  // default 0
-
-    public int getReceivedQuantity() {
+    public int getReceivedQuantity(){
         return receivedQuantity;
     }
-
-    public void setReceivedQuantity(int receivedQuantity) {
+    
+    public void setReceivedQuantity(int receivedQuantity){
         this.receivedQuantity = receivedQuantity;
     }
     

@@ -27,7 +27,7 @@ public class Supplier {
 
     @Override
     public String toString(){
-        return supplierID + "," + supplierName + "," + contact + "," + item + "," + price;
+        return supplierID + "," + supplierName + "," + contact + "," + item.getItemID() + "," + price;
     }
     
     public static Supplier fromLine(String line, List<Item> itemList){

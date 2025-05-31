@@ -28,14 +28,10 @@ public class Item {
     
     public static Item fromLine(String line){
         String[] parts = line.split(",");
-        if (parts.length < 3) {
-            System.out.println("Skipping invalid Item line: " + line);
-            return null;
-        }
         return new Item(
             parts[0], //PR_ID
             parts[1], //Item_ID
-            Integer.parseInt(parts[2].trim()) //PR requested Item Quantity
+            Integer.parseInt(parts[2]) //PR requested Item Quantity
         );
     }
 

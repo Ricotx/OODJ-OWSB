@@ -1,0 +1,855 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package com.mycompany.omega;
+import com.mycompany.omega.classes.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import static java.time.ZoneId.systemDefault;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author userr
+ */
+public class PM2Frame extends javax.swing.JFrame {
+    private PurchaseManager manager;
+    private PO selectedPO;
+    private FileHandler FH;
+    
+
+    /**
+     * Creates new form PMFrame
+     */
+    public PM2Frame(Employee user) {
+        initComponents();
+        
+        if (user instanceof PurchaseManager) {
+            this.manager = (PurchaseManager) user;  // Safe cast
+        } else if (user.getRole() == Employee.Role.ADMINISTRATOR) {
+            // Optional: Admins can access view-only or limited version
+            this.manager = new PurchaseManager(user.getEmployeeID(), user.getName(), user.getRole(), user.getEmail(), user.getPassword());
+        } else {
+            JOptionPane.showMessageDialog(this, "Access Denied. You are not authorized to access this page.");
+            dispose();
+            return;
+        }
+        
+        editBtn.setEnabled(false);
+        deleteBtn.setEnabled(false);
+        
+        System.out.println("Session User: " + Session.getCurrentUser());
+        System.out.println("Manager assigned? " + (manager != null));
+        
+        
+        loadAllPOs();
+        
+        lblGreeting.setText("Welcome, " + manager.getRole() + ": " + manager.getName());
+        
+
+        
+    }
+    
+    private void loadAllPOs(){
+        DefaultTableModel model = (DefaultTableModel) poTable.getModel();
+        model.setRowCount(0);
+        Employee PM = Session.getCurrentUser();
+        for(PO po: manager.viewAll()){
+            if (po.getRequestedBy().equals(PM.getEmployeeID())){
+                model.addRow(new Object[]{
+                    po.getPoID(),
+                    po.getPr().getPR_ID(),
+                    po.getItem().getItemID(),
+                    po.getSup().getSupplierName(),
+                    po.getQuantity(),
+                    po.getDate().toString(),
+                    po.getRequestedBy(),
+                    po.getApproval(),
+                    po.getApprovalBy(),
+                    po.getReceivedQuantity()
+                });
+            }  
+        }
+    }
+    
+    private void clearPOForm(){
+        poIDTextField.setText("");
+        prIDTextField.setText("");
+        itemIDTextField.setText("");
+        supplierIDTextField.setText("");
+        quantityTextField.setText("");
+        requestedByTextField.setText("");
+        dateTextField.setText("");
+        statusTextField.setText("");
+        approvalByTextField.setText("");
+        receivedQtyTextField.setText("");
+    }
+    
+    private void populatePOFields(PO po){
+        selectedPO = po;
+        try {
+            poIDTextField.setText(po.getPoID());
+            prIDTextField.setText(po.getPr().getPR_ID());
+            itemIDTextField.setText(po.getItem().getItemID());
+            supplierIDTextField.setText(po.getSup().getSupplierID());
+            quantityTextField.setText(String.valueOf(po.getQuantity()));
+            dateTextField.setText(po.getDate().toString());
+            requestedByTextField.setText(po.getRequestedBy());
+            statusTextField.setText(po.getApproval());
+            approvalByTextField.setText(po.getApprovalBy());
+            receivedQtyTextField.setText(String.valueOf(po.getReceivedQuantity()));
+
+            if (po.getApproval().equalsIgnoreCase("PENDING")){
+                quantityTextField.setEditable(true);
+                editBtn.setEnabled(true);
+                deleteBtn.setEnabled(true);
+                JOptionPane.showMessageDialog(this, "This Purchase Order has yet been APPROVED and is in PENDING status \n ONLY item quantity can be adjusted. \n If a change of supplier is needed, please DELETE the PO and Request a new PO.");
+
+            } else {
+                quantityTextField.setEditable(false);
+                editBtn.setEnabled(false);
+                deleteBtn.setEnabled(false);
+                JOptionPane.showMessageDialog(this, "This Purchase Order is already APPROVED, it CANNOT be edited or deleted");
+            }
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, "Error loading PO details: " +e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        lblGreeting = new javax.swing.JLabel();
+        btnCreatePO = new javax.swing.JButton();
+        btnEditDeletePO = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        searchLabel = new javax.swing.JLabel();
+        poSearchTextField = new javax.swing.JTextField();
+        dateSearchTextField = new com.toedter.calendar.JDateChooser();
+        jLabel8 = new javax.swing.JLabel();
+        searchPOButton = new javax.swing.JButton();
+        clearPOButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        poTable = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        poIDLabel = new javax.swing.JLabel();
+        poIDTextField = new javax.swing.JTextField();
+        prIDLabel = new javax.swing.JLabel();
+        prIDTextField = new javax.swing.JTextField();
+        quantityLabel = new javax.swing.JLabel();
+        dateTextField = new javax.swing.JTextField();
+        itemIDLabel = new javax.swing.JLabel();
+        itemIDTextField = new javax.swing.JTextField();
+        supplierIDLabel = new javax.swing.JLabel();
+        supplierIDTextField = new javax.swing.JTextField();
+        editBtn = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
+        dateLabel = new javax.swing.JLabel();
+        quantityTextField = new javax.swing.JTextField();
+        requestedByLabel = new javax.swing.JLabel();
+        requestedByTextField = new javax.swing.JTextField();
+        statusLabel = new javax.swing.JLabel();
+        statusTextField = new javax.swing.JTextField();
+        approvalByLabel = new javax.swing.JLabel();
+        approvalByTextField = new javax.swing.JTextField();
+        receivedQtyLabel = new javax.swing.JLabel();
+        receivedQtyTextField = new javax.swing.JTextField();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(1253, 670));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 153));
+        jPanel1.setPreferredSize(new java.awt.Dimension(162, 102));
+
+        lblGreeting.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblGreeting.setText("Hello, Purchase Manager, Richard Ong");
+
+        btnCreatePO.setText("Create PO");
+        btnCreatePO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreatePOActionPerformed(evt);
+            }
+        });
+
+        btnEditDeletePO.setText("Edit/Delete PO");
+        btnEditDeletePO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditDeletePOActionPerformed(evt);
+            }
+        });
+
+        btnLogout.setText("Logout");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(lblGreeting, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(191, 191, 191)
+                .addComponent(btnCreatePO)
+                .addGap(47, 47, 47)
+                .addComponent(btnEditDeletePO)
+                .addGap(52, 52, 52)
+                .addComponent(btnLogout)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGreeting, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditDeletePO)
+                    .addComponent(btnCreatePO)
+                    .addComponent(btnLogout))
+                .addContainerGap(33, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel3.setPreferredSize(new java.awt.Dimension(1000, 630));
+
+        searchLabel.setText("Search based on Purchase Order ID or Request Date:");
+
+        poSearchTextField.setText("Enter PO ID");
+        poSearchTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                poSearchTextFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("or");
+
+        searchPOButton.setText("Search");
+        searchPOButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchPOButtonActionPerformed(evt);
+            }
+        });
+
+        clearPOButton.setText("Clear");
+        clearPOButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearPOButtonActionPerformed(evt);
+            }
+        });
+
+        poTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "PO_ID", "PR_ID", "Item_ID", "Supplier_ID", "Quantity", "Requested_Date", "Requested_By", "Status", "Appproval_By"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        poTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                poTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(poTable);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(searchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(poSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dateSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60)
+                        .addComponent(searchPOButton)
+                        .addGap(38, 38, 38)
+                        .addComponent(clearPOButton)))
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(searchLabel)
+                            .addComponent(poSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addComponent(dateSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(searchPOButton)
+                        .addComponent(clearPOButton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                .addGap(5, 5, 5))
+        );
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 204));
+
+        poIDLabel.setText("Purchase Order ID:");
+
+        poIDTextField.setEditable(false);
+        poIDTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                poIDTextFieldActionPerformed(evt);
+            }
+        });
+
+        prIDLabel.setText("Purchase Requisition ID:");
+
+        prIDTextField.setEditable(false);
+        prIDTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prIDTextFieldActionPerformed(evt);
+            }
+        });
+
+        quantityLabel.setText("Quantity:");
+
+        dateTextField.setEditable(false);
+        dateTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dateTextFieldActionPerformed(evt);
+            }
+        });
+
+        itemIDLabel.setText("Item ID:");
+
+        itemIDTextField.setEditable(false);
+        itemIDTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemIDTextFieldActionPerformed(evt);
+            }
+        });
+
+        supplierIDLabel.setText("Supplier ID:");
+
+        supplierIDTextField.setEditable(false);
+        supplierIDTextField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                supplierIDTextFieldMouseClicked(evt);
+            }
+        });
+        supplierIDTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supplierIDTextFieldActionPerformed(evt);
+            }
+        });
+
+        editBtn.setText("Edit");
+        editBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBtnActionPerformed(evt);
+            }
+        });
+
+        deleteBtn.setText("Delete");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
+
+        dateLabel.setText("Requested Date");
+
+        quantityTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quantityTextFieldActionPerformed(evt);
+            }
+        });
+
+        requestedByLabel.setText("Requested By");
+
+        requestedByTextField.setEditable(false);
+        requestedByTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                requestedByTextFieldActionPerformed(evt);
+            }
+        });
+
+        statusLabel.setText("Status");
+
+        statusTextField.setEditable(false);
+        statusTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                statusTextFieldActionPerformed(evt);
+            }
+        });
+
+        approvalByLabel.setText("Approval By");
+
+        approvalByTextField.setEditable(false);
+        approvalByTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                approvalByTextFieldActionPerformed(evt);
+            }
+        });
+
+        receivedQtyLabel.setText("Received Quantity");
+
+        receivedQtyTextField.setEditable(false);
+        receivedQtyTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                receivedQtyTextFieldActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(81, 81, 81)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(poIDLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(poIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(prIDLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(prIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(itemIDLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(itemIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(69, 69, 69)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(requestedByLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(requestedByTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(quantityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(quantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(receivedQtyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(receivedQtyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(approvalByLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(approvalByTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(statusTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(supplierIDLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(supplierIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59)
+                        .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(121, 121, 121)
+                        .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(73, 73, 73))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(statusLabel)
+                            .addComponent(statusTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(approvalByLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(approvalByTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(receivedQtyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(receivedQtyLabel)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(poIDLabel)
+                            .addComponent(poIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(prIDLabel)
+                            .addComponent(prIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(itemIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(itemIDLabel))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(supplierIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(supplierIDLabel)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(quantityLabel)
+                            .addComponent(quantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(dateLabel)
+                            .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(requestedByLabel)
+                            .addComponent(requestedByTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1189, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1189, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void poSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_poSearchTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_poSearchTextFieldActionPerformed
+
+    private void searchPOButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchPOButtonActionPerformed
+        // TODO add your handling code here:
+        String poId = poSearchTextField.getText().trim();
+        Date selectedDate = dateSearchTextField.getDate();
+        
+        DefaultTableModel model = (DefaultTableModel) poTable.getModel();
+        model.setRowCount(0);
+        
+        if(!poId.isEmpty()){
+            PO result = manager.viewById(poId);
+            if (result != null){
+                model.addRow(new Object[]{
+                    result.getPoID(),
+                    result.getPr().getPR_ID(),
+                    result.getSup().getSupplierID(),
+                    result.getItem().getItemID(),
+                    result.getQuantity(),
+                    result.getDate().toString(),
+                    result.getRequestedBy(),
+                    result.getApproval(),
+                    result.getApprovalBy(),
+                    result.getReceivedQuantity()
+                });
+            }else{
+                JOptionPane.showMessageDialog(this, "No PO found based on the PO ID: " + poId);
+            }
+        } else if (selectedDate != null){
+            LocalDate searchDate = selectedDate.toInstant()
+                    .atZone(java.time.ZoneId.systemDefault())
+                    .toLocalDate();
+            List<PO> results = manager.filterPO_byDate(searchDate);
+            
+            if(results.isEmpty()){
+                JOptionPane.showMessageDialog(this,"No PO found based on selected date. ");
+
+            } else {
+                for (PO po : results){
+                    model.addRow(new Object[]{
+                        po.getPoID(),
+                        po.getPr().getPR_ID(),
+                        po.getSup().getSupplierID(),
+                        po.getItem().getItemID(),
+                        po.getQuantity(),
+                        po.getDate().toString(),
+                        po.getRequestedBy(),
+                        po.getApproval(),
+                        po.getApprovalBy(),
+                        po.getReceivedQuantity()
+                    });
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,"Please enter a valid PO ID or select a date!");
+        }
+    }//GEN-LAST:event_searchPOButtonActionPerformed
+
+    private void clearPOButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearPOButtonActionPerformed
+        // TODO add your handling code here:
+        poSearchTextField.setText("");
+        dateSearchTextField.setDate(null);
+        loadAllPOs();
+    }//GEN-LAST:event_clearPOButtonActionPerformed
+
+    private void btnCreatePOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreatePOActionPerformed
+        // TODO add your handling code here:
+        new PMFrame(Session.getCurrentUser()).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnCreatePOActionPerformed
+
+    private void btnEditDeletePOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditDeletePOActionPerformed
+        // TODO add your handling code here:
+        new PM2Frame(Session.getCurrentUser()).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnEditDeletePOActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        Session.clear();
+        System.out.println("User Logged Out: " + Session.getCurrentUser());
+        this.dispose();
+        new LoginFrame().setVisible(true);
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void poTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_poTableMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = poTable.getSelectedRow();
+        if (selectedRow >= 0){
+            String poID = poTable.getValueAt(selectedRow, 0).toString();
+            selectedPO = manager.viewById(poID);
+            
+            if (selectedPO!=null){
+                populatePOFields(selectedPO);
+            } else {
+                JOptionPane.showMessageDialog(this, "PO ID not found in table");
+            }
+                
+        }
+    }//GEN-LAST:event_poTableMouseClicked
+
+    private void receivedQtyTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receivedQtyTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_receivedQtyTextFieldActionPerformed
+
+    private void approvalByTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approvalByTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_approvalByTextFieldActionPerformed
+
+    private void statusTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_statusTextFieldActionPerformed
+
+    private void requestedByTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestedByTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_requestedByTextFieldActionPerformed
+
+    private void quantityTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantityTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quantityTextFieldActionPerformed
+
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        // TODO add your handling code here:
+        //Validate all fields except supplier field
+        if (selectedPO == null){
+            JOptionPane.showMessageDialog(this, "Please select the PO to delete from the PR table before deleting it!");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(this,
+            "Are you sure you want to delete PO: " + selectedPO.getPoID() + "?",
+            "Confirm Deletion",
+            JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION){
+            manager.delete(selectedPO);
+            FH.writeAllToFile("data/PO.txt", manager.viewAll());
+
+            manager.updatePRStatus(selectedPO.getPr().getPR_ID(), "REJECTED");
+
+            JOptionPane.showMessageDialog(this, "Purchase Order " + selectedPO.getPoID() + " has been rejected and deleted.");
+            loadAllPOs();
+            clearPOForm();
+            selectedPO = null;
+        }
+
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+        // TODO add your handling code here:
+        //Validate fields
+        int oldQuantity = selectedPO.getQuantity();
+        if(selectedPO == null){
+            JOptionPane.showMessageDialog(this, "Select a PO from the PO table to edit the quantity");
+        }
+
+        if (quantityTextField.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please make Quantity is not empty!");
+            return;
+        }
+        String quantityText = quantityTextField.getText().trim();
+        int newQuantity;
+        try{
+            newQuantity = Integer.parseInt(quantityText);
+            if (newQuantity <= 0){
+                JOptionPane.showMessageDialog(this, "Quantity must be greater than 0!");
+                return;
+            }
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Quantity must be a valid number.");
+            return;
+        }
+
+        selectedPO.setQuantity(newQuantity);
+        manager.edit(selectedPO);
+        FH.writeAllToFile("data/PO.txt",manager.viewAll());
+        JOptionPane.showMessageDialog(this, "PO " + selectedPO.getPoID() + " updated: \nQuantity changed from " + oldQuantity + " to " + newQuantity,
+            "Update Successful!", JOptionPane.INFORMATION_MESSAGE);
+
+        loadAllPOs();
+        clearPOForm();
+        selectedPO = null;
+    }//GEN-LAST:event_editBtnActionPerformed
+
+    private void supplierIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierIDTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_supplierIDTextFieldActionPerformed
+
+    private void supplierIDTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supplierIDTextFieldMouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_supplierIDTextFieldMouseClicked
+
+    private void itemIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemIDTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemIDTextFieldActionPerformed
+
+    private void dateTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dateTextFieldActionPerformed
+
+    private void prIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prIDTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_prIDTextFieldActionPerformed
+
+    private void poIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_poIDTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_poIDTextFieldActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(PM2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(PM2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(PM2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(PM2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                new PM2Frame().setVisible(true);
+//            }
+//        });
+//    }
+    
+    
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel approvalByLabel;
+    private javax.swing.JTextField approvalByTextField;
+    private javax.swing.JButton btnCreatePO;
+    private javax.swing.JButton btnEditDeletePO;
+    private javax.swing.JButton btnLogout;
+    private javax.swing.JButton clearPOButton;
+    private javax.swing.JLabel dateLabel;
+    private com.toedter.calendar.JDateChooser dateSearchTextField;
+    private javax.swing.JTextField dateTextField;
+    private javax.swing.JButton deleteBtn;
+    private javax.swing.JButton editBtn;
+    private javax.swing.JLabel itemIDLabel;
+    private javax.swing.JTextField itemIDTextField;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblGreeting;
+    private javax.swing.JLabel poIDLabel;
+    private javax.swing.JTextField poIDTextField;
+    private javax.swing.JTextField poSearchTextField;
+    private javax.swing.JTable poTable;
+    private javax.swing.JLabel prIDLabel;
+    private javax.swing.JTextField prIDTextField;
+    private javax.swing.JLabel quantityLabel;
+    private javax.swing.JTextField quantityTextField;
+    private javax.swing.JLabel receivedQtyLabel;
+    private javax.swing.JTextField receivedQtyTextField;
+    private javax.swing.JLabel requestedByLabel;
+    private javax.swing.JTextField requestedByTextField;
+    private javax.swing.JLabel searchLabel;
+    private javax.swing.JButton searchPOButton;
+    private javax.swing.JLabel statusLabel;
+    private javax.swing.JTextField statusTextField;
+    private javax.swing.JLabel supplierIDLabel;
+    private javax.swing.JTextField supplierIDTextField;
+    // End of variables declaration//GEN-END:variables
+}

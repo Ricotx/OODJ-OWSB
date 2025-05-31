@@ -1,4 +1,2 @@
-IT001,Widget A,4
-IT002,Widget B,9
-IT003,Widget C,0
-IT004,Widget D,11
+IT001,Mouse,40
+IT002,Keyboard,20

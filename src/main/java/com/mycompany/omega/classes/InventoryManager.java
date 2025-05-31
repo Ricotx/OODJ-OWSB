@@ -68,7 +68,7 @@ public class InventoryManager extends Employee {
     // Existing launchDashboard, now passing 'this'
     @Override
     public void launchDashboard() {
-        new InventoryFrame().setVisible(true);
+        new InventoryFrame(Session.getCurrentUser()).setVisible(true);
     }
 
     public List<String> getPOIDs() {

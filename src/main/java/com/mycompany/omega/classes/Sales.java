@@ -37,17 +37,12 @@ public class Sales {
                date.format(formatter);
     }
 
-    public static Sales fromLine(String line, List<Item> items, List<Employee> employees) {
+    public static Sales fromLine(String line, List<Item> items) {
         String[] parts = line.split(",");
         Item matchedItem = items.stream()
             .filter(i -> i.getItemID().equals(parts[1]))
             .findFirst().orElse(null);
 
-        //Employee matchedEmp = employees.stream()
-            //.filter(e -> e.getEmployeeID().equals(parts[3]))
-            //.findFirst().orElse(null);
-
-        //if (matchedItem == null || matchedEmp == null) return null;
         if (matchedItem == null) return null;
 
         return new Sales(
@@ -58,4 +53,42 @@ public class Sales {
             LocalDate.parse(parts[4], formatter)
         );
     }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public String getSaleID() {
+        return saleID;
+    }
+    
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getRecordedBy() {
+        return recordedBy;
+    }
+
+    public void setRecordedBy(String recordedBy) {
+        this.recordedBy = recordedBy;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+    
+    
 }
