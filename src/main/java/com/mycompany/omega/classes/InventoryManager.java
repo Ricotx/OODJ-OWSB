@@ -4,24 +4,24 @@
  */
 package com.mycompany.omega.classes;
 
+
 import com.mycompany.omega.InventoryFrame;
 import java.util.List;
-import com.mycompany.omega.classes.*;
+import java.util.ListIterator;
 import java.util.stream.Collectors;
 import java.util.Map;
 
-
 /**
- *
- * @author fikri
+ * InventoryManager manages inventory items, purchase requisitions, suppliers, and purchase orders.
+ * Implements Manageable and Viewable interfaces for Purchase Orders.
  */
-public class InventoryManager extends Employee {
+public class InventoryManager extends Employee implements Manageable<PO>, Viewable<PO> {
     private List<Item> itemList;
     private List<PR> prList;
     private List<Supplier> supplierList;
     private List<PO> poList;
 
-    public InventoryManager(String employeeID, String name, Role role, String email, String password) {
+    public InventoryManager(String employeeID, String name, Employee.Role role, String email, String password) {
         super(employeeID, name, role, email, password);
         loadItems();
         loadPRs();
@@ -34,7 +34,6 @@ public class InventoryManager extends Employee {
     }
 
     private void loadPRs() {
-        // Note: PR.fromLine expects itemList, so ensure items loaded first
         this.prList = FileHandler.loadFromFile("data/PR.txt", line -> PR.fromLine(line, itemList));
     }
 
@@ -43,11 +42,9 @@ public class InventoryManager extends Employee {
     }
 
     private void loadPOs() {
-        // PO.fromLine expects prList, itemList, supplierList, so load them first
         this.poList = FileHandler.loadFromFile("data/PO.txt", line -> PO.fromLine(line, prList, itemList, supplierList));
     }
 
-    // Getter methods for GUI access
     public List<Item> getItemList() {
         return itemList;
     }
@@ -63,73 +60,110 @@ public class InventoryManager extends Employee {
     public List<PO> getPOList() {
         return poList;
     }
-    
 
-    // Existing launchDashboard, now passing 'this'
     @Override
     public void launchDashboard() {
         new InventoryFrame(Session.getCurrentUser()).setVisible(true);
     }
 
+    // Manageable interface methods
+
+    @Override
+    public void add(PO po) {
+        poList.add(po);
+        FileHandler.appendLine("data/PO.txt", po.toString());
+    }
+
+    @Override
+    public void edit(PO po) {
+        ListIterator<PO> iterator = poList.listIterator();
+        while (iterator.hasNext()) {
+            PO current = iterator.next();
+            if (current.getPoID().equals(po.getPoID())) {
+                iterator.set(po);
+                FileHandler.writeAllToFile("data/PO.txt", poList);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void delete(PO po) {
+        poList.removeIf(p -> p.getPoID().equals(po.getPoID()));
+        FileHandler.writeAllToFile("data/PO.txt", poList);
+    }
+
+    // Viewable interface methods
+
+    @Override
+    public List<PO> viewAll() {
+        return poList;
+    }
+
+    @Override
+    public PO viewById(String id) {
+        return poList.stream()
+                .filter(po -> po.getPoID().equals(id))
+                .findFirst()
+                .orElse(null);
+    }
+
+    // Existing business logic methods
+
     public List<String> getPOIDs() {
         return poList.stream()
                 .filter(po -> "APPROVED".equalsIgnoreCase(po.getApproval()))
-                .filter(po -> po.getReceivedQuantity() < po.getQuantity()) // only show if quantity ordered > 0
+                .filter(po -> po.getReceivedQuantity() < po.getQuantity())  // only show PO with remaining quantity
                 .map(PO::getPoID)
                 .distinct()
                 .collect(Collectors.toList());
     }
-    
+
     public boolean isPOFullyReceived(String poID) {
         List<PO> details = getPODetailsByID(poID);
-
-    // Make sure every PO detail's received quantity >= ordered quantity
         return details.stream().allMatch(po -> po.getReceivedQuantity() >= po.getQuantity());
     }
-         
-     public List<PO> getPODetailsByID(String poID) {
+
+    public List<PO> getPODetailsByID(String poID) {
         return poList.stream()
                 .filter(po -> po.getPoID().equals(poID))
                 .collect(Collectors.toList());
-    } 
-     
+    }
+
     public void updateStock(Map<String, Map<String, Integer>> poItemMap) {
-    for (Map.Entry<String, Map<String, Integer>> entry : poItemMap.entrySet()) {
-        String poID = entry.getKey();
-        Map<String, Integer> itemMap = entry.getValue();
+        for (Map.Entry<String, Map<String, Integer>> entry : poItemMap.entrySet()) {
+            String poID = entry.getKey();
+            Map<String, Integer> itemMap = entry.getValue();
 
-        for (PO po : poList) {
-            if (po.getPoID().equals(poID)) {
-                String itemID = po.getItem().getItemID();
-                if (itemMap.containsKey(itemID)) {
-                    int received = itemMap.get(itemID);
+            for (PO po : poList) {
+                if (po.getPoID().equals(poID)) {
+                    String itemID = po.getItem().getItemID();
+                    if (itemMap.containsKey(itemID)) {
+                        int received = itemMap.get(itemID);
 
-                    int maxReceivable = po.getQuantity() - po.getReceivedQuantity();
-                    if (received > maxReceivable) {
-                        received = maxReceivable;
-                    }
+                        // Ensure received quantity does not exceed remaining quantity
+                        int maxReceivable = po.getQuantity() - po.getReceivedQuantity();
+                        if (received > maxReceivable) {
+                            received = maxReceivable;
+                        }
 
-                    po.setReceivedQuantity(po.getReceivedQuantity() + received);
+                        po.setReceivedQuantity(po.getReceivedQuantity() + received);
 
-                    // Update item stock
-                    for (Item item : itemList) {
-                        if (item.getItemID().equals(itemID)) {
-                            item.setStock(item.getStock() + received);
-                            break;
+                        // Update stock in Item
+                        for (Item item : itemList) {
+                            if (item.getItemID().equals(itemID)) {
+                                item.setStock(item.getStock() + received);
+                                break;
+                            }
                         }
                     }
                 }
             }
         }
+
+        FileHandler.writeAllToFile("data/Items.txt", itemList);
+        FileHandler.writeAllToFile("data/PO.txt", poList);
     }
-
-    FileHandler.writeAllToFile("data/Items.txt", itemList);
-    FileHandler.writeAllToFile("data/PO.txt", poList);
-}
-
-
-
-
 }
 
 
