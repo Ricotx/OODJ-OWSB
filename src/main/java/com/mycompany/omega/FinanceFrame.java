@@ -215,38 +215,6 @@ public class FinanceFrame extends javax.swing.JFrame {
             }
         }
     }
-//    
-//    private void loadAllSuppliers(){
-//        DefaultTableModel model = (DefaultTableModel) supplierTable.getModel();
-//        model.setRowCount(0);
-//        
-//        for(Supplier sup: manager.getAllSuppliers()){
-//            model.addRow(new Object[]{
-//                sup.getSupplierID(),
-//                sup.getSupplierName(),
-//                sup.getContact(),
-//                sup.getItem().getItemID(),
-//                sup.getPrice()
-//            });
-//        }
-//        System.out.println("Suppliers Loaded" + manager.getAllSuppliers().size());
-//    }
-//    
-//    private void loadSupplierForItem(String itemID){
-//        DefaultTableModel model = (DefaultTableModel) supplierTable.getModel();
-//        model.setRowCount(0);
-//        
-//        for(Supplier sup: manager.getSupplierForItem(itemID)){
-//            model.addRow(new Object[]{
-//            sup.getSupplierID(),
-//            sup.getSupplierName(),
-//            sup.getContact(),
-//            sup.getItem().getItemID(),
-//            sup.getPrice()
-//            });
-//        }
-//    }
-//    
     private void clearPOForm(){
         txtPO.setText("");
         txtItemID.setText("");
@@ -1517,14 +1485,9 @@ public class FinanceFrame extends javax.swing.JFrame {
                 int Quantity = selectedPO.getQuantity();
                 double Cost = Quantity * Price;
                 txtPrice.setText(String.valueOf(Cost));
-                //
-
-                //Filter suppliers for selected item based on the itemID
-                //                loadSupplierForItem(selectedPR.getItem().getItemID());
-                //
             }
 
-        }        // TODO add your handling code here:
+        }
     }//GEN-LAST:event_tblPOMouseClicked
 
     private void tblPOComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tblPOComponentAdded
