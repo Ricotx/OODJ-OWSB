@@ -448,10 +448,10 @@ public class FinanceFrame extends javax.swing.JFrame {
                 .addComponent(jButton6)
                 .addGap(36, 36, 36)
                 .addComponent(jButton2)
-                .addContainerGap(846, Short.MAX_VALUE))
+                .addContainerGap(306, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 180, 1090));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 180, 550));
 
         btn1.setBackground(new java.awt.Color(255, 255, 255));
         btn1.setTabPlacement(javax.swing.JTabbedPane.RIGHT);
@@ -859,7 +859,6 @@ public class FinanceFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblUnpaidPO.setColumnSelectionAllowed(true);
         tblUnpaidPO.getTableHeader().setReorderingAllowed(false);
         tblUnpaidPO.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1013,6 +1012,7 @@ public class FinanceFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblPayment.setColumnSelectionAllowed(true);
         tblPayment.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(tblPayment);
         tblPayment.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -1084,6 +1084,7 @@ public class FinanceFrame extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         btn1.setSelectedIndex(2);
+        loadUnpaidPOs();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
