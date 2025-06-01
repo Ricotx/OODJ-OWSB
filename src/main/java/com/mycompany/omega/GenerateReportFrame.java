@@ -28,7 +28,7 @@ import java.util.HashMap;
 public class GenerateReportFrame extends javax.swing.JFrame {
 
     private InventoryManager inventoryManager;
-    private final int LOW_STOCK_THRESHOLD = 10;
+    private final int LOW_STOCK_THRESHOLD = 20;
     public GenerateReportFrame() {
         initComponents();
         

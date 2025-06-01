@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 public class ViewItemFrame extends javax.swing.JFrame {
 
     private InventoryManager inventoryManager;
-    private static final int LOW_STOCK_THRESHOLD = 10;
+    private static final int LOW_STOCK_THRESHOLD = 20;
     public ViewItemFrame() { 
        initComponents();
        Employee currentUser = Session.getCurrentUser();
